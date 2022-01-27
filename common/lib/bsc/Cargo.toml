@@ -1,0 +1,18 @@
+[package]
+name = "bsc"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+esp-idf-sys = { version = "0.30", features = ["binstart"] }
+esp-idf-svc = { git = "https://github.com/esp-rs/esp-idf-svc.git", rev = "a39c119", features = ["experimental", "alloc"] }
+esp-idf-hal = "0.32"
+embedded-svc = "0.16"
+log = "0.4"
+anyhow = "1"
+toml-cfg = "0.1"
+simple_logger = {version = "2.1", features = ["colored"], default-features = false} # TODO: "time" default feature doesn't build unter espc3
+riscv = { version = "0.7", features=["inline-asm"] }

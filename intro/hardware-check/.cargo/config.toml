@@ -1,0 +1,43 @@
+[build]
+# Uncomment the relevant target for your chip here (ESP32, ESP32-S2, ESP32-S3 or ESP32-C3)
+#target = "xtensa-esp32-espidf"
+#target = "xtensa-esp32s2-espidf"
+#target = "xtensa-esp32s3-espidf"
+target = "riscv32imc-esp-espidf"
+
+[target.xtensa-esp32-espidf]
+linker = "ldproxy"
+
+[target.xtensa-esp32s2-espidf]
+linker = "ldproxy"
+
+[target.xtensa-esp32s3-espidf]
+linker = "ldproxy"
+
+[target.riscv32imc-esp-espidf]
+linker = "ldproxy"
+
+# Future - necessary for the experimental "native build" of esp-idf-sys with ESP32C3
+# See also https://github.com/ivmarkov/embuild/issues/16
+rustflags = ["-C", "default-linker-libraries"]
+
+[unstable]
+
+build-std = ["std", "panic_abort"]
+build-std-features = ["panic_immediate_abort"]
+
+[env]
+# Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF upcoming (v4.4)
+ESP_IDF_VERSION = { value = "branch:release/v4.4" }
+# Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF master (v5.0)
+#ESP_IDF_VERSION = { value = "master" }
+
+# These configurations will pick up your custom "sdkconfig.release", "sdkconfig.debug" or "sdkconfig.defaults[.*]" files
+# that you might put in the root of the project
+# The easiest way to generate a full "sdkconfig[.release|debug]" configuration (as opposed to manually enabling only the necessary flags via "sdkconfig.defaults[.*]"
+# is by running "cargo pio espidf menuconfig" (that is, if using the pio builder)
+#ESP_IDF_SDKCONFIG = { value = "./sdkconfig.release", relative = true }
+#ESP_IDF_SDKCONFIG = { value = "./sdkconfig.debug", relative = true }
+ESP_IDF_SDKCONFIG_DEFAULTS = { value = "./sdkconfig.defaults", relative = true }
+
+ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" }
