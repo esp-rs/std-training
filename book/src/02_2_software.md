@@ -16,7 +16,6 @@ TODO nightly is currently broken, so we're using one from 2021. Once this is res
 
 ```console
 $ rustup install nightly-2021-11-18
-$ rustup target add riscv32imc-esp-espidf --toolchain nightly-2021-11-18
 $ rustup component add rust-src --toolchain nightly-2021-11-18
 ```
 
@@ -30,9 +29,10 @@ Several tools are required:
 - `cargo-espflash` - upload firmware to the microcontroller
 - `espmonitor` - monitor firmware log messages
 - `bindgen` - generate Rust bindings for C APIs
+- `ldproxy` - Espressif build toolchain dependency
 
 ```console
-$ cargo install cargo-generate cargo-espflash espmonitor bindgen
+$ cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
 ```
 
 ## Toolchain dependencies

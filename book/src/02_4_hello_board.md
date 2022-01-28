@@ -8,14 +8,17 @@ You're now ready to do a consistency check.
 espressif-trainings$ cd intro/hardware-check
 ```
 
-To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `config.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided. 
+To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided. 
 
-✅ Copy `config.toml.example` to `config.toml` and edit it to reflect your actual credentials:
+TODO we consider `cfg.toml` a suboptimal file name, an [issue]() has been raised.
+
+✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
 ```console
-$ cp config.toml.example config.toml
-$ $EDITOR config.toml
-$ cat config.toml
+$ cp cfg.toml.example cfg.toml
+$ $EDITOR cfg.toml
+$ cat cfg.toml
+
 [hardware-check]
 wifi_ssid = "Your Wifi name"
 wifi_psk = "Your Wifi password" 
@@ -49,3 +52,9 @@ The board LED should turn yellow on startup, and then, depending on whether a Wi
 ```console
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
+
+# Troubleshooting
+
+## Connecting to Wifi
+
+- You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.

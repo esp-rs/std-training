@@ -7,7 +7,7 @@ This chapter contains informations about the course material, the required hardw
 We use Icons to mark different kinds of information in the book:
 * ✅ Call for action
 * ❗️ Warnings, Details that require special attention
-* 🔎 Knowledge, that gets you deeper into the subject, but you do not have to understand it completely to proceed.
+* 🔎 Knowledge that dives deeper into a subject, but which you are not required to understand to proceed.
 * 💬 Descriptions for Accessibility
 
 > Example note: Notes like this one contain helpful information
