@@ -1,6 +1,6 @@
 # Introduction
 
-This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is divided into two workshops: introductory and advanced. The introductory trail will introduce you to basics of embedded development (TODO which) and how to make the embedded board interact with the outside world - reacting to commands and sending sensor data.
+This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is divided into two workshops: introductory and advanced. The introductory trail will introduce you to basics of embedded development (TODO describe in more detail) and how to make the embedded board interact with the outside world - reacting to commands and sending sensor data.
 
 The advanced course takes it from there to dive deeper into topics like interrupt handling, low-level peripheral access and writing your own drivers.
 

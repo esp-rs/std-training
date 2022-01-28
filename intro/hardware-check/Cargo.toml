@@ -31,5 +31,4 @@ bsc = { path = "../../common/lib/bsc" }
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-uuid = { version = "0.8", features = ["v4"] }
 toml = "0.5"

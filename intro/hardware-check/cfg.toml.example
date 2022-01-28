@@ -1,7 +1,3 @@
-[mqtt-mcu]
-mqtt_user = "horse"
-mqtt_pass = "CorrectHorseBatteryStaple"
-mqtt_host = "yourpc.local"
+[hardware-check]
 wifi_ssid = "FBI Surveillance Van"
 wifi_psk = "hunter 2"
-# uuid = will be generated for you by `build.rs`

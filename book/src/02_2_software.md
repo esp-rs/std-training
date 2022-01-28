@@ -29,31 +29,31 @@ Several tools are required:
 - `cargo-generate` - general purpose project setup wizard
 - `cargo-espflash` - upload firmware to the microcontroller
 - `espmonitor` - monitor firmware log messages
+- `bindgen` - generate Rust bindings for C APIs
 
 ```console
-$ cargo install cargo-generate cargo-espflash espmonitor
+$ cargo install cargo-generate cargo-espflash espmonitor bindgen
 ```
 
+## Toolchain dependencies
 
-## Workshop repository
+`bindgen` relies upon a few compiler packages. How to install these depends on your operating system - here are a few examples, further documentation (including Windows) can be found in the official [bindgen requirements](https://rust-lang.github.io/rust-bindgen/requirements.html) document.
 
-The entire training material can be found at <https://github.com/ferrous-systems/espressif-trainings>.
-
-✅ Clone and change into the workshop repository:
-
+### Debian/Ubuntu
 ```console
-$ git clone "https://github.com/ferrous-systems/espressif-trainings.git"
-$ cd espressif-trainings
+$ sudo apt install llvm-dev libclang-dev clang
+```
+### macOS
+
+(when using the Homebrew package manager, which we recommend)
+```console 
+$ brew install llvm
 ```
 
-### Repository contents
-
-- `intro/` - code examples and exercises for the introduction course
-- `advanced/` - code examples and exercises for the advanced course
-- `common/` - code shared between both courses
-- `common/vendor/` - third party crates that have been forked to add required support, pending upstream merges TODO: hopefully none required
-- `book/` - markdown sources of this book
+### Troubleshooting
+- Python 3 is a required dependency. It comes preinstalled on stock macOS and typically on desktop Linux distributions. An existing **Python 2** installation with the `virtualenv` add-on pointing to it is known to potentially cause build problems. 
 
 ## Additional software (IDE + recommended plugins)
 
 TODO copy from <https://embedded-trainings.ferrous-systems.com/installation.html>? Maybe just leave it out…
+
