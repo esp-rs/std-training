@@ -1,5 +1,2 @@
 [toolchain]
-
-
-channel = "nightly"
-
+channel = "nightly-2021-11-18" # circa 1.59.0-beta
