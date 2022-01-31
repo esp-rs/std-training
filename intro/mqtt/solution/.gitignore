@@ -1,7 +1,4 @@
 /.vscode
-/.embuild
 /target
 /Cargo.lock
 cfg.toml
-/ve
-/__pycache__

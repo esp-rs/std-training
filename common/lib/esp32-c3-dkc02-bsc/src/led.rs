@@ -1,8 +1,4 @@
-use std::{
-    convert::TryFrom,
-    fmt::Display,
-    ptr::{null, null_mut},
-};
+use std::ptr::{null, null_mut};
 
 use esp_idf_sys::{
     c_types::c_void, esp, rmt_config, rmt_config_t, rmt_config_t__bindgen_ty_1, rmt_driver_install,
@@ -10,6 +6,7 @@ use esp_idf_sys::{
     rmt_item32_t__bindgen_ty_1__bindgen_ty_1, rmt_mode_t_RMT_MODE_TX, rmt_translator_init,
     rmt_tx_config_t, rmt_wait_tx_done, rmt_write_sample, size_t, u_int8_t,
 };
+pub use rgb::RGB8;
 
 const WS2812_T0H_NS: u32 = 350;
 const WS2812_T0L_NS: u32 = 1000;
@@ -90,49 +87,6 @@ unsafe extern "C" fn ws2812_to_rmt(
     *item_num = num;
 }
 
-pub struct RGB {
-    r: u8,
-    g: u8,
-    b: u8,
-}
-
-impl RGB {
-    pub fn new(r: u8, g: u8, b: u8) -> Self {
-        Self { r, g, b }
-    }
-}
-
-impl From<[u8; 3]> for RGB {
-    fn from(val: [u8; 3]) -> Self {
-        Self {
-            r: val[0],
-            g: val[1],
-            b: val[2],
-        }
-    }
-}
-
-impl TryFrom<&[u8]> for RGB {
-    type Error = ();
-
-    fn try_from(val: &[u8]) -> Result<Self, Self::Error> {
-        if val.len() == 3 {
-            Ok(Self {
-                r: val[0],
-                g: val[1],
-                b: val[2],
-            })
-        } else {
-            Err(())
-        }
-    }
-}
-
-impl Display for RGB {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("RGB({},{},{})", self.r, self.g, self.b))
-    }
-}
 pub struct WS2812RMT {
     config: rmt_config_t,
 }
@@ -182,7 +136,7 @@ impl WS2812RMT {
         Ok(Self { config })
     }
 
-    pub fn set_pixel(&self, color: RGB) -> anyhow::Result<()> {
+    pub fn set_pixel(&mut self, color: RGB8) -> anyhow::Result<()> {
         let timeout_ms = 1;
         unsafe {
             esp!(rmt_write_sample(

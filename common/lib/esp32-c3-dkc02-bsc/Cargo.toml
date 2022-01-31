@@ -1,0 +1,19 @@
+[package]
+name = "esp32-c3-dkc02-bsc"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+esp32c3 = "=0.3.0"
+esp-idf-sys = { version = "=0.30.4" }
+esp-idf-svc = { version="=0.36.7", features = ["experimental", "alloc"] }
+esp-idf-hal = "=0.32.5"
+embedded-svc = "=0.16.5"
+rgb = "0.8"
+log = "0.4"
+anyhow = "1"
+toml-cfg = "0.1"
+riscv = { version = "0.7", features=["inline-asm"] }

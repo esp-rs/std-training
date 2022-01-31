@@ -1,0 +1,10 @@
+# Rust often needs a bit of an extra main task stack size compared to C (the default is 3K)
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=7000
+
+# Workaround for https://github.com/espressif/esp-idf/issues/7631
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=n
+
+# TODO this does not seem to work (should enable log level DEBUG)
+CONFIG_LOG_DEFAULT_LEVEL_INFO=n
+CONFIG_LOG_DEFAULT_LEVEL=4

@@ -5,7 +5,7 @@ use bsc::{
     wifi,
 };
 use config::CONFIG;
-use esp_idf_svc::log::EspLogger;
+use esp32_c3_dkc02_bsc as bsc;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::info;
@@ -13,7 +13,6 @@ use log::info;
 mod config;
 
 fn main() -> anyhow::Result<()> {
-    EspLogger::initialize_default();
     info!("Hello, world!");
 
     let led = WS2812RMT::new()?;
