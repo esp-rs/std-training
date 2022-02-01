@@ -1,7 +1,7 @@
 use std::{thread::sleep, time::Duration};
 
 use bsc::{
-    led::{RGB, WS2812RMT},
+    led::{RGB8, WS2812RMT},
     wifi,
 };
 use config::CONFIG;
@@ -15,16 +15,16 @@ mod config;
 fn main() -> anyhow::Result<()> {
     info!("Hello, world!");
 
-    let led = WS2812RMT::new()?;
-    led.set_pixel(RGB::new(50, 50, 0))?;
+    let mut led = WS2812RMT::new()?;
+    led.set_pixel(RGB8::new(50, 50, 0))?;
 
     let app_config = CONFIG;
 
     let wifi = Box::new(wifi::wifi(app_config.wifi_ssid, app_config.wifi_psk));
     match *wifi {
-        Ok(_) => led.set_pixel(RGB::new(0, 50, 0))?,
+        Ok(_) => led.set_pixel(RGB8::new(0, 50, 0))?,
         Err(err) => {
-            led.set_pixel(RGB::new(50, 0, 0))?;
+            led.set_pixel(RGB8::new(50, 0, 0))?;
             anyhow::bail!("could not connect to Wi-Fi network: {:?}", err)
         }
     }
@@ -33,8 +33,8 @@ fn main() -> anyhow::Result<()> {
     loop {
         sleep(Duration::from_secs(1));
         match odd {
-            true => led.set_pixel(RGB::new(0, 50, 0))?,
-            false => led.set_pixel(RGB::new(0, 0, 50))?,
+            true => led.set_pixel(RGB8::new(0, 50, 0))?,
+            false => led.set_pixel(RGB8::new(0, 0, 50))?,
         }
         odd = !odd;
     }
