@@ -13,5 +13,11 @@ $ cd espressif-trainings
 - `intro/` - code examples and exercises for the introduction course
 - `advanced/` - code examples and exercises for the advanced course
 - `common/` - code shared between both courses
+- `common/extra` - tools not required for this training which might still be useful
+- `common/lib/` - support crates
+- `common/lib/esp32-c3-dkc02-bsc` - board support crate (bsc) for the `ESP32-C3-DevKitC-02` board
+    - ❗️ this crate re-exports `esp_idf_svc`, because depending both on the board support crate and `esp_idf_svc` can lead to linker errors
+    - TODO migrate bsc to `esp-rs` github (`esp_idf_scv` problem probably needs to be resolved first)
+    - TODO add second bsc for training board once it's available
 - `common/vendor/` - third party crates that have been forked to add required support, pending upstream merges TODO: hopefully none required
 - `book/` - markdown sources of this book

@@ -15,11 +15,11 @@ $ lsusb | grep UART
 Bus 001 Device 011: ID 10c4:ea60 Silicon Laboratories, Inc. CP2102N USB to UART Bridge Controller  Serial: a4c4193ceaa0eb119085d1acdf749906
 ```
 
-The device will also show up in the `/dev` directory as a `ttyACM` device:
+The device will also show up in the `/dev` directory as a `ttyUSB` device:
 
 ``` console
-$ ls /dev/ttyACM*
-/dev/ttyACM0
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0
 ```
 
 **macOS**:

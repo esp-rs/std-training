@@ -13,5 +13,5 @@ Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products
 A basic familiarity with the Rust programming language is assumed. 
 
 TODO
-- what does this mean
+- specify what kind of knowledge is required
 - link learning resources (Ferrous teaching material, Rust book, awesome-rust-..)

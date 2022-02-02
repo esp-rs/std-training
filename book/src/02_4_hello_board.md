@@ -10,7 +10,7 @@ espressif-trainings$ cd intro/hardware-check
 
 To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided. 
 
-TODO we consider `cfg.toml` a suboptimal file name, an [issue]() has been raised.
+TODO we consider `cfg.toml` a suboptimal file name, an [issue](https://github.com/jamesmunns/toml-cfg/issues/2) has been raised.
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
@@ -54,6 +54,21 @@ Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
 
 # Troubleshooting
+
+## Build errors
+
+```console
+error[E0463]: can't find crate for `core`
+= note: the `riscv32imc-esp-espidf` target may not be installed
+```
+
+You're trying to build with a `stable` Rust - you need to use `nightly`.
+this error message is slightly misleading - this target *cannot* be installed. It needs to be built from source, using `build-std`, which is a feature available on nightly only
+
+
+```console
+error: cannot find macro `llvm_asm` in this scope
+```
 
 ## Connecting to Wifi
 
