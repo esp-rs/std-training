@@ -42,6 +42,7 @@ $ cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
 `bindgen` relies upon a few compiler packages. How to install these depends on your operating system - here are a few examples, further documentation (including Windows) can be found in the official [bindgen requirements](https://rust-lang.github.io/rust-bindgen/requirements.html) document.
 
 ### Debian/Ubuntu
+
 ```console
 $ sudo apt install llvm-dev libclang-dev clang
 ```
@@ -53,9 +54,11 @@ $ brew install llvm
 ```
 
 ### Troubleshooting
+
 - Python 3 is a required dependency. It comes preinstalled on stock macOS and typically on desktop Linux distributions. An existing **Python 2** installation with the `virtualenv` add-on pointing to it is known to potentially cause build problems. 
 
 ## Additional software (IDE + recommended plugins)
 
-TODO copy from <https://embedded-trainings.ferrous-systems.com/installation.html>? Maybe just leave it out…
+- TODO copy from <https://embedded-trainings.ferrous-systems.com/installation.html>? Maybe just leave it out…
 
+- When using VSCode, the "Better TOML" extension is a useful addition for editing configuration files. 

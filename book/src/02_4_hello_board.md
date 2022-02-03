@@ -10,8 +10,6 @@ espressif-trainings$ cd intro/hardware-check
 
 To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided. 
 
-TODO we consider `cfg.toml` a suboptimal file name, an [issue](https://github.com/jamesmunns/toml-cfg/issues/2) has been raised.
-
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
 ```console
@@ -63,11 +61,26 @@ error[E0463]: can't find crate for `core`
 ```
 
 You're trying to build with a `stable` Rust - you need to use `nightly`.
-this error message is slightly misleading - this target *cannot* be installed. It needs to be built from source, using `build-std`, which is a feature available on nightly only
+this error message is slightly misleading - this target *cannot* be installed. It needs to be built from source, using `build-std`, which is a feature available on nightly only.
 
+---
 
 ```console
 error: cannot find macro `llvm_asm` in this scope
+```
+
+You're using an incompatible version of nightly - configure a suitable one using `rust-toolchain.toml` or  `cargo override`.
+
+---
+
+```console
+CMake Error at .../Modules/CMakeDetermineSystem.cmake:129 (message):
+```
+
+Your Espressif toolchain installation might be damaged. Delete it and rerun the build to trigger a fresh download:
+
+```console
+$ rm -rf ~/.espressif
 ```
 
 ## Connecting to Wifi
