@@ -57,10 +57,28 @@ impl Default for SensorConfig {
 pub struct BoardTempSensor {
     config: SensorConfig,
     efuse_calibration: f32,
+    peripherals: Option<Peripherals>,
 }
 
 impl BoardTempSensor {
+    pub fn new_taking_peripherals() -> Self {
+        let mut peripherals = Peripherals::take().unwrap();
+        let efuse_calibration = Self::common_init(&mut peripherals);
+        Self {
+            config: Default::default(),
+            efuse_calibration,
+            peripherals: Some(peripherals),
+        }
+    }
     pub fn new(peripherals: &mut Peripherals) -> Self {
+        let efuse_calibration = Self::common_init(peripherals);
+        Self {
+            config: Default::default(),
+            efuse_calibration,
+            peripherals: None,
+        }
+    }
+    fn common_init(peripherals: &mut Peripherals) -> f32 {
         // enable TSENS clock
         peripherals
             .SYSTEM
@@ -87,7 +105,7 @@ impl BoardTempSensor {
         /*
         esp_efuse_table.c
         static const esp_efuse_desc_t TEMP_CALIB[] = {
-            {EFUSE_BLK2, 131, 9}, 	 // Temperature calibration data,
+        {EFUSE_BLK2, 131, 9}, 	 // Temperature calibration data,
         };
         */
         // register is 128..160
@@ -118,13 +136,10 @@ impl BoardTempSensor {
 
         info!("efuse calibration: {}", efuse_calibration);
 
-        Self {
-            config: Default::default(),
-            efuse_calibration,
-        }
+        efuse_calibration
     }
 
-    pub fn read(&self, adc: &mut APB_SARADC) -> f32 {
+    fn read_impl(&self, adc: &mut APB_SARADC) -> f32 {
         let register = adc.apb_tsens_ctrl.read();
         let raw_value = register.tsens_out().bits();
         let value = ADC_FACTOR * (raw_value as f32)
@@ -132,5 +147,24 @@ impl BoardTempSensor {
             - self.efuse_calibration;
 
         value
+    }
+
+    pub fn read(&self, adc: &mut APB_SARADC) -> f32 {
+        self.read_impl(adc)
+    }
+
+    pub fn read_owning_peripherals(&mut self) -> f32 {
+        let adc = &mut self.peripherals.as_mut().unwrap().APB_SARADC;
+        let register = adc.apb_tsens_ctrl.read();
+        let raw_value = register.tsens_out().bits();
+        let value = ADC_FACTOR * (raw_value as f32)
+            - DAC_FACTOR * self.config.dac_offset.offset() as f32
+            - self.efuse_calibration;
+
+        value
+    }
+
+    pub fn free(self) -> Option<Peripherals> {
+        self.peripherals
     }
 }

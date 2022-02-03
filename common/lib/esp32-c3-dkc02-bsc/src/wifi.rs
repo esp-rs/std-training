@@ -20,6 +20,12 @@ pub struct Wifi {
 }
 
 pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
+    if ssid.len() == 0 {
+        anyhow::bail!("missing WiFi name")
+    }
+    if psk.len() == 0 {
+        anyhow::bail!("missing WiFi password")
+    }
     let netif_stack = Arc::new(EspNetifStack::new()?);
     let sys_loop_stack = Arc::new(EspSysLoopStack::new()?);
     let default_nvs = Arc::new(EspDefaultNvs::new()?);
