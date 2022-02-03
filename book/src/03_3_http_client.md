@@ -1,6 +1,8 @@
 # A simple HTTP client
 
 In this exercise, we'll retrieve some data over a HTTP connection to the internet.
+
+## Setup
 You can find a prepared project skeleton in `intro/http-client/exercise`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
 
 ## Making a connection

@@ -1,6 +1,10 @@
 # A simple HTTP server
 
-We're now turning our board into a tiny web server. You can find a prepared project skeleton in `intro/http-server/exercise`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
+We're now turning our board into a tiny web server. 
+
+## Setup
+
+You can find a prepared project skeleton in `intro/http-server/exercise`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
 
 ## Serving requests
 
