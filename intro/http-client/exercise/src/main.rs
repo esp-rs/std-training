@@ -34,7 +34,7 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
-    // 1. create a new default EspHttpClien
+    // 1. create a new EspHttpClient
     // let mut client = EspHttpClient::new(...)?;
 
     // 2. open a GET request to `url`
