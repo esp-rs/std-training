@@ -5,7 +5,7 @@ use std::{
     time::Duration,
 };
 
-use bsc::{esp_idf_svc, temp_sensor::BoardTempSensor, wifi::wifi};
+use bsc::{temp_sensor::BoardTempSensor, wifi::wifi};
 use embedded_svc::{
     http::{
         server::{registry::Registry, Response, ResponseWrite},

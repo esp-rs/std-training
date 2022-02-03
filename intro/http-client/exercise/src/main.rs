@@ -1,9 +1,6 @@
 use core::str;
 
-use bsc::{
-    esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration},
-    wifi::wifi,
-};
+use bsc::wifi::wifi;
 use embedded_svc::{
     http::{
         client::{Client, Request, RequestWrite, Response},
@@ -12,6 +9,7 @@ use embedded_svc::{
     io::Read,
 };
 use esp32_c3_dkc02_bsc as bsc;
+use esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration};
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 
 #[toml_cfg::toml_config]

@@ -17,6 +17,7 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
+esp-idf-svc="=0.36.7"
 esp-idf-sys = { version = "=0.30.4", features = ["binstart"] }
 esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
 embedded-svc = "=0.16.5"

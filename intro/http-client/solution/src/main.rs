@@ -1,16 +1,15 @@
 use core::str;
 
-use bsc::{
-    esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration},
-    wifi::wifi,
-};
+use bsc::wifi::wifi;
 use embedded_svc::{
     http::{
         client::{Client, Request, RequestWrite, Response},
-        Headers, Status,
+        Status,
     },
     io::Read,
 };
+use esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration};
+
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 
