@@ -43,16 +43,14 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
         ..Default::default()
     })?;
 
-    // 2. open a GET request to http://neverssl.com
-    //let request = client.get("http://neverssl.com")?;
+    // 2. open a GET request to `url`
     let request = client.get(url.as_ref())?;
 
     // 3. requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
     // (since we don't send anything - but have to do the writer step anyway)
     //
     // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_http_client.html
-    // if this were a POST request, you'd set a write length > 0 and then:
-    // writer.do_write(&some_buf);
+    // if this were a POST request, you'd set a write length > 0 and then writer.do_write(&some_buf);
     let writer = request.into_writer(0)?;
 
     // 4. turn the writer into a response and check its status. Successful http status codes are in the 200..=299 range.
