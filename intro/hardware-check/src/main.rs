@@ -13,6 +13,8 @@ use log::info;
 mod config;
 
 fn main() -> anyhow::Result<()> {
+    esp_idf_sys::link_patches();
+
     info!("Hello, world!");
 
     let mut led = WS2812RMT::new()?;

@@ -39,17 +39,16 @@ pub struct Config {
 }
 
 fn main() -> anyhow::Result<()> {
-    let app_config = CONFIG;
+    esp_idf_sys::link_patches();
 
     EspLogger::initialize_default();
 
-    let mut low_level_peripherals =
-        esp32c3::Peripherals::take().ok_or(anyhow!("could not take Peripherals"))?;
-
-    let temp_sensor = BoardTempSensor::new(&mut low_level_peripherals);
+    let app_config = CONFIG;
 
     info!("our UUID is:");
     info!("{}", UUID);
+
+    let mut temp_sensor = BoardTempSensor::new_taking_peripherals();
 
     let mut led = WS2812RMT::new()?;
     led.set_pixel(RGB8::new(0, 0, 0))?;
@@ -81,7 +80,7 @@ fn main() -> anyhow::Result<()> {
 
     loop {
         sleep(Duration::from_secs(1));
-        let temp = temp_sensor.read(&mut low_level_peripherals.APB_SARADC);
+        let temp = temp_sensor.read_owning_peripherals();
 
         client.publish(
             mqtt_messages::temperature_data_topic(UUID),
