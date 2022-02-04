@@ -1,11 +1,6 @@
-use std::{convert::TryFrom, thread::sleep, time::Duration};
+use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 
-use anyhow::anyhow;
 use bsc::{
-    esp_idf_svc::{
-        log::EspLogger,
-        mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
-    },
     led::{RGB8, WS2812RMT},
     temp_sensor::BoardTempSensor,
     wifi::wifi,
@@ -17,10 +12,14 @@ use embedded_svc::mqtt::client::{
     Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
+use esp_idf_svc::{
+    log::EspLogger,
+    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{cmd_topic_fragment, Command, RawCommandData};
+use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -51,13 +50,13 @@ fn main() -> anyhow::Result<()> {
     let mut temp_sensor = BoardTempSensor::new_taking_peripherals();
 
     let mut led = WS2812RMT::new()?;
-    led.set_pixel(RGB8::new(0, 0, 0))?;
+    led.set_pixel(RGB8::new(1, 1, 0))?;
 
     let _wifi = wifi(app_config.wifi_ssid, app_config.wifi_psk)?;
 
     let mqtt_config = MqttClientConfiguration::default();
 
-    let uri = if app_config.mqtt_user != "" {
+    let url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -67,16 +66,19 @@ fn main() -> anyhow::Result<()> {
     };
 
     let mut inflight = vec![];
-    let mut client = EspMqttClient::new_with_callback(uri, &mqtt_config, move |message_event| {
-        if let Some(Ok(message_event)) = message_event {
-            process_message(message_event, &mut inflight, &mut led);
+    let mut client = EspMqttClient::new_with_callback(url, &mqtt_config, move |message_event| {
+        if let Some(Ok(Received(message))) = message_event {
+            process_message(message, &mut inflight, &mut led);
         }
     })?;
+
+    let payload: &[u8] = &[];
+    client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
     client.subscribe(
         format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
         QoS::AtLeastOnce,
-    )?; // TODO define QoS
+    )?;
 
     loop {
         sleep(Duration::from_secs(1));
@@ -91,64 +93,56 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(
-    message_event: Event<EspMqttMessage>,
-    inflight: &mut Vec<u8>,
-    led: &mut WS2812RMT,
-) {
-    if let Received(message) = message_event {
-        match message.details() {
-            Complete(token) => {
-                let topic = message.topic(token);
-                // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
-                // and if it matches, process the remaining part
-                if let Some(cmd) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
-                    // try and parse the remaining path and the data sent along as `BoardLed` command
-                    let raw = RawCommandData {
-                        path: std::borrow::Cow::Borrowed(cmd),
-                        data: message.data(),
+fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
+    match message.details() {
+        Complete(token) => {
+            let topic = message.topic(token);
+            // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
+            // and if it matches, process the remaining part
+            if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
+                // try and parse the remaining path and the data sent along as `BoardLed` command
+                let raw = RawCommandData {
+                    path: command_str,
+                    data: message.data(),
+                };
+
+                if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
+                    match led.set_pixel(color) {
+                        Err(e) => error!("could not set board LED: {:?}", e),
+                        _ => {}
                     };
-
-                    if let Ok(cmd) = Command::try_from(raw) {
-                        match cmd {
-                            Command::BoardLed(color) => match led.set_pixel(color) {
-                                Err(e) => error!("could not set board LED: {:?}", e),
-                                _ => {}
-                            },
-                        }
-                    }
                 }
             }
-            InitialChunk(chunk_info) => {
-                let data = message.data();
-                inflight.extend(data.iter());
-                info!(
-                    "received start of a partial packet: {}/{} bytes",
-                    inflight.len(),
-                    chunk_info.total_data_size
-                );
+        }
+        InitialChunk(chunk_info) => {
+            let data = message.data();
+            inflight.extend(data.iter());
+            info!(
+                "received start of a partial packet: {}/{} bytes",
+                inflight.len(),
+                chunk_info.total_data_size
+            );
+        }
+        SubsequentChunk(chunk_data) => {
+            let mut complete = false;
+            let data = message.data();
+
+            inflight.extend(message.data().iter());
+            info!(
+                "received more partial data: {} bytes (buffer:{}/{})",
+                data.len(),
+                inflight.len(),
+                chunk_data.total_data_size
+            );
+
+            if inflight.len() == chunk_data.total_data_size {
+                complete = true;
+                info!("big packet complete!");
             }
-            SubsequentChunk(chunk_data) => {
-                let mut complete = false;
-                let data = message.data();
 
-                inflight.extend(message.data().iter());
-                info!(
-                    "received more partial data: {} bytes (buffer:{}/{})",
-                    data.len(),
-                    inflight.len(),
-                    chunk_data.total_data_size
-                );
-
-                if inflight.len() == chunk_data.total_data_size {
-                    complete = true;
-                    info!("big packet complete!");
-                }
-
-                if complete {
-                    /* further processing here */
-                    inflight.clear();
-                }
+            if complete {
+                /* further processing here */
+                inflight.clear();
             }
         }
     }
