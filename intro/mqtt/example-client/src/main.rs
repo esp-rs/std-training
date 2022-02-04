@@ -1,6 +1,7 @@
-use mqtt_messages::{temperature_data_topic, Command, RawCommandData, RGB8};
+use mqtt_messages::{hello_topic, temperature_data_topic, Command, RGB8};
 use rand::Rng;
-use rumqttc::{Client, MqttOptions, Packet, Publish, QoS};
+use rumqttc::{Client, MqttOptions, Packet, QoS};
+use std::error::Error;
 use std::thread;
 use std::time::Duration;
 
@@ -17,9 +18,10 @@ pub struct Config {
     mqtt_pass: &'static str,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     dbg!(CONFIG);
     let client_id = UUID;
+    dbg!(UUID);
     let mut mqttoptions = MqttOptions::new(client_id, CONFIG.mqtt_host, 1883);
     mqttoptions.set_credentials(CONFIG.mqtt_user, CONFIG.mqtt_pass);
 
@@ -27,9 +29,8 @@ fn main() {
 
     let (mut client, mut connection) = Client::new(mqttoptions, 10);
 
-    client
-        .subscribe(temperature_data_topic(UUID), QoS::AtMostOnce)
-        .unwrap();
+    client.subscribe(temperature_data_topic(UUID), QoS::AtMostOnce)?;
+    client.subscribe(hello_topic(UUID), QoS::AtMostOnce)?;
     thread::spawn(move || {
         let mut rng = rand::thread_rng();
         loop {
@@ -53,9 +54,14 @@ fn main() {
 
     // Iterate to poll the eventloop for connection progress
     for (_, notification) in connection.iter().enumerate() {
-        // if you want to see everything, uncomment:
-        // println!("Notification = {:?}", notification);
+        // if you want to see *everything*, uncomment:
+        // println!("Notification = {:#?}", notification);
+
         if let Ok(rumqttc::Event::Incoming(Packet::Publish(publish_data))) = notification {
+            if publish_data.topic == hello_topic(UUID) {
+                println!("board says hi!");
+            }
+
             if publish_data.topic == temperature_data_topic(UUID) {
                 let data: &[u8] = &publish_data.payload;
                 let data: Result<[u8; 4], _> = data.try_into();
@@ -67,4 +73,5 @@ fn main() {
             }
         }
     }
+    Ok(())
 }
