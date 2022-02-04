@@ -9,18 +9,16 @@ You can find a prepared project skeleton in `intro/http-server/exercise`. It inc
 ## Serving requests
 
 To connect to your board, you need to know its IP address. Running the skeleton will yield a line like the following at the end:
+
 ```console
-I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: 255.255.255.0, gw: 192.168.178.1
+I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ...
 ```
 
 the `sta ip` is the "station", the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
 
 > esp-idf tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
 >
-> You can change the hostname by setting `CONFIG_LWIP_LOCAL_HOSTNAME` in `sdkconfig.defaults`, e.g.:
-```code
-CONFIG_LWIP_LOCAL_HOSTNAME="esp32c3"
-```
+> You can change the hostname by setting `CONFIG_LWIP_LOCAL_HOSTNAME` in `sdkconfig.defaults`, e.g.: `CONFIG_LWIP_LOCAL_HOSTNAME="esp32c3"`
 
 Sending HTTP data to a client involves:
 - creating an `esp_idf_svc::http::server::EspHttpServer` using a default `esp_idf_svc::http::server::Configuration` - this will automatically cause it to listen on port 80
@@ -38,7 +36,8 @@ server.set_inline_handler(path, method, |request, response| {
     // now you can write your desired data
     writer.do_write_all(&some_buf);
 
-    // once you're done the handler expects a `Completion` as result, this is achieved via:
+    // once you're done the handler expects a `Completion` as result,
+    // this is achieved via:
     writer.complete()
 });
 

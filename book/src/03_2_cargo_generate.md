@@ -55,8 +55,7 @@ Hello, world!
 
 ## Extra tasks
 - If your main function exits, you have to reset the microcontroller to start it again. Try and guess what happens when you put an infinite loop at the end instead, then test your theory by flashing a looping program.
-- Can you think of a way to prevent what you're now seeing? [^hint]
-
+- Can you think of a way to prevent what you're now seeing? (click for hint:[^hint])
 
 ## Troubleshooting
 - `⛔ Git Error: authentication required`: your git configuration is probably set to override `https` github URLs to `ssh`. Check your global `~/.git/config` for `insteadOf` sections and disable them.

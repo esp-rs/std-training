@@ -54,7 +54,9 @@ A client sends several subscribe messages to indicate they're interested in rece
 
 ## Setup
 
-You can find a prepared project skeleton in `intro/mqtt/exercise`. Similar to the http exercises you need to configure your WiFi credentials in `cfg.toml`, but here you'll also need to add MQTT server details.
+You can find a prepared project skeleton in `intro/mqtt/exercise`. 
+
+❗️ Similar to the http exercises you need to configure your WiFi credentials in `cfg.toml`, but here you'll also need to add MQTT server details. Check `cfg.toml.example` for required settings.
 
 ## Support tools & crates
 
@@ -71,14 +73,14 @@ The `mqtt_messages` crate (located in `common/lib`) supports handling messages, 
 
 We're going to use a very rudimentary encoding scheme for our data:
 - the board temperature `f32` float is converted to four "big endian" bytes using `temp.to_be_bytes()`.
-- board LED commands are made of three bytes indicating red, green and blue
-    - `enum Command`: represents all possible commands (here: just `BoardLed`)
-    - `RawCommandData` stores the last part of a message topic (e.g. `board_led` in `a-uuid/command/board_led`). It can be converted into a `Command` using `try_from`
+- board LED commands are made of three bytes indicating red, green and blue.
+    - `enum Command`: represents all possible commands (here: just `BoardLed`).
+    - `RawCommandData` stores the last part of a message topic (e.g. `board_led` in `a-uuid/command/board_led`). It can be converted into a `Command` using `try_from`.
 
 ```rust
 // temperature
-let temperature_data = temp.to_be_bytes() as &[u8]; // board code
-let decoded_temperature = f32::from_be_bytes(temperature_data); // example client code
+let temperature_data = temp.to_be_bytes() as &[u8]; // board
+let decoded_temperature = f32::from_be_bytes(temperature_data); // workstation
 
 // RGB LED command
 let raw = RawCommandData {
@@ -98,10 +100,10 @@ It is constructed using
 
 ```rust
 const url = format!("mqtt://{}:{}@{}", username, password, host);
-let mqtt_config = MqttClientConfiguration::default();
-let mut client = EspMqttClient::new_with_callback(url, &mqtt_config, move |message_event| { 
-    // ... your handler code here - leave empty for the first 
-    upcoming exercise
+let cfg = MqttClientConfiguration::default();
+let mut client = EspMqttClient::new_with_callback(url, &cfg, move |message_event| { 
+    // ... your handler code here - leave this empty for now
+    // we'll add functionality later in this chapter
 };
 ```
 ## Publish & Subscribe
@@ -119,8 +121,11 @@ client.publish(publish_topic, QoS::AtLeastOnce, false, payload)?;
 ```
 
 ✅ Create an `EspMqttClient` with a default configuration and an empty handler closure.
+
 ✅ Send an empty message under the `hello` topic to the broker. Use the `hello_topic(uuid)` utility function to generate a properly scoped topic.
+
 ✅ Verify a successful publish by having a client connected that logs these messages. The `example_client` implements this behavior.
+
 ✅ In the loop at the end of your main function, publish the board temperature every second. Verify this, too.
 
 ## Handling incoming messages
@@ -134,11 +139,14 @@ if let Some(Ok(Received(message))) = message_event {
     match message.details() {
         Details::Complete(token) => {
             // all messages in this exercise will be of type `Complete`
-            // the other variants of the `Details` enum are for larger message payloads
+            // the other variants of the `Details` enum
+            // are for larger message payloads
 
-            let topic: Cow<str> = message.topic(token); // Cow<str> behaves a lot like other Rust strings (&str, String)
+            // Cow<str> behaves a lot like other Rust strings (&str, String)
+            let topic: Cow<str> = message.topic(token); 
 
-            // determine if we're interested in this topic and dispatch based on its content
+            // determine if we're interested in this topic and
+            // dispatch based on its content
             let is_command_topic: bool = /* ... */;
             if is_command_topic {
                 let raw = RawCommandData { /* ... */ };
@@ -154,7 +162,9 @@ if let Some(Ok(Received(message))) = message_event {
 ```
 
 ✅ Subscribe to all "command" messages, combining `cmd_topic_fragment(uuid)` with a trailing `#` wildcard
+
 ✅ Verify your subscription is working by logging the received topic and running the `example_client` in parallel. You should receive a board LED command roughly every second.
+
 ✅ React to the LED commands by setting the newly received color
 
 ## Hints

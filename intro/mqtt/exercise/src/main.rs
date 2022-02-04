@@ -1,5 +1,3 @@
-use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
-
 use bsc::{
     led::{RGB8, WS2812RMT},
     temp_sensor::BoardTempSensor,
@@ -16,6 +14,7 @@ use esp_idf_svc::{
     log::EspLogger,
     mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
 };
+use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
