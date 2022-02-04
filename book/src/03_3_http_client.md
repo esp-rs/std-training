@@ -1,9 +1,20 @@
 # A simple HTTP client
 
-In this exercise, we'll retrieve some data over a HTTP connection to the internet.
+In this exercise, we'll write a small http client that retrieves data over a HTTP connection to the internet.
 
 ## Setup
-You can find a prepared project skeleton in `intro/http-client/exercise`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
+
+✅ Go to `intro/http-client/exercise` directory.
+
+✅ Open the docs for this project with the following command:
+
+```
+$ cargo doc --open
+```
+
+✅ Add your network credentials to the `cfg.toml`.
+
+✅ Open the prepared project skeleton in `intro/http-client/exercise`. We'll read through the code together.
 
 ## Making a connection
 
@@ -11,9 +22,11 @@ By default only unencrypted HTTP is available, which rather limits our options o
 
 In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`.
 
+✅ Create a new `EspHttpClient` with default values.
+
 TODO currently no `docs.rs` documentation for the svc crates (ping Espressif about this, it's a known issue though)
 
-calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`.
+Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`.
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
@@ -24,6 +37,7 @@ let request = client.get(...)
 let writer = request.into_writer(0)?;
 let response = writer.into_response()?;
 ```
+✅ Implement sending a `GET` request and receiving a response.
 
 A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
