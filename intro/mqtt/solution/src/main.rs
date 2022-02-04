@@ -56,7 +56,7 @@ fn main() -> anyhow::Result<()> {
 
     let mqtt_config = MqttClientConfiguration::default();
 
-    let url = if app_config.mqtt_user != "" {
+    let broker_url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -66,11 +66,12 @@ fn main() -> anyhow::Result<()> {
     };
 
     let mut inflight = vec![];
-    let mut client = EspMqttClient::new_with_callback(url, &mqtt_config, move |message_event| {
-        if let Some(Ok(Received(message))) = message_event {
-            process_message(message, &mut inflight, &mut led);
-        }
-    })?;
+    let mut client =
+        EspMqttClient::new_with_callback(broker_url, &mqtt_config, move |message_event| {
+            if let Some(Ok(Received(message))) = message_event {
+                process_message(message, &mut inflight, &mut led);
+            }
+        })?;
 
     let payload: &[u8] = &[];
     client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
