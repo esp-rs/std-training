@@ -1,0 +1,6 @@
+[mqtt]
+mqtt_user = "horse"
+mqtt_pass = "CorrectHorseBatteryStaple"
+mqtt_host = "yourpc.local"
+wifi_ssid = "FBI Surveillance Van"
+wifi_psk = "hunter2"
