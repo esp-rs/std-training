@@ -19,7 +19,8 @@ After this optional send step the `Writer` can be turned into a `Response` from 
 
 ```Rust
 let request = client.get(...)
-// the parameter passed to `into_writer` is the number of bytes the client intends to send
+// the parameter passed to `into_writer` is the number of bytes
+// the client intends to send
 let writer = request.into_writer(0)?;
 let response = writer.into_response()?;
 ```
@@ -27,14 +28,19 @@ let response = writer.into_response()?;
 A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
 ✅ Verify the connection was successful.
+
 ✅ Return an error if the status 
+
 ✅ Turn your `response` into a `embedded_svc::io::Read` reader by calling `response.reader()` and read the received data chunk by chunk into a `u8` buffer using `reader.do_read(&mut buf)`. `do_read` returns the number of bytes read - you're done when this value is `0`.
+
 ✅ Report the total number of bytes read.
+
 ✅ Log the received data to the console.
 
 ## Extra Tasks
 
 ✅ Handle 3xx, 4xx and 5xx status codes each in a separate match arm
+
 ✅ Write a custom `Error` enum to represent these errors. Implement the `std::error::Error` trait for your error.
 
 ## HTTPS

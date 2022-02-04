@@ -45,6 +45,7 @@ server.set_inline_handler(path, method, |request, response| {
  
 
 ✅ Create a `EspHttpServer` instance and verify a connection to `http://<sta ip>/` yields a `404` (not found) error stating `This URI does not exist`.
+
 ✅ Show a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
 
 ## Dynamic data
