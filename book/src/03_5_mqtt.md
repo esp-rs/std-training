@@ -118,7 +118,7 @@ let payload: &[u8] = /* ... */ ;
 client.publish(publish_topic, QoS::AtLeastOnce, false, payload)?;
 ```
 
-✅ Configure an `EspMqttClient` with an empty handler closure.
+✅ Create an `EspMqttClient` with a default configuration and an empty handler closure.
 ✅ Send an empty message under the `hello` topic to the broker. Use the `hello_topic(uuid)` utility function to generate a properly scoped topic.
 ✅ Verify a successful publish by having a client connected that logs these messages. The `example_client` implements this behavior.
 ✅ In the loop at the end of your main function, publish the board temperature every second. Verify this, too.
@@ -157,6 +157,10 @@ if let Some(Ok(Received(message))) = message_event {
 ✅ Verify your subscription is working by logging the received topic and running the `example_client` in parallel. You should receive a board LED command roughly every second.
 ✅ React to the LED commands by setting the newly received color
 
+## Hints
+
+- `split()` on a string returns an iterator. You can access a specific item from an iterator using [`nth()`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.nth).
+- TODO more hints here
 
 ## Extra tasks
 
