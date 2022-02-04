@@ -18,10 +18,10 @@ You'll be prompted for details regarding your new project. When given a choice b
 ✅ Configure your project:
 
 1. Project Name: `hello-world`
-2. ESP-IDF native build version: `4.4`
-3. STD support: `true`
-4. MCU: `esp32c3`
-5. Rust toolchain: `nightly`
+2. STD support: `true`
+3. MCU: `esp32c3`
+4. Rust toolchain: `nightly`
+5. ESP-IDF native build version: `4.4`
 
 We're going to build using the `native` variant of the Espressif build system. 
 
