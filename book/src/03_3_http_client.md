@@ -26,12 +26,12 @@ In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClien
 
 TODO currently no `docs.rs` documentation for the svc crates (ping Espressif about this, it's a known issue though)
 
-Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`.
+Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`. 
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
 ```Rust
-let request = client.get(...)
+let request = client.get(url.as_ref())?;
 // the parameter passed to `into_writer` is the number of bytes
 // the client intends to send
 let writer = request.into_writer(0)?;
@@ -43,7 +43,7 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Verify the connection was successful.
 
-✅ Return an error if the status 
+✅ Return an Error if the status is not in the 2xx range.
 
 ✅ Turn your `response` into a `embedded_svc::io::Read` reader by calling `response.reader()` and read the received data chunk by chunk into a `u8` buffer using `reader.do_read(&mut buf)`. `do_read` returns the number of bytes read - you're done when this value is `0`.
 
