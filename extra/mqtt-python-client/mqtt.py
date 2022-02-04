@@ -22,19 +22,24 @@ def get_config():
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
-    data_topic = f"{uuid}/sensor_data/#"
+
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
+    client.subscribe(f"{uuid}/hello")
+
+    data_topic = f"{uuid}/sensor_data/#"
+    client.subscribe(data_topic)
 
     # this would subscribe to a lot of system messages - interesting but noisy!
     # client.subscribe("$SYS/#")
 
-    client.subscribe(data_topic)
-
 
 def on_message(client, userdata, msg):
-    [mcu_temp] = unpack(">f", msg.payload)
-    print(f"{msg.topic} {mcu_temp:.1f}")
+    if "sensor_data" in msg.topic:
+        [mcu_temp] = unpack(">f", msg.payload)
+        print(f"{msg.topic} {mcu_temp:.1f}")
+    else:
+        print(f"{msg.topic} {msg.payload}")
 
 
 def msg():
