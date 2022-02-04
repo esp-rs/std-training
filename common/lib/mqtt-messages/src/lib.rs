@@ -5,11 +5,15 @@ pub use rgb::RGB8;
 
 // not really a topic, since it ends with a trailing slash
 pub fn cmd_topic_fragment(uuid: &str) -> String {
-    format!("{}/cmd/", uuid)
+    format!("{}/command/", uuid)
 }
 
 pub fn temperature_data_topic(uuid: &str) -> String {
-    format!("{}/sensor_data/mcu_temp", uuid)
+    format!("{}/sensor_data/temperature", uuid)
+}
+
+pub fn hello_topic(uuid: &str) -> String {
+    format!("{}/hello", uuid)
 }
 
 pub enum Command {
@@ -17,7 +21,7 @@ pub enum Command {
 }
 
 impl Command {
-    const BOARD_LED: &'static str = "led";
+    const BOARD_LED: &'static str = "board_led";
 
     pub fn topic(&self, uuid: &str) -> String {
         match self {
@@ -33,7 +37,7 @@ impl Command {
 }
 
 pub struct RawCommandData<'a> {
-    pub path: Cow<'a, str>,
+    pub path: &'a str,
     pub data: Cow<'a, [u8]>,
 }
 
@@ -44,7 +48,7 @@ impl<'a> TryFrom<Command> for RawCommandData<'a> {
         match value {
             Command::BoardLed(rgb) => Ok(RawCommandData {
                 data: Cow::Owned(vec![rgb.r, rgb.g, rgb.b]),
-                path: Cow::Borrowed(Command::BOARD_LED),
+                path: Command::BOARD_LED,
             }),
         }
     }
