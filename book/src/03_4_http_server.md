@@ -1,6 +1,6 @@
 # A simple HTTP server
 
-We're now turning our board into a tiny web server. 
+We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the the it's internal temperature sensor. 
 
 ## Setup
 
@@ -8,22 +8,25 @@ You can find a prepared project skeleton in `intro/http-server/exercise`. It inc
 
 ## Serving requests
 
-To connect to your board, you need to know its IP address. Running the skeleton will yield a line like the following at the end:
+To connect to your board with your browser, you need to know the board's IP address. 
+
+
+✅ Run the skeleton code. The output should yield the board's IP address like this:
 
 ```console
 I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ...
 ```
 
-the `sta ip` is the "station", the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
+The `sta ip` is the "station", the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
 
 > esp-idf tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
 >
 > You can change the hostname by setting `CONFIG_LWIP_LOCAL_HOSTNAME` in `sdkconfig.defaults`, e.g.: `CONFIG_LWIP_LOCAL_HOSTNAME="esp32c3"`
 
 Sending HTTP data to a client involves:
-- creating an `esp_idf_svc::http::server::EspHttpServer` using a default `esp_idf_svc::http::server::Configuration` - this will automatically cause it to listen on port 80
+- creating an an instance of `EspHttpServer`
 - looping in the main function so it doesn't terminate - termination would result in the server going out of scope and subsequently shutting down
-- setting a separate `handler` function for each requested path you want to serve content. Any unconfigured path will result in a `404` error. These handler functions are realized inline as Rust closures via:
+- setting a separate request `handler` function for each requested path you want to serve content. Any unconfigured path will result in a `404` error. These handler functions are realized inline as Rust closures via:
 
 ```rust
 server.set_inline_handler(path, method, |request, response| {
@@ -44,15 +47,17 @@ server.set_inline_handler(path, method, |request, response| {
 ```
  
 
-✅ Create a `EspHttpServer` instance and verify a connection to `http://<sta ip>/` yields a `404` (not found) error stating `This URI does not exist`.
+✅ Create a `EspHttpServer` instance using a default `esp_idf_svc::http::server::Configuration`. The default configuration will cause it to listen on port 80 automatically. 
 
-✅ Show a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
+✅ Verify that a connection to `http://<sta ip>/` yields a `404` (not found) error stating `This URI does not exist`.
+
+✅ Write a request handler for `GET` requests to the root path (`"/"`). The request handler sends a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
 
 ## Dynamic data
 
-We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor`
+We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor` that measures the board's internal temperature. 
 
-✅ Report the chip temperature at `http://<sta ip>/temperature`, using the provided `temperature(val: f32)` function to generate the HTML String.
+✅ Write a second handler that reports the chip temperature at `http://<sta ip>/temperature`, using the provided `temperature(val: f32)` function to generate the HTML String.
 
 TODO I'd rather avoid the `Arc<Mutex>` dance since I think it's on the far end of basic Rust knowledge - investigating options. On the other hand it's a pretty important topic… 
 
