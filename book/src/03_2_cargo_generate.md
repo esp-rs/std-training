@@ -13,6 +13,12 @@ $ cargo generate --git https://github.com/esp-rs/esp-idf-template cargo
 
 You'll be prompted for details regarding your new project. When given a choice between several options, navigate using cursor up/down and select with the Return key.
 
+The first message you see will be:
+`⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you do not have a favorite config file, but you don't need one and you can ignore this warning.
+
+🔎 You can create a [favorite config file](https://rustrepo.com/repo/cargo-generate-cargo-generate) who will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
+
+
 > If you make a mistake, hit `Ctrl+C` and start anew.
 
 ✅ Configure your project:
@@ -32,6 +38,10 @@ We're going to build using the `native` variant of the Espressif build system.
 default = ["native"] # add this line
 native = ["esp-idf-sys/native"]
 ```
+
+🔎 The `.cargo/config.toml` is the file where you set local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package. 
+The `Cargo.toml` file, you will [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
+
 
 Optional, but recommended: save some disk space by setting the toolchain directory to global.
 
@@ -63,4 +73,4 @@ Hello, world!
 - if you're using the deprecated `pio` build system, an [initial git commit of your project](https://github.com/espressif/esp-idf/issues/3920) will be required for a successful build.
 - if `cargo espflash` is stuck on `Connecting...`, you might have another monitor process still running (e.g. from the initial `hardware-check` test). Try finding and terminating it. If this doesn't help, disconnect and reconnect the board's USB cable.
 
-[^hint]: yield control back to the underlying operating system by `sleep`ing in a loop instead of busy waiting
+[^hint]: yield control back to the underlying operating system by `sleep`ing in a loop instead of busy waiting. (use `use std::thread::sleep`)
