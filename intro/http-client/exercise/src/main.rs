@@ -46,7 +46,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     // let writer = request...;
 
-    // 4. Rurn the writer into a response and check its status. Successful http status codes are in the 200..=299 range.
+    // 4. Turn the writer into a response and check its status. Successful http status codes are in the 200..=299 range.
 
     // let response = writer...;
     // let status = ...;
@@ -54,7 +54,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
     // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
-    
+
 
     Ok(())
 }

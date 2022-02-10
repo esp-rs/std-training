@@ -17,17 +17,20 @@ You'll be prompted for details regarding your new project. When given a choice b
 
 ✅ Configure your project:
 
+(These items may appear in a different order)
+
 1. Project Name: `hello-world`
-2. STD support: `true`
+2. Rust toolchain: `nightly`
 3. MCU: `esp32c3`
-4. Rust toolchain: `nightly`
-5. ESP-IDF native build version: `4.4`
+4. ESP-IDF native build version: `4.4`
+5. STD support: `true`
+
+
+
 
 We're going to build using the `native` variant of the Espressif build system.
 
-✅ Go to your new `hello-world` project and open the `Cargo.toml`.
-
-✅ Add `"native"` as default feature.
+✅ Enable the native build system by opening `Cargo.toml` in your new `hello-world` project and adding `"native"` as default feature:
 
 ```toml
 [features]
@@ -35,7 +38,7 @@ default = ["native"] # add this line
 native = ["esp-idf-sys/native"]
 ```
 
-To save some disk space set the toolchain directory to global. Otherwise each new project will have it's own instance of the toolchain on your computer.
+To save disk space and download time, set the toolchain directory to global - otherwise each new project/workspace will have its own instance of the toolchain installed on your computer.
 
 ✅ Open `hello-world/.cargo/config.toml` and add the following line to the bottom of the `[env]` section. Leave everything else unchanged.
 
@@ -52,7 +55,7 @@ $ cd hello-world
 $ cargo espflash --release --monitor /dev/SERIAL_DEVICE
 ```
 
-✅ Your output should look like this:
+✅ The last lines of your output should look like this:
 
 ```shell
 (...)

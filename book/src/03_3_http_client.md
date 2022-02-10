@@ -1,6 +1,6 @@
 # A simple HTTP client
 
-In this exercise, we'll write a small http client that retrieves data over a HTTP connection to the internet.
+In this exercise, we'll write a small client that retrieves data over a HTTP connection to the internet.
 
 ## Setup
 
@@ -29,6 +29,8 @@ TODO currently no `docs.rs` documentation for the svc crates (ping Espressif abo
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`. 
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
+
+TODO explain as_ref(). Or find a better way to point people to it. 
 
 ```Rust
 let request = client.get(url.as_ref())?;
