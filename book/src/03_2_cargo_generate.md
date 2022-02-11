@@ -19,11 +19,11 @@ You'll be prompted for details regarding your new project. When given a choice b
 
 (These items may appear in a different order)
 
-1. Project Name: `hello-world`
-2. Rust toolchain: `nightly`
-3. MCU: `esp32c3`
-4. ESP-IDF native build version: `4.4`
-5. STD support: `true`
+* Project Name: `hello-world`
+* Rust toolchain: `nightly`
+* MCU: `esp32c3`
+* ESP-IDF native build version: `4.4`
+* STD support: `true`
 
 
 
