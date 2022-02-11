@@ -46,15 +46,24 @@ running:
 ~/espressif-trainings/book $ mdbook serve
 ```
 
-A local web-server will be started on http://127.0.0.1:3000 where you can view
-the rendered book. It will update automatically as you modify Markdown pages
-on disk.
+A local web-server will be started on <http://127.0.0.1:3000> where you can
+view the rendered book. It will update automatically as you modify Markdown
+pages on disk.
+
+Note that you __must__ not push to the `main` branch. Instead undertake any
+changes in a branch, either in this repository (if you have access) or in a
+fork. Please do then feel free to open a Pull Request in Github to merge the
+changes to our `main` branch.
+
+This work is continually updated and as such there are no 'releases'. Every
+commit to `main` gets published to
+<https://espressif-trainings.ferrous-systems.com> automatically.
 
 ## Licence
 
 The material in this repository is licensed
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-All material is Copyright 2022 Ferrous Systems GmbH, unless otherwise stated.
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). All
+material is Copyright 2022 Ferrous Systems GmbH, unless otherwise stated.
 
 You are free to __Share__ and __Adapt__ but you must give __Attribution__ and
 __Share Alike__.
