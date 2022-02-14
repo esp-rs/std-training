@@ -16,7 +16,7 @@ You'll be prompted for details regarding your new project. When given a choice b
 The first message you see will be:
 `⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you do not have a favorite config file, but you don't need one and you can ignore this warning.
 
-🔎 You can create a [favorite config file](https://rustrepo.com/repo/cargo-generate-cargo-generate) who will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
+🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) who will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
 
 
 > If you make a mistake, hit `Ctrl+C` and start anew.
