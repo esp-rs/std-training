@@ -1,6 +1,6 @@
 # A simple HTTP server
 
-We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the the it's internal temperature sensor. 
+We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the internal temperature sensor. 
 
 ## Setup
 
