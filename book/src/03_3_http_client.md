@@ -20,7 +20,7 @@ $ cargo doc --open
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
-In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`.
+In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. These functions expect a destination URL reference parameter.
 
 ✅ Create a new `EspHttpClient` with default values.
 
@@ -28,12 +28,10 @@ TODO currently no `docs.rs` documentation for the svc crates (ping Espressif abo
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`. 
 
-After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
-
-TODO explain as_ref(). Or find a better way to point people to it. 
+After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read.
 
 ```Rust
-let request = client.get(url.as_ref())?;
+let request = client.get(some_url_ref)?;
 // the parameter passed to `into_writer` is the number of bytes
 // the client intends to send
 let writer = request.into_writer(0)?;
