@@ -3,14 +3,14 @@ use core::str;
 use bsc::wifi::wifi;
 use embedded_svc::{
     http::{
-        client::{Client, Request, RequestWrite, Response},
-        Headers, Status,
-    },
-    io::Read,
+        client::{Client, Response, Request, RequestWrite},
+       Status,
+    }, io::Read,
 };
+
 use esp32_c3_dkc02_bsc as bsc;
-use esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration};
-use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_svc::http::client::{EspHttpClient};
+use esp_idf_sys as _; 
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -25,36 +25,52 @@ fn main() -> anyhow::Result<()> {
 
     let _wifi = wifi(CONFIG.wifi_ssid, CONFIG.wifi_psk)?;
 
-    // TODO your code here
-    //get(...)?;
+    get("http://neverssl.com/")?;
 
     Ok(())
 }
 
 fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     // 1. Create a new EspHttpClient. (Check documentation) 
+    let mut client = EspHttpClient::new_default()?;
    
-
     // 2. Open a GET request to `url`
-  
+    let request = client.get(url)?;
 
     // 3. Requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
     // (since we don't send anything - but have to do the writer step anyway)
-    //
     // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_http_client.html
     // If this were a POST request, you'd set a write length > 0 and then writer.do_write(&some_buf);
 
-    // let writer = request...;
+    let writer = request.into_writer(0)?;
 
-    // 4. Turn the writer into a response and check its status. Successful http status codes are in the 200..=299 range.
+    // 4. Turn the writer into a response and check its status. 
+    // Successful http status codes are in the 200..=299 range.
 
-    // let response = writer...;
-    // let status = ...;
-    // println!("response code: {}\n", status);
+    let response = writer.into_response()?;
+    let status = response.status();
+    let mut total_size = 0;
 
-    // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
-    // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
+    println!("response code: {}\n", status);
 
-
+    match status {
+        200..=299 => {
+            // 5. if the status is OK, read response data chunk by chunk into a buffer and print it until done
+            let mut buf = [0_u8;256];
+            let mut reader = response.reader();
+            loop {
+                if let Ok(size) = Read::do_read(&mut reader, &mut buf){
+                    if size == 0 { break; }
+                    total_size += size;
+                    // 6. try converting the bytes into a Rust (UTF-8) string and print it
+                    let response_text = str::from_utf8(&buf[..size])?;
+                    println!("{}", response_text);
+                }
+            } 
+        }
+        _ => anyhow::bail!("unexpected response code: {}", status),
+    }
+            
+    
     Ok(())
 }
