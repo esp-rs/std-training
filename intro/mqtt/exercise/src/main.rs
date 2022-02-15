@@ -18,6 +18,8 @@ use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
+
+// imported message topics
 use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 
 const UUID: &'static str = get_uuid::uuid();
@@ -37,6 +39,8 @@ pub struct Config {
 }
 
 fn main() -> anyhow::Result<()> {
+
+    // Setup 
     esp_idf_sys::link_patches();
 
     EspLogger::initialize_default();
@@ -62,23 +66,19 @@ fn main() -> anyhow::Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
-    // 1. create client with default configuration and empty handler
+    // Your Code:
+
+    // 1. Create a client with default configuration and empty handler
     // let mut client = EspMqttClient::new_with_callback( ... )?;
 
     // 2. publish an empty hello message
-    let payload: &[u8] = &[];
-    // client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    // 3. subscribe to *all* commands
-    // client.subscribe( ... )?;
 
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
 
-        // 4. publish CPU temperature
+        // 3. publish CPU temperature
         // client.publish( ... )?;
     }
-
-    // 5. extend your client according to the remaining exercises.
 }
