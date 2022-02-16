@@ -91,4 +91,3 @@ impl<'a> TryFrom<EspMqttMessage<'_>> for Command {
         Ok(Command::BoardLed(rgb))
     }
 }
-`
