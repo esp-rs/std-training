@@ -10,7 +10,7 @@
     - [Project organization](./03_1_project_orga.md)
     - [Generating new projects](./03_2_cargo_generate.md)
     - [HTTP and HTTPS client](./03_3__1_http_https_client.md)
-    - [Http Client](./03_3_2_http_client.md)
+      - [Http Client](./03_3_2_http_client.md)
       - [Https Client](./03_3_3_https_client.md)
     - [A simple HTTP server](./03_4_http_server.md)
     - [IoT using MQTT](./03_5_0_mqtt.md)
