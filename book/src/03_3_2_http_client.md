@@ -18,17 +18,18 @@ $ cargo doc --open
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
-In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open`.
+In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `http::client::EspHttpClient` and see instantiation methods at your disposal.
 
 ✅ Add the url `http://neverssl.com/` is in the main function. This is the address we will query.
 
-✅ Create a new `EspHttpClient` with default values (Try to find the method `new_default()` in the documentation).
+✅ Create a new `EspHttpClient` with default values. Look for a suitable constructor in the documentation.
 
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. 
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
+- TODO explain as_ref(). Or find a better way to point people to it. 
 
 ```Rust
 let request = client.get(url)?;
@@ -50,7 +51,8 @@ match status {
         _ => anyhow::bail!("unexpected response code: {}", status),
     }
 ```
-The status error can be returned with [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), who returns the result and manages internally any type `Error` that implements `std::error:Error`.
+The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), crate which contains various functionality to simplify application-level error handling. It supplies a universal `anyhow::Result<T>`, wrapping the success (`Ok`) case in T and removing the need to specify the Err type, as long as every error you return implements `std::error::Error`.
+
 
 ✅ Turn your `response` into a `embedded_svc::io::Read` reader by calling `response.reader()` and read the received data chunk by chunk into a `u8` buffer using `reader.do_read(&mut buf)`. `do_read` returns the number of bytes read - you're done when this value is `0`.
 
