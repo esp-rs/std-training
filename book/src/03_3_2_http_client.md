@@ -42,15 +42,8 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Verify the connection was successful.
 
-✅ Return an Error if the status is not in the 2xx range.
+✅ Use `match` to ensure the status is in the 2xx range.  Return an error with `anyhow::bail` if the status is outside of this range. 
 
-```rust
-match status {
-        200..=299 => {
-        }
-        _ => anyhow::bail!("unexpected response code: {}", status),
-    }
-```
 The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), crate which contains various functionality to simplify application-level error handling. It supplies a universal `anyhow::Result<T>`, wrapping the success (`Ok`) case in T and removing the need to specify the Err type, as long as every error you return implements `std::error::Error`.
 
 
