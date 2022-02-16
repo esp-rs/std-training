@@ -1,11 +1,13 @@
 use std::borrow::{Borrow, Cow};
 
+use embedded_svc::mqtt::client::Message;
+use esp_idf_svc::mqtt::client::EspMqttMessage;
 use rgb::ComponentSlice;
+
 pub use rgb::RGB8;
 
-// not really a topic, since it ends with a trailing slash
 pub fn cmd_topic_fragment(uuid: &str) -> String {
-    format!("{}/command/", uuid)
+    format!("{}/command", uuid)
 }
 
 pub fn temperature_data_topic(uuid: &str) -> String {
@@ -75,3 +77,18 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
         }
     }
 }
+
+impl<'a> TryFrom<EspMqttMessage<'_>> for Command {
+    type Error = ConvertError;
+
+    fn try_from(message: EspMqttMessage<'_>) -> Result<Self, Self::Error> {
+        let data: &[u8] = &message.data();
+        let data: [u8; 3] = data
+            .clone()
+            .try_into()
+            .map_err(|_| ConvertError::Length(data.len()))?;
+        let rgb = RGB8::new(data[0], data[1], data[2]);
+        Ok(Command::BoardLed(rgb))
+    }
+}
+`

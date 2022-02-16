@@ -76,15 +76,12 @@ fn main() -> anyhow::Result<()> {
     let payload: &[u8] = &[];
     client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(
-        format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
-        QoS::AtLeastOnce,
-    )?;
-
+    client.subscribe(mqtt_messages::cmd_topic_fragment(UUID), QoS::AtLeastOnce)?;
+    println!("Client.subscribe");
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
-
+        println!("Client.publish");
         client.publish(
             mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
@@ -94,25 +91,15 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
+// If we remove the hierarchy, we should not need to process the topic anymore
+// There is now an `impl` from EspMqttMessage --> Command to get the content of the data
 fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
-        Complete(token) => {
-            let topic = message.topic(token);
-            // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
-            // and if it matches, process the remaining part
-            if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
-                // try and parse the remaining path and the data sent along as `BoardLed` command
-                let raw = RawCommandData {
-                    path: command_str,
-                    data: message.data(),
+        Complete(_token) => {
+            if let Ok(Command::BoardLed(color)) = Command::try_from(message) {
+                if let Err(e) = led.set_pixel(color) {
+                    error!("could not set board LED: {:?}", e)
                 };
-
-                if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
-                    match led.set_pixel(color) {
-                        Err(e) => error!("could not set board LED: {:?}", e),
-                        _ => {}
-                    };
-                }
             }
         }
         InitialChunk(chunk_info) => {
