@@ -20,7 +20,9 @@ use esp_idf_sys as _;
 use log::{error, info};
 
 // imported message topics
-use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
+use mqtt_messages::{
+    cmd_topic_fragment, hello_topic, temperature_data_topic, Command, RawCommandData,
+};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -39,8 +41,8 @@ pub struct Config {
 }
 
 fn main() -> anyhow::Result<()> {
-
-    // Setup 
+    // Setup
+    env_logger::init();
     esp_idf_sys::link_patches();
 
     EspLogger::initialize_default();
@@ -52,12 +54,12 @@ fn main() -> anyhow::Result<()> {
 
     let mut temp_sensor = BoardTempSensor::new_taking_peripherals();
 
-    let mut led = WS2812RMT::new()?;
-    led.set_pixel(RGB8::new(1, 1, 0))?;
+    // let mut led = WS2812RMT::new()?;
+    // led.set_pixel(RGB8::new(1, 1, 0))?;
 
     let _wifi = wifi(app_config.wifi_ssid, app_config.wifi_psk)?;
 
-    let broker_url = if app_config.mqtt_user != "" {
+    let broker_url = if !app_config.mqtt_user.is_empty() {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -67,18 +69,26 @@ fn main() -> anyhow::Result<()> {
     };
 
     // Your Code:
-
     // 1. Create a client with default configuration and empty handler
-    // let mut client = EspMqttClient::new_with_callback( ... )?;
+
+    let client = EspMqttClient::new(broker_url, &MqttClientConfiguration::default())?;
+    let mut client = client.0;
+    let mqtt_config = MqttClientConfiguration::default();
 
     // 2. publish an empty hello message
-
+    let payload: &[u8] = &[];
+    client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
     loop {
-        sleep(Duration::from_secs(1));
-        let temp = temp_sensor.read_owning_peripherals();
-
+        sleep(Duration::from_secs(5));
+        let temperature_data = temp_sensor.read_owning_peripherals();
+        let temperature_data = &temperature_data.to_be_bytes() as &[u8];
         // 3. publish CPU temperature
-        // client.publish( ... )?;
+        client.publish(
+            temperature_data_topic(UUID),
+            QoS::AtLeastOnce,
+            true,
+            temperature_data,
+        )?;
     }
 }
