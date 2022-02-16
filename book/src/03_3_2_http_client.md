@@ -58,7 +58,7 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ✅ Report the total number of bytes read.
 
-✅ Log the received data to the console. Hint, the response in the buffert is in bytes, so you might need [a method](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
+✅ Log the received data to the console. Use [from_utf8](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
 
 ## Extra Tasks
 
