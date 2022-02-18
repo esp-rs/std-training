@@ -23,6 +23,8 @@ anyhow = "1"
 embedded-hal = "0.2.7"
 shtcx = "0.10.0"
 lis3dh = "0.4.1"
+shared-bus = "0.2.2"
+
 
 
 [build-dependencies]
