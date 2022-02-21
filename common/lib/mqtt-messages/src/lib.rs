@@ -6,7 +6,7 @@ use rgb::ComponentSlice;
 pub use rgb::RGB8;
 
 pub fn cmd_topic_fragment(uuid: &str) -> String {
-    format!("{}/command", uuid)
+    format!("{}/command/", uuid)
 }
 
 pub fn temperature_data_topic(uuid: &str) -> String {

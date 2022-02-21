@@ -76,7 +76,11 @@ fn main() -> anyhow::Result<()> {
     let payload: &[u8] = &[];
     client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(mqtt_messages::cmd_topic_fragment(UUID), QoS::AtLeastOnce)?;
+    client.subscribe(
+        format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
+        QoS::AtLeastOnce,
+    )?;
+
     println!("Client.subscribe");
     loop {
         sleep(Duration::from_secs(1));
@@ -92,7 +96,7 @@ fn main() -> anyhow::Result<()> {
 }
 
 // If we remove the hierarchy, we should not need to process the topic anymore
-// There is now an `impl` from EspMqttMessage --> Command to get the content of the data
+// There is now an `impl` from Cow<u8> --> Command to get the content of the data
 fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
         Complete(_token) => {
