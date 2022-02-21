@@ -1,7 +1,6 @@
 use std::borrow::{Borrow, Cow};
+use std::convert::TryInto;
 
-use embedded_svc::mqtt::client::Message;
-use esp_idf_svc::mqtt::client::EspMqttMessage;
 use rgb::ComponentSlice;
 
 pub use rgb::RGB8;
@@ -78,16 +77,15 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
     }
 }
 
-impl<'a> TryFrom<EspMqttMessage<'_>> for Command {
+impl<'a> TryFrom<Cow<'a, [u8]>> for Command {
     type Error = ConvertError;
 
-    fn try_from(message: EspMqttMessage<'_>) -> Result<Self, Self::Error> {
-        let data: &[u8] = &message.data();
-        let data: [u8; 3] = data
-            .clone()
-            .try_into()
-            .map_err(|_| ConvertError::Length(data.len()))?;
-        let rgb = RGB8::new(data[0], data[1], data[2]);
-        Ok(Command::BoardLed(rgb))
+    fn try_from(message: Cow<'a, [u8]>) -> Result<Self, Self::Error> {
+        if message.len() == 3 {
+            let rgb = RGB8::new(message[0], message[1], message[2]);
+            Ok(Command::BoardLed(rgb))
+        } else {
+            Err(ConvertError::Length(message.len()))
+        }
     }
 }

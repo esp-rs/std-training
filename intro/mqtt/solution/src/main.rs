@@ -19,7 +19,7 @@ use esp_idf_svc::{
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
+use mqtt_messages::{hello_topic, Command};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -56,7 +56,7 @@ fn main() -> anyhow::Result<()> {
 
     let mqtt_config = MqttClientConfiguration::default();
 
-    let broker_url = if app_config.mqtt_user != "" {
+    let broker_url = if !app_config.mqtt_user.is_empty() {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -96,7 +96,8 @@ fn main() -> anyhow::Result<()> {
 fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
         Complete(_token) => {
-            if let Ok(Command::BoardLed(color)) = Command::try_from(message) {
+            let message_data = message.data();
+            if let Ok(Command::BoardLed(color)) = Command::try_from(message_data) {
                 if let Err(e) = led.set_pixel(color) {
                     error!("could not set board LED: {:?}", e)
                 };

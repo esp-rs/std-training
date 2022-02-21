@@ -7,5 +7,4 @@ edition = "2021"
 
 [dependencies]
 rgb = "0.8"
-esp-idf-svc = { version="=0.36.7", features = ["experimental", "alloc"] }
-embedded-svc = "=0.16.5"
+
