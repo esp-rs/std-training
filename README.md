@@ -18,12 +18,15 @@ There is:
 * Some advanced level examples:
    * Low-level GPIO
    * Interrupts in General
+   * I2c Driver ([Source](./advanced/i2c-driver))
+   * I2c Sensor Reading ([Source](./advanced/i2c-sensor-reading))
    * GPIO/Button Interrupts ([Source](./advanced/button-interrupt))
    * Driving an RGB LED
 * Some useful common crates:
    * [`esp32-c3-dkc02-bsc`](./common/lib/esp32-c3-dkc02-bsc) - Board-Support for the ESP32-C3-DKC02
    * [`get-uuid`](./common/lib/get-uuid) - provides a compile-time generated UUID
    * [`mqtt-messages`](./common/lib/mqtt-messages) - MQTT helper functions
+   * [`imc42670p`](./common/lib/imc42670p) - basic sensor driver
 * Some extra bits:
    * [`mqtt-python-client`](./extra/mqtt-python-client) A Python MQTT client, for testing
 
