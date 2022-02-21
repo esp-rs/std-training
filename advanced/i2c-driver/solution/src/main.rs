@@ -25,10 +25,10 @@ fn main() -> anyhow::Result<()> {
 
     let mut sensor = IMC42670P::new(i2c, SlaveAddr::AD1)?;
     println!("Sensor init");
-    let serial_num = sensor.read_device_id_register()?;
+    let device_id = sensor.read_device_id_register()?;
 
-    assert_eq!(serial_num, 103_u16);
-    println!("Hello, world, I am sensor {}", serial_num);
+    assert_eq!(device_id, 103_u16);
+    println!("Hello, world, I am sensor {}", device_id);
 
    loop {};
 
