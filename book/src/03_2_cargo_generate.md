@@ -17,13 +17,18 @@ You'll be prompted for details regarding your new project. When given a choice b
 
 ✅ Configure your project:
 
-1. Project Name: `hello-world`
-2. ESP-IDF native build version: `4.4`
-3. STD support: `true`
-4. MCU: `esp32c3`
-5. Rust toolchain: `nightly`
+(These items may appear in a different order)
 
-We're going to build using the `native` variant of the Espressif build system. 
+* Project Name: `hello-world`
+* Rust toolchain: `nightly`
+* MCU: `esp32c3`
+* ESP-IDF native build version: `4.4`
+* STD support: `true`
+
+
+
+
+We're going to build using the `native` variant of the Espressif build system.
 
 ✅ Enable the native build system by opening `Cargo.toml` in your new `hello-world` project and adding `"native"` as default feature:
 
@@ -33,9 +38,9 @@ default = ["native"] # add this line
 native = ["esp-idf-sys/native"]
 ```
 
-Optional, but recommended: save some disk space by setting the toolchain directory to global.
+To save disk space and download time, set the toolchain directory to global - otherwise each new project/workspace will have its own instance of the toolchain installed on your computer.
 
-✅ Open `hello-world/.cargo/config.toml` and add the following line to the bottom of the `[env]` section, leaving everything else unchanged:
+✅ Open `hello-world/.cargo/config.toml` and add the following line to the bottom of the `[env]` section. Leave everything else unchanged.
 
 ```toml
 [env]
@@ -43,18 +48,23 @@ Optional, but recommended: save some disk space by setting the toolchain directo
 ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 ```
 
-✅ Run your project:
+✅ Run your project by using the following command out of the `hello_world` directory.
+
 ```shell
 $ cd hello-world
 $ cargo espflash --release --monitor /dev/SERIAL_DEVICE
+```
 
+✅ The last lines of your output should look like this:
+
+```shell
 (...)
 I (268) cpu_start: Starting scheduler.
 Hello, world!
 ```
 
 ## Extra tasks
-- If your main function exits, you have to reset the microcontroller to start it again. Try and guess what happens when you put an infinite loop at the end instead, then test your theory by flashing a looping program.
+- If your main function exits, you have to reset the microcontroller to start it again. What happens when you put an infinite loop at the end instead? Test your theory by flashing a looping program.
 - Can you think of a way to prevent what you're now seeing? (click for hint:[^hint])
 
 ## Troubleshooting
