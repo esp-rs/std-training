@@ -1,4 +1,4 @@
-use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
+use std::{convert::TryFrom, thread::sleep, time::Duration};
 
 use bsc::{
     led::{RGB8, WS2812RMT},
@@ -8,7 +8,7 @@ use bsc::{
 use embedded_svc::mqtt::client::{
     Client,
     Details::{Complete, InitialChunk, SubsequentChunk},
-    Event::{self, Received},
+    Event::Received,
     Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
@@ -19,7 +19,7 @@ use esp_idf_svc::{
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{hello_topic, Command};
+use mqtt_messages::{hello_topic, ColorData};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -76,16 +76,11 @@ fn main() -> anyhow::Result<()> {
     let payload: &[u8] = &[];
     client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(
-        format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
-        QoS::AtLeastOnce,
-    )?;
+    client.subscribe(mqtt_messages::color_topic(UUID), QoS::AtLeastOnce)?;
 
-    println!("Client.subscribe");
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
-        println!("Client.publish");
         client.publish(
             mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
@@ -99,9 +94,11 @@ fn main() -> anyhow::Result<()> {
 // There is now an `impl` from Cow<u8> --> Command to get the content of the data
 fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
-        Complete(_token) => {
+        Complete(token) => {
+            dbg!(message.topic(token));
             let message_data = message.data();
-            if let Ok(Command::BoardLed(color)) = Command::try_from(message_data) {
+            if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
+                dbg!(color);
                 if let Err(e) = led.set_pixel(color) {
                     error!("could not set board LED: {:?}", e)
                 };
