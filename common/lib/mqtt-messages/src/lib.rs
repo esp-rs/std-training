@@ -107,10 +107,10 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
 /// Handles `.data()` from EspMqttMessage
 ///
 // The message data is cast into a ColorData(rgb)
-impl<'a> TryFrom<Cow<'a, [u8]>> for ColorData {
+impl<'a> TryFrom<&[u8]> for ColorData {
     type Error = ConvertError;
 
-    fn try_from(message: Cow<'a, [u8]>) -> Result<Self, Self::Error> {
+    fn try_from(message: &[u8]) -> Result<Self, Self::Error> {
         if message.len() == 3 {
             let rgb = RGB8::new(message[0], message[1], message[2]);
             Ok(ColorData::BoardLed(rgb))
