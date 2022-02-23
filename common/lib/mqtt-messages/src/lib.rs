@@ -5,12 +5,17 @@ use rgb::ComponentSlice;
 
 pub use rgb::RGB8;
 
-// This topic can be used for hierarchised messages
-// Not used atm
+/// Handles `EspMqttMessage` with MQTT hierarchy
+///
+/// Not used atm but can be used to send ColorData(rgb)
+/// with `Command`
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
 }
 
+/// Handles `EspMqttMessage` without MQTT hierarchy
+///
+/// Used to send ColorData(rgb)
 pub fn color_topic(uuid: &str) -> String {
     format!("{}/color_topic", uuid)
 }
@@ -23,11 +28,10 @@ pub fn hello_topic(uuid: &str) -> String {
     format!("{}/hello", uuid)
 }
 
-// Not used atm
 pub enum Command {
     BoardLed(RGB8),
 }
-// Not used atm
+
 impl Command {
     const BOARD_LED: &'static str = "board_led";
 
@@ -44,10 +48,7 @@ impl Command {
     }
 }
 
-// This is roughly simplified Command.
-// It has a topic without appending color,
-// with the goal of simplifying hiearchy
-
+/// `ColorData` is basically simplified `Command`
 pub enum ColorData {
     BoardLed(RGB8),
 }
@@ -64,13 +65,10 @@ impl ColorData {
     }
 }
 
-// RawCommandData is used with Command and hierarchised mqtt
-// Not used atm
 pub struct RawCommandData<'a> {
     pub path: &'a str,
     pub data: Cow<'a, [u8]>,
 }
-// Not used atm
 impl<'a> TryFrom<Command> for RawCommandData<'a> {
     type Error = ();
 
@@ -89,7 +87,6 @@ pub enum ConvertError {
     InvalidPath,
 }
 
-// Not used atm
 impl<'a> TryFrom<RawCommandData<'a>> for Command {
     type Error = ConvertError;
 
@@ -107,8 +104,9 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
     }
 }
 
-// impl for ColorData to convert the Cow<u8> message.data()
-// from EspMqttMessage to ColorData(rgb)
+/// Handles `.data()` from EspMqttMessage
+///
+// The message data is cast into a ColorData(rgb)
 impl<'a> TryFrom<Cow<'a, [u8]>> for ColorData {
     type Error = ConvertError;
 
