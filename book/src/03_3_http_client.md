@@ -30,7 +30,7 @@ Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpReque
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
-We are using [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html).This allows us to keep an argument that will be converted back to its original type. But we can also do reference-to-reference conversion (converting a type into another type) if the `impl` exist.
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
 ```Rust
 let request = client.get(url.as_ref())?;
