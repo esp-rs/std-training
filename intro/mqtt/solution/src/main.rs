@@ -96,7 +96,7 @@ fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS
     match message.details() {
         Complete(token) => {
             dbg!(message.topic(token));
-            let message_data = message.data();
+            let message_data: &[u8] = &message.data();
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 dbg!(color);
                 if let Err(e) = led.set_pixel(color) {
