@@ -12,10 +12,6 @@ use esp_idf_sys::{
 
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
-
-// TODO place code in ram using IRAM linker feature
-// https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/linker-script-generation.html
-// uncommenting this "works", TODO test/verify
 #[link_section = ".iram0.text"]
 unsafe extern "C" fn button_interrupt(_: *mut c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
@@ -36,7 +32,7 @@ fn main() -> anyhow::Result<()> {
     // Queue configurations
     const QUEUE_TYPE_BASE: u8 = 0;
     const ITEM_SIZE: u32 = 0; // we're not posting any actual data, just notifying
-    const QUEUE_SIZE: u32 = 2; // 1 might be enough?
+    const QUEUE_SIZE: u32 = 1;
 
     unsafe {
         // Writes button configuration into register

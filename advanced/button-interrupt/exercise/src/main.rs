@@ -9,7 +9,7 @@ use esp_idf_sys::{
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
 };
 
-// 4. Create an event queue
+// 4. Create a static mut that keeps the status of the event queue.
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
 // 6. Define what the interrupt handler does, once the button is pushed. Button_interrupt sends a message into the queue. 
@@ -27,7 +27,6 @@ fn main() -> anyhow::Result<()> {
     //     ...
     // };
 
-    // 
     unsafe {
 
         // 2. write the GPIO configuration into the register
@@ -41,8 +40,8 @@ fn main() -> anyhow::Result<()> {
 
         // Queue configurations
         const QUEUE_TYPE_BASE: u8 = 0;
-        const ITEM_SIZE: u32 = 0; // we're not posting any actual data, just notifying
-        const QUEUE_SIZE: u32 = 2; // 1 might be enough?
+        const ITEM_SIZE: u32 = 0; 
+        const QUEUE_SIZE: u32 = 1;
 
         // 5. Create an event queue
         // EVENT_QUEUE = Some(...);

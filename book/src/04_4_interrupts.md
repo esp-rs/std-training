@@ -6,6 +6,8 @@ This exercise involves working with C bindings to the esp-idf-sys and other unsa
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
 You can find the solution for this exercise in advanced/button-interrupt/solutuion/src/main.rs.
 
+TODO Add points where it's safe to build to rule out basic mistakes.
+TODO why are some functions called with some(...), esp!(...) or "normal"?
 
 ## Tasks
 
