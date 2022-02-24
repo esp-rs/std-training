@@ -10,30 +10,60 @@ The goal of this exercise is to log a message upon pressing the `BOOT` button on
 
 ## Tasks
 
-✅ Configure the button (GPIO 9) with a c struct [`gpio_config_t`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/struct.gpio_config_t.html)the following settings:
+1. Configure the button (GPIO 9) with a c struct [`gpio_config_t`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/struct.gpio_config_t.html)the following settings:
     - input mode
     - pull up
     - interrupt on positive edge
+  
+  TODO add the variable names for the settings
 
-✅ Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
+2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
 
 
-✅ Install the interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function needs `const ESP_INTR_FLAG_IRAM` as argument.
+3. Install the global interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function needs `const ESP_INTR_FLAG_IRAM` as argument.
 
 
-✅ Before the `unsafe` block create an asynchronous streaming [channel](https://doc.rust-lang.org/std/sync/mpsc/fn.channel.html) for the type `()`. 
-
-✅ Before `fn main` define a `static mut` that holds the status of the interrupt handler. The interrupt handler is the sender so it has the type `Option<mpsc::Sender<()>>`. It's value is `None` for now.
-
-✅ Add a function that determines what the interrupt handler does, once the button is pushed: It sends a message of type `()` over the `tx` ("transmitter") part of the channel. 
+4. Create a `static mut` that holds the state of the queue.
 
 ```rust
-unsafe extern "C" fn button_interrupt(_: *mut c_void) {
-    ISR_TX.as_mut().unwrap().send(());
-}
+static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 ```
 
-✅ Install the global GPIO interrupt handler and add the button as individual pin. 
+5. Create the event queue using [`pub unsafe extern "C" fn xQueueGenericCreate`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.xQueueGenericCreate.html)
+
+```rust
+EVENT_QUEUE = Some(xQueueGenericCreate(QUEUE_SIZE, ITEM_SIZE, QUEUE_TYPE_BASE));
+```
+
+6. Add a function to the RAM that determines what the interrupt handler does.
+
+```rust
+#[link_section = ".iram0.text"]
+unsafe extern "C" fn button_interrupt(_: *mut c_void) {
+    xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
+}
+```
+If the interrupt fires, an event is added to the queue. 
+TODO Add explanation
+    - what is added to the queue
+    - why is it in RAM
+
+7. Add the button GPIO as well as the function that is executed upon the interrupt to the interrupt handler.
+
+```rust
+esp!(gpio_isr_handler_add(
+    GPIO_NUM,
+    Some(button_interrupt),
+    std::ptr::null_mut()
+))?;
+```
+
+8. Inside a loop, get the event item out of the queue.
+
+```rust
+let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), PORT_MAX_DELAY);
+```
+
 
 ## How to call the C functions
 
