@@ -1,11 +1,10 @@
 # Interrupts
 
-The goal of this exercise is to handle a button interrupt, so that the words "button pushed" get logged, if the button is pushed. 
-This exercise involves working with C wrappers and other unsafe operations, as well as non-typical documentation. In a first step we will go line by line to build this interrupt handler, in a second step, you can modify it. 
+The goal of this exercise is to handle a button interrupt, so that the words "button pushed" get logged, if the `BOOT` button is pushed. 
+This exercise involves working with C bindings to the esp-idf-sys and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
-You can find a skeleton code for this exercise in advanced/button-interrupt.
-The goal of this exercise is to log a message upon pressing the `BOOT` button on the board. 
-
+You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
+You can find the solution for this exercise in advanced/button-interrupt/solutuion/src/main.rs.
 
 
 ## Tasks
