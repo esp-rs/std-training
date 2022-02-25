@@ -1,7 +1,7 @@
 [package]
 name = "button-interrupt"
 version = "0.1.0"
-authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>"]
+authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>", "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>"]
 edition = "2021"
 resolver = "2"
 
