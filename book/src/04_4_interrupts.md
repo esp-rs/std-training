@@ -59,7 +59,7 @@ esp!(gpio_isr_handler_add(
 ))?;
 ```
 
-8. Inside a loop, get the event item out of the queue.
+8. Inside a loop, wait until the queue has an item in it. That is, until the `button_interrupt` function puts something in the queue.
 
 ```rust
 let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), PORT_MAX_DELAY);
