@@ -35,7 +35,7 @@ fn main() -> anyhow::Result<()> {
     const QUEUE_SIZE: u32 = 1;
 
     unsafe {
-        // Writes button configuration into register
+        // Writes the button configuration to the registers
         esp!(gpio_config(&io_conf))?;
         
         // The flag that the interrupt is handled in RAM
