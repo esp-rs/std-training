@@ -30,7 +30,7 @@ TODO why are some functions called with some(...), esp!(...) or "normal"?
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 ```
 
-5. Create the event queue using [`pub unsafe extern "C" fn xQueueGenericCreate`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.xQueueGenericCreate.html)
+5. Create the event queue using [`pub unsafe extern "C" fn xQueueGenericCreate`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.xQueueGenericCreate.html). This lets us safely pass events from an interrupt routine to our main thread.
 
 ```rust
 EVENT_QUEUE = Some(xQueueGenericCreate(QUEUE_SIZE, ITEM_SIZE, QUEUE_TYPE_BASE));
