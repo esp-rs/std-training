@@ -1,15 +1,17 @@
 // reference:
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 
-use std::{ffi::CString, ptr, sync::mpsc};
+use std::ptr;
 
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported (`self as _`)
 use esp_idf_sys::{
     self as _, c_types::c_void, esp, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
-    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, xTaskCreatePinnedToCore, QueueHandle_t,
+    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM,
 };
 
+// This `static mut` holds the queue handle we are going to get from `xQueueGenericCreate`.
+// This is unsafe, but we are careful not to enable our GPIO interrupt handler until after this value has been initialised, and then never modify it again
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
 #[link_section = ".iram0.text"]
@@ -37,12 +39,10 @@ fn main() -> anyhow::Result<()> {
     unsafe {
         // Writes the button configuration to the registers
         esp!(gpio_config(&io_conf))?;
-        
-        // The flag that the interrupt is handled in RAM
-        const ESP_INTR_FLAG_IRAM: i32 = 1 << 10; // ISR will be executed even when caches are disabled
+
         
         // Installs the generic GPIO interrupt handler
-        esp!(gpio_install_isr_service(ESP_INTR_FLAG_IRAM))?;
+        esp!(gpio_install_isr_service(ESP_INTR_FLAG_IRAM as i32))?;
 
         // Instantiates the event queue
         EVENT_QUEUE = Some(xQueueGenericCreate(QUEUE_SIZE, ITEM_SIZE, QUEUE_TYPE_BASE));
@@ -59,15 +59,15 @@ fn main() -> anyhow::Result<()> {
     loop {
         unsafe {
             // maximum delay
-            const PORT_MAX_DELAY: u32 = 0xffffffff;
+            const QUEUE_WAIT_TICKS: u32 = 1000;
 
             // Reads the event item out of the queue
-            let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), PORT_MAX_DELAY);
+            let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
             
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed. 
             match res {
-                _ => println!("button pressed!"),
-                0 => {}
+                1 => println!("button pressed!"),
+                _ => {},
             };
         }
     }

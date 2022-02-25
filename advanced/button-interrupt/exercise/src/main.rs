@@ -1,15 +1,15 @@
 // reference:
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
-
-use std::sync::mpsc;
+use std::ptr;
 
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported (`self as _`)
 use esp_idf_sys::{
     self as _, c_types::c_void, esp, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
+    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM,
 };
 
-// 4. Create a static mut that keeps the status of the event queue.
+// 4. Create a `static mut` that holds the queue handle.
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
 // 6. Define what the interrupt handler does, once the button is pushed. Button_interrupt sends a message into the queue. 
@@ -32,8 +32,6 @@ fn main() -> anyhow::Result<()> {
         // 2. write the GPIO configuration into the register
         // esp!(...)?;
 
-        // Flag used to allocate the interrupt in RAM
-        const ESP_INTR_FLAG_IRAM: i32 = 1 << 10;
 
         // 3. Install the global GPIO interrupt handler
         // esp!(...)?;
@@ -55,7 +53,7 @@ fn main() -> anyhow::Result<()> {
     loop {
         unsafe {
             // maximum delay
-            const PORT_MAX_DELAY: u32 = 0xffffffff;
+            const QUEUE_WAIT_TICKS: u32 = 1000;;
 
             // 8. Receive the event from the queue.
             // let res = ...;

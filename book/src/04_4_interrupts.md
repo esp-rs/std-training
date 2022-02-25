@@ -62,11 +62,12 @@ esp!(gpio_isr_handler_add(
 8. Inside a loop, wait until the queue has an item in it. That is, until the `button_interrupt` function puts something in the queue.
 
 ```rust
-let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), PORT_MAX_DELAY);
+let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
 ```
 
 
-## How to call the C functions
+## Modify
+
+TODO
 
 
-- extra: hold button <-> LED on (might be good to not use semaphore xqueue then)
