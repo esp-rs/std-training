@@ -41,7 +41,7 @@ fn main() -> anyhow::Result<()> {
         // The flag that the interrupt is handled in RAM
         const ESP_INTR_FLAG_IRAM: i32 = 1 << 10; // ISR will be executed even when caches are disabled
         
-        // Installs the interrupt handler
+        // Installs the generic GPIO interrupt handler
         esp!(gpio_install_isr_service(ESP_INTR_FLAG_IRAM))?;
 
         // Instantiates the event queue
