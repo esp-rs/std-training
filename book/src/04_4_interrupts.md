@@ -24,7 +24,7 @@ TODO why are some functions called with some(...), esp!(...) or "normal"?
 3. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
 
 
-4. Create a `static mut` that holds the state of the queue.
+4. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
 
 ```rust
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
