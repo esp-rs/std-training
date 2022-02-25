@@ -49,7 +49,7 @@ TODO Add explanation
     - what is added to the queue
     - why is it in RAM
 
-7. Add the button GPIO as well as the function that is executed upon the interrupt to the interrupt handler.
+7. Pass the function we just wrote to the generic GPIO interrupt handler we registered earlier, along with the number of the GPIO pin that should cause this function to be executed.
 
 ```rust
 esp!(gpio_isr_handler_add(
