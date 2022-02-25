@@ -47,7 +47,7 @@ fn main() -> anyhow::Result<()> {
         // Instantiates the event queue
         EVENT_QUEUE = Some(xQueueGenericCreate(QUEUE_SIZE, ITEM_SIZE, QUEUE_TYPE_BASE));
 
-        // Adds the GPIO to the interrupt handler as well as the function that is to be executed upon firing of the interrupt
+        // Registers our function with the generic GPIO interrupt handler we installed earlier.
         esp!(gpio_isr_handler_add(
             GPIO_NUM,
             Some(button_interrupt),
