@@ -4,7 +4,7 @@ The goal of this exercise is to handle a button interrupt, so that the words "bu
 This exercise involves working with C bindings to the esp-idf-sys and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
-You can find the solution for this exercise in advanced/button-interrupt/solutuion/src/main.rs.
+You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
 
 TODO Add points where it's safe to build to rule out basic mistakes.
 TODO why are some functions called with some(...), esp!(...) or "normal"?
