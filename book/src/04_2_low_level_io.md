@@ -1,10 +1,15 @@
-# Low level I/O
+# Low level I/O How to manipulate Registers
 
-TODO svd2rust, register manipulation, critical sections, edge vs level triggered interrupts, (atomics emulated via ISR -> can't use in own ISR)
+## How does the mapping from register to software work?
 
-TODO rust-analyzer - `esp_idf_sys` - expand macro crashes
+Registers and their fields on a device are described in system view description (svd) files. `svd2rust` is used to generate peripheral access crates (PACs) from them. PACS provide a thin wrapper over the various memory-wrapper registers defined for the particular part-number of micro-controller you are using. While it is possible to write code with a PAC alone, a lot of it would be unsafe or otherwise inconvenient as it only provides the basic perhipherals of the microcontroller and not any other that may be on your specific development kit. So there is another layer, the Hardware Abstraction Layer (HAL). HALs provide a more user friendly API for your specific device, and often implement common traits defined in the embedded-hal. 
 
-## Register Manipulation: Configuring a GPIO
+
+TODO svd2rust, register manipulation edge vs level triggered interrupts, (atomics emulated via ISR -> can't use in own ISR)
+
+## 
+
+## Register Manipulation with C bindings: Configuring a GPIO
 
 Pins are configured with the `c struct` `gpio_config_t`. The struct has the following fields:
 
