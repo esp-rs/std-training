@@ -97,14 +97,12 @@ fn main() -> anyhow::Result<()> {
 fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
         Complete(token) => {
-            let topic = message.topic(token);
-            // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
-            // and if it matches, process the remaining part
-            if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
-                // try and parse the remaining path and the data sent along as `BoardLed` command
-                let raw = RawCommandData {
-                    path: command_str,
-                    data: message.data(),
+            dbg!(message.topic(token));
+            let message_data: &[u8] = &message.data();
+            if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
+                dbg!(color);
+                if let Err(e) = led.set_pixel(color) {
+                    error!("could not set board LED: {:?}", e)
                 };
 
                 if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {

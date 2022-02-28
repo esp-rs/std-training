@@ -3,9 +3,20 @@ use std::borrow::{Borrow, Cow};
 use rgb::ComponentSlice;
 pub use rgb::RGB8;
 
-// not really a topic, since it ends with a trailing slash
+/// Handles `EspMqttMessage` with MQTT hierarchy
+///
+/// Not used atm but can be used to send ColorData(rgb)
+/// with `Command`
+
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
+}
+
+/// Handles `EspMqttMessage` without MQTT hierarchy
+///
+/// Used to send ColorData(rgb)
+pub fn color_topic(uuid: &str) -> String {
+    format!("{}/color_topic", uuid)
 }
 
 pub fn temperature_data_topic(uuid: &str) -> String {
@@ -32,6 +43,23 @@ impl Command {
     pub fn data(&self) -> &[u8] {
         match self {
             Command::BoardLed(led_data) => led_data.as_slice(),
+        }
+    }
+}
+
+/// `ColorData` is basically simplified `Command`
+pub enum ColorData {
+    BoardLed(RGB8),
+}
+impl ColorData {
+    pub fn topic(&self, uuid: &str) -> String {
+        match self {
+            ColorData::BoardLed(_) => color_topic(uuid),
+        }
+    }
+    pub fn data(&self) -> &[u8] {
+        match self {
+            ColorData::BoardLed(led_data) => led_data.as_slice(),
         }
     }
 }
@@ -72,6 +100,22 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
             Ok(Command::BoardLed(rgb))
         } else {
             Err(ConvertError::InvalidPath)
+        }
+    }
+}
+
+/// Handles `.data()` from EspMqttMessage
+///
+// The message data is cast into a ColorData(rgb)
+impl<'a> TryFrom<&[u8]> for ColorData {
+    type Error = ConvertError;
+
+    fn try_from(message: &[u8]) -> Result<Self, Self::Error> {
+        if message.len() == 3 {
+            let rgb = RGB8::new(message[0], message[1], message[2]);
+            Ok(ColorData::BoardLed(rgb))
+        } else {
+            Err(ConvertError::Length(message.len()))
         }
     }
 }
