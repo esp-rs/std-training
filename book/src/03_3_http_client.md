@@ -20,7 +20,7 @@ $ cargo doc --open
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
-In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`.
+In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. These functions expect a destination URL reference parameter.
 
 ✅ Create a new `EspHttpClient` with default values.
 
@@ -30,10 +30,11 @@ Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpReque
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
-TODO explain as_ref(). Or find a better way to point people to it. 
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
+
 
 ```Rust
-let request = client.get(url.as_ref())?;
+let request = client.get(some_url_ref)?;
 // the parameter passed to `into_writer` is the number of bytes
 // the client intends to send
 let writer = request.into_writer(0)?;

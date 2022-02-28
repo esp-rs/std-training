@@ -1,14 +1,13 @@
 use std::borrow::{Borrow, Cow};
-use std::convert::TryInto;
 
 use rgb::ComponentSlice;
-
 pub use rgb::RGB8;
 
 /// Handles `EspMqttMessage` with MQTT hierarchy
 ///
 /// Not used atm but can be used to send ColorData(rgb)
 /// with `Command`
+
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
 }
@@ -69,6 +68,7 @@ pub struct RawCommandData<'a> {
     pub path: &'a str,
     pub data: Cow<'a, [u8]>,
 }
+
 impl<'a> TryFrom<Command> for RawCommandData<'a> {
     type Error = ();
 
