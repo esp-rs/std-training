@@ -1,4 +1,4 @@
-use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
+use std::{convert::TryFrom, thread::sleep, time::Duration};
 
 use bsc::{
     led::{RGB8, WS2812RMT},
@@ -8,7 +8,7 @@ use bsc::{
 use embedded_svc::mqtt::client::{
     Client,
     Details::{Complete, InitialChunk, SubsequentChunk},
-    Event::{self, Received},
+    Event::Received,
     Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
@@ -19,7 +19,7 @@ use esp_idf_svc::{
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
+use mqtt_messages::{hello_topic, ColorData};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -56,7 +56,7 @@ fn main() -> anyhow::Result<()> {
 
     let mqtt_config = MqttClientConfiguration::default();
 
-    let broker_url = if app_config.mqtt_user != "" {
+    let broker_url = if !app_config.mqtt_user.is_empty() {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -76,15 +76,11 @@ fn main() -> anyhow::Result<()> {
     let payload: &[u8] = &[];
     client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(
-        format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
-        QoS::AtLeastOnce,
-    )?;
+    client.subscribe(mqtt_messages::color_topic(UUID), QoS::AtLeastOnce)?;
 
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
-
         client.publish(
             mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
@@ -106,13 +102,6 @@ fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS
                     path: command_str,
                     data: message.data(),
                 };
-
-                if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
-                    match led.set_pixel(color) {
-                        Err(e) => error!("could not set board LED: {:?}", e),
-                        _ => {}
-                    };
-                }
             }
         }
         InitialChunk(chunk_info) => {
