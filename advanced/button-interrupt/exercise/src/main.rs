@@ -60,8 +60,8 @@ fn main() -> anyhow::Result<()> {
             
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed. 
             match res {
-                _ => println!("button pressed!"),
-                0 => {}
+                1 => println!("button pressed!"),
+                _ => {},
             };
         }
     }

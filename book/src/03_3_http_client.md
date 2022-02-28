@@ -28,7 +28,10 @@ TODO currently no `docs.rs` documentation for the svc crates (ping Espressif abo
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`. 
 
-After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read.
+After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
+
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
+
 
 ```Rust
 let request = client.get(some_url_ref)?;
