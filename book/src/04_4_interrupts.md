@@ -1,10 +1,12 @@
 # Interrupts
 
-The goal of this exercise is to handle a button interrupt, so that the words "button pushed" get logged, if the `BOOT` button is pushed. 
+The goal of this exercise is to handle a button interrupt, if the `BOOT` button is pushed. 
 This exercise involves working with C bindings to the esp-idf-sys and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
 You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
+
+This first part is not memory safe. We chose this route despite this fact, as it makes the general theme of dealing with the interrupt more obvious. We provide a safe variant for you to compare: `advanced/button-interrupt/solution/src/main_safe.rs`
 
 TODO Add points where it's safe to build to rule out basic mistakes.
 TODO why are some functions called with some(...), esp!(...) or "normal"?
@@ -16,7 +18,33 @@ TODO why are some functions called with some(...), esp!(...) or "normal"?
     - pull up
     - interrupt on positive edge
   
-  TODO add the variable names for the settings
+Possible ooptions
+ Pins are configured with the `c struct` `gpio_config_t`. The struct has the following fields:
+
+ * `pin_bit_mask`: represents the Pin number, 1  shifted by the number of the pin. 
+ * `mode`: sets the mode of the pin, it can have the following settings:
+   * `gpio_mode_t_GPIO_MODE_INPUT`
+   * `gpio_mode_t_GPIO_MODE_OUTPUT`
+   * `gpio_mode_t_GPIO_MODE_DISABLE`
+   * `gpio_mode_t_GPIO_MODE_OUTPUT_OD`
+   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT`
+   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT_OD`
+
+ They are constants with numbers representing the bit that must be set in the corresponding register. 
+
+ * `pull_up_en`: true.into(), if the GPIO is pulled up,
+ * `pull_down_en`: true.into(), if the GPIO is pulled down,
+ * `intr_type`: sets the interrupt type, it can have the following settings:
+   * `gpio_int_type_t_GPIO_INTR_MAX`
+   * `gpio_int_type_t_GPIO_INTR_ANYEDGE`
+   * `gpio_int_type_t_GPIO_INTR_DISABLE`
+   * `gpio_int_type_t_GPIO_INTR_NEGEDGE`
+   * `gpio_int_type_t_GPIO_INTR_POSEDGE`
+
+
+
+ TODO Add verbal description of configuration
+
 
 2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
 
