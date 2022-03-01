@@ -29,12 +29,8 @@ Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpReque
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
-<<<<<<< HEAD
 The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
-=======
-- TODO explain as_ref(). Or find a better way to point people to it. 
->>>>>>> rewrite: changes further Tanks + Anatol comments
 
 ```Rust
 let request = client.get(some_url_ref)?;
@@ -49,8 +45,15 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Verify the connection was successful.
 
-✅ Use `match` to ensure the status is in the 2xx range.  Return an error with `anyhow::bail` if the status is outside of this range. 
+✅ Return an Error if the status is not in the 2xx range.
 
+```rust
+match status {
+        200..=299 => {
+        }
+        _ => anyhow::bail!("unexpected response code: {}", status),
+    }
+```
 The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), crate which contains various functionality to simplify application-level error handling. It supplies a universal `anyhow::Result<T>`, wrapping the success (`Ok`) case in T and removing the need to specify the Err type, as long as every error you return implements `std::error::Error`.
 
 
@@ -58,7 +61,7 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ✅ Report the total number of bytes read.
 
-✅ Log the received data to the console. Use [from_utf8](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
+✅ Log the received data to the console. Hint, the response in the buffert is in bytes, so you might need [a method](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
 
 ## Extra Tasks
 
