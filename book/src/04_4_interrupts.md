@@ -70,8 +70,6 @@ unsafe extern "C" fn button_interrupt(_: *mut c_void) {
 ```
 If the interrupt fires, an event is added to the queue. 
 
-This function is in the RAM and not in the flash memory. The reason for this is that while code from flash memory is executed, everything else for example reading a button status is blocked. This is not the case for functions that live in RAM. They can still be executed. This allows are more exact reaction on interrupts.
-
 7. Pass the function we just wrote to the generic GPIO interrupt handler we registered earlier, along with the number of the GPIO pin that should cause this function to be executed.
 
 ```rust
