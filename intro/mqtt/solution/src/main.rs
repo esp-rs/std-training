@@ -143,7 +143,7 @@ fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS
 
             if complete {
                 /* further processing here */
-                inflight.clear(RGB8());
+                inflight.clear();
             }
         }
     }
