@@ -1,6 +1,6 @@
 # Interrupts
 
-The goal of this exercise is to handle a button interrupt, if the `BOOT` button is pushed. 
+The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed. 
 This exercise involves working with C bindings to the [esp-idf-sys](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/index.html) and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
@@ -89,9 +89,9 @@ let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS)
 ```
 
 
-## Modify the code:
+## Random LED color on pushing a button
 
-✅ Modify the code so the RGB LED light changes to another random color upon each button press. The LED should not go out or change color if the button is not pressed for some time. 
+✅ Modify the code so the RGB LED light changes to different random color upon each button press. The LED should not go out or change color if the button is not pressed for some time. 
 
 
 ### Solving Help
