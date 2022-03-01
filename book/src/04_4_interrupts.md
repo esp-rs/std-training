@@ -1,12 +1,10 @@
 # Interrupts
 
 The goal of this exercise is to handle a button interrupt, if the `BOOT` button is pushed. 
-This exercise involves working with C bindings to the esp-idf-sys and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
+This exercise involves working with C bindings to the [esp-idf-sys](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/index.html) and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
 You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
-
-This first part is not memory safe. We chose this route despite this fact, as it makes the general theme of dealing with the interrupt more obvious. We provide a safe variant for you to compare: `advanced/button-interrupt/solution/src/main_safe.rs`
 
 TODO Add points where it's safe to build to rule out basic mistakes.
 TODO why are some functions called with some(...), esp!(...) or "normal"?
@@ -18,41 +16,38 @@ TODO why are some functions called with some(...), esp!(...) or "normal"?
     - pull up
     - interrupt on positive edge
   
-Possible ooptions
- Pins are configured with the `c struct` `gpio_config_t`. The struct has the following fields:
+Possible options:
 
- * `pin_bit_mask`: represents the Pin number, 1  shifted by the number of the pin. 
+Pins are configured with the `c struct` `gpio_config_t`. The struct has the following fields:
+
+ * `pin_bit_mask`: represents the Pin number, the value 1  shifted by the number of the pin. 
  * `mode`: sets the mode of the pin, it can have the following settings:
-   * `gpio_mode_t_GPIO_MODE_INPUT`
+   * `gpio_mode_t_GPIO_MODE_INPUT` 
    * `gpio_mode_t_GPIO_MODE_OUTPUT`
-   * `gpio_mode_t_GPIO_MODE_DISABLE`
-   * `gpio_mode_t_GPIO_MODE_OUTPUT_OD`
-   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT`
-   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT_OD`
+   * `gpio_mode_t_GPIO_MODE_DISABLE` // disable gpio
+   * `gpio_mode_t_GPIO_MODE_OUTPUT_OD` // open drain output
+   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT` // input and output
+   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT_OD` // open drain input and output
 
  They are constants with numbers representing the bit that must be set in the corresponding register. 
 
  * `pull_up_en`: true.into(), if the GPIO is pulled up,
  * `pull_down_en`: true.into(), if the GPIO is pulled down,
  * `intr_type`: sets the interrupt type, it can have the following settings:
-   * `gpio_int_type_t_GPIO_INTR_MAX`
-   * `gpio_int_type_t_GPIO_INTR_ANYEDGE`
-   * `gpio_int_type_t_GPIO_INTR_DISABLE`
-   * `gpio_int_type_t_GPIO_INTR_NEGEDGE`
-   * `gpio_int_type_t_GPIO_INTR_POSEDGE`
+   * `gpio_int_type_t_GPIO_INTR_ANYEDGE` // interrupt at any edge
+   * `gpio_int_type_t_GPIO_INTR_DISABLE` // interrupt disabled
+   * `gpio_int_type_t_GPIO_INTR_NEGEDGE` // interrupt at negative edge
+   * `gpio_int_type_t_GPIO_INTR_POSEDGE` // interrupt at positive edge
 
 
 
- TODO Add verbal description of configuration
+1. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
 
 
-2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
+2. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
 
 
-3. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
-
-
-4. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
+3. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
 
 ```rust
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
@@ -94,8 +89,26 @@ let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS)
 ```
 
 
-## Modify
+## Modify the code:
 
-TODO
+Modify the code so the RGB LED light changes to another random color upon each button press. The LED should not go out or change color if the button is not pressed for some time. 
 
 
+### Solving Help
+
+1. The necessary imports are already made, if you enter `cargo --doc --open` you will get helping documentation regarding the LED.
+2. The board has a hardware random number generator. It can be called with `esp_random()`.
+
+### Step by Step Guide to the Solution
+
+1. Initialize the LED peripheral and switch the LED on with an arbitrary value just to see that it works.
+2. Light up the LED only when the button is pressed. You can do this for now by exchanging the print statement. 
+3. Create random RGB values by calling `esp_random()`. 
+   * This function is unsafe. 
+   * It yields u32, so it needs to be cast as u8.
+
+If you run the code now, the LED should change it's color upon every button press. But the LED is also only on as long until the queue timeout is reached. To avoid this, we need to keep the state of the LED separate from the condition that an event is in the queue. 
+
+4. Create a new function that takes a mutable reference to the LED instance and a `RGB8` value as arguments. Change the color of the LED inside the function. 
+
+TODO: Add respective code lines
