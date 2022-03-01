@@ -6,8 +6,9 @@ This exercise involves working with C bindings to the [esp-idf-sys](https://esp-
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
 You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
 
-TODO Add points where it's safe to build to rule out basic mistakes.
-TODO why are some functions called with some(...), esp!(...) or "normal"?
+## A note on `unsafe {}` blocks:
+
+This code contains a lot of `unsafe {}` blocks. As a general rule, `unsafe` does not mean that the contained code is not memory safe, it means, that Rust can't make safety guarantees in this place and that it is in the responsibility of the programmer to ensure memory safety. For example Calling C Bindings is per se unsafe, as Rust can't make any safety guarantees for the underlaying C Code. 
 
 ## Tasks
 
@@ -68,9 +69,8 @@ unsafe extern "C" fn button_interrupt(_: *mut c_void) {
 }
 ```
 If the interrupt fires, an event is added to the queue. 
-TODO Add explanation
-    - what is added to the queue
-    - why is it in RAM
+
+This function is in the RAM and not in the flash memory. The reason for this is that while code from flash memory is executed, everything else for example reading a button status is blocked. This is not the case for functions that live in RAM. They can still be executed. This allows are more exact reaction on interrupts.
 
 7. Pass the function we just wrote to the generic GPIO interrupt handler we registered earlier, along with the number of the GPIO pin that should cause this function to be executed.
 
