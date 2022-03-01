@@ -17,9 +17,7 @@ This code contains a lot of `unsafe {}` blocks. As a general rule, `unsafe` does
     - pull up
     - interrupt on positive edge
   
-Possible options:
-
-Pins are configured with the `c struct` `gpio_config_t`. The struct has the following fields:
+The struct has the following fields:
 
  * `pin_bit_mask`: represents the Pin number, the value 1  shifted by the number of the pin. 
  * `mode`: sets the mode of the pin, it can have the following settings:
@@ -30,8 +28,6 @@ Pins are configured with the `c struct` `gpio_config_t`. The struct has the foll
    * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT` // input and output
    * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT_OD` // open drain input and output
 
- They are constants with numbers representing the bit that must be set in the corresponding register. 
-
  * `pull_up_en`: true.into(), if the GPIO is pulled up,
  * `pull_down_en`: true.into(), if the GPIO is pulled down,
  * `intr_type`: sets the interrupt type, it can have the following settings:
@@ -40,15 +36,16 @@ Pins are configured with the `c struct` `gpio_config_t`. The struct has the foll
    * `gpio_int_type_t_GPIO_INTR_NEGEDGE` // interrupt at negative edge
    * `gpio_int_type_t_GPIO_INTR_POSEDGE` // interrupt at positive edge
 
+They are constants with numbers representing the bit that must be set in the corresponding register. 
 
 
-1. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
+2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
 
 
-2. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
+3. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
 
 
-3. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
+4. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
 
 ```rust
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
