@@ -6,7 +6,7 @@ use std::ptr;
 use esp_idf_sys::{
     self as _, c_types::c_void, esp, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
-    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM,
+    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM, esp_random,
 };
 
 // 4. Create a `static mut` that holds the queue handle.
