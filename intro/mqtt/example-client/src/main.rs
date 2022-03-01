@@ -47,7 +47,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     //command.topic(UUID),
                     QoS::AtLeastOnce,
                     false,
-                    color.data().clone(),
+                    color.data(),
                     //command.data().clone(),
                 )
                 .unwrap();
