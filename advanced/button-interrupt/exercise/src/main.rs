@@ -9,6 +9,10 @@ use esp_idf_sys::{
     xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM,
 };
 
+// These imports are needed for part 2.
+// use esp32_c3_dkc02_bsc as bsc;
+// use bsc::led::{RGB8, WS2812RMT};
+
 // 4. Create a `static mut` that holds the queue handle.
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
@@ -17,7 +21,6 @@ static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 unsafe extern "C" fn button_interrupt(_: *mut c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
 }
-
 
 fn main() -> anyhow::Result<()> {
     const GPIO_NUM: i32 = 9;

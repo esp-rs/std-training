@@ -17,8 +17,9 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-esp-idf-sys = { version = "0.30", features = ["binstart"] }
+esp-idf-sys = { version = "=0.30.4", features = ["binstart"] }
 anyhow = "1"
+esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
 
 [build-dependencies]
 embuild = "0.28"
