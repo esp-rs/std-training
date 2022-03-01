@@ -70,16 +70,21 @@ fn main() -> anyhow::Result<()> {
             // Reads the event item out of the queue
             let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
             
-            // Generates random rgb values
-            let r = esp_random() as u8;
-            let g = esp_random() as u8;
-            let b = esp_random() as u8;
-            let color = RGB8::new(r, g, b);
-            
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed. 
             // If the button was pressed, a function that changes the state of the LED is called. 
+        
             match res {
-                1 => light(&mut led, color),
+                1 => {
+                    // Generates random rgb values
+                    let r = esp_random() as u8;
+                    let g = esp_random() as u8;
+                    let b = esp_random() as u8;
+
+                    let color = RGB8::new(r, g, b);
+
+                    light(&mut led, color);
+                    
+                },
                 _ => {},
             };
         }
