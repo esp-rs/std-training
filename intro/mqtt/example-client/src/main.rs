@@ -1,4 +1,4 @@
-use mqtt_messages::{hello_topic, temperature_data_topic, Command, RGB8};
+use mqtt_messages::{hello_topic, temperature_data_topic, ColorData, Command, RGB8};
 use rand::Rng;
 use rumqttc::{Client, MqttOptions, Packet, QoS};
 use std::error::Error;
@@ -39,13 +39,16 @@ fn main() -> Result<(), Box<dyn Error>> {
             let b = rng.gen();
             let color = RGB8::new(r, g, b);
             println!("setting new color: {}", color);
-            let command = Command::BoardLed(color);
+            let color = ColorData::BoardLed(color);
+            //let command = Command::BoardLed(color);
             client
                 .publish(
-                    command.topic(UUID),
+                    color.topic(UUID),
+                    //command.topic(UUID),
                     QoS::AtLeastOnce,
                     false,
-                    command.data().clone(),
+                    color.data(),
+                    //command.data().clone(),
                 )
                 .unwrap();
             thread::sleep(Duration::from_secs(1));

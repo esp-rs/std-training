@@ -5,8 +5,7 @@ pub use rgb::RGB8;
 
 /// Handles `EspMqttMessage` with MQTT hierarchy
 ///
-/// Not used atm but can be used to send ColorData(rgb)
-/// with `Command`
+/// Can be used to send ColorData(rgb) with `Command`
 
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
@@ -47,7 +46,8 @@ impl Command {
     }
 }
 
-/// `ColorData` is basically simplified `Command`
+/// `ColorData` is a simplified `Command`
+
 pub enum ColorData {
     BoardLed(RGB8),
 }
@@ -106,7 +106,7 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
 
 /// Handles `.data()` from EspMqttMessage
 ///
-// The message data is cast into a ColorData(rgb)
+// The message is a slice containing 3 values, and is cast into a ColorData(rgb)
 impl<'a> TryFrom<&[u8]> for ColorData {
     type Error = ConvertError;
 
