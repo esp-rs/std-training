@@ -6,10 +6,7 @@ use bsc::{
     wifi::wifi,
 };
 use embedded_svc::mqtt::client::{
-    Client,
-    Details::{Complete, InitialChunk, SubsequentChunk},
-    Event::Received,
-    Message, Publish, QoS,
+    Client, Details::Complete, Event::Received, Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_svc::{
@@ -65,11 +62,10 @@ fn main() -> anyhow::Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
-    let mut inflight = vec![];
     let mut client =
         EspMqttClient::new_with_callback(broker_url, &mqtt_config, move |message_event| {
             if let Some(Ok(Received(message))) = message_event {
-                process_message(message, &mut inflight, &mut led);
+                process_message(message, &mut led);
             }
         })?;
 
@@ -90,7 +86,7 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
+fn process_message(message: EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
         Complete(token) => {
             info!("{}", message.topic(token));
@@ -102,36 +98,6 @@ fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS
                 };
             }
         }
-        InitialChunk(chunk_info) => {
-            let data = message.data();
-            inflight.extend(data.iter());
-            info!(
-                "received start of a partial packet: {}/{} bytes",
-                inflight.len(),
-                chunk_info.total_data_size
-            );
-        }
-        SubsequentChunk(chunk_data) => {
-            let mut complete = false;
-            let data = message.data();
-
-            inflight.extend(message.data().iter());
-            info!(
-                "received more partial data: {} bytes (buffer:{}/{})",
-                data.len(),
-                inflight.len(),
-                chunk_data.total_data_size
-            );
-
-            if inflight.len() == chunk_data.total_data_size {
-                complete = true;
-                info!("big packet complete!");
-            }
-
-            if complete {
-                /* further processing here */
-                inflight.clear();
-            }
-        }
+        _ => error!("could not set board LED"),
     }
 }
