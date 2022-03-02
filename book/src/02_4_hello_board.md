@@ -12,6 +12,8 @@ To test Wi-Fi connectivity, you will have to provide your network name (SSID) an
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
+❗️The 5GHz band is not supported according to [ESP32-C3 documentation](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
+
 ```console
 $ cp cfg.toml.example cfg.toml
 $ $EDITOR cfg.toml
@@ -21,6 +23,7 @@ $ cat cfg.toml
 wifi_ssid = "Your Wifi name"
 wifi_psk = "Your Wifi password" 
 ```
+
 
 ✅ build, run and monitor the project, substituting the actual serial device name for `/dev/SERIAL_DEVICE`:
 ```console

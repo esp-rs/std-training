@@ -1,0 +1,26 @@
+[package]
+name = "button-interrupt"
+version = "0.1.0"
+authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>", "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>"]
+edition = "2021"
+resolver = "2"
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true # Symbols are nice and they don't increase the size on Flash
+opt-level = "z"
+
+[features]
+default = ["native"]
+native = ["esp-idf-sys/native"]
+
+[dependencies]
+esp-idf-sys = { version = "=0.30.4", features = ["binstart"] }
+anyhow = "1"
+esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
+
+[build-dependencies]
+embuild = "0.28"
+anyhow = "1"
