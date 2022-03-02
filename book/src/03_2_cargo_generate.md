@@ -16,7 +16,7 @@ You'll be prompted for details regarding your new project. When given a choice b
 The first message you see will be:
 `⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you do not have a favorite config file, but you don't need one and you can ignore this warning.
 
-🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) who will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
+🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) that will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
 
 
 > If you make a mistake, hit `Ctrl+C` and start anew.
@@ -39,8 +39,8 @@ default = ["native"] # add this line
 native = ["esp-idf-sys/native"]
 ```
 
-🔎 The `.cargo/config.toml` is the file where you set local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package. 
-The `Cargo.toml` file, you will [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
+🔎 `.cargo/config.toml` contains local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package. 
+`Cargo.toml` contains dependencies [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
 
 
 Optional, but recommended: save some disk space by setting the toolchain directory to global.
