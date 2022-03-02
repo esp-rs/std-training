@@ -1,6 +1,4 @@
-# A simple HTTP client
-
-In this exercise, we'll write a small client that retrieves data over a HTTP connection to the internet.
+# HTTP client
 
 ## Setup
 
@@ -12,7 +10,7 @@ In this exercise, we'll write a small client that retrieves data over a HTTP con
 $ cargo doc --open
 ```
 
-✅ Add your network credentials to the `cfg.toml`.
+✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as previously.
 
 ✅ Open the prepared project skeleton in `intro/http-client/exercise`. We'll read through the code together.
 
@@ -20,13 +18,14 @@ $ cargo doc --open
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
-In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. These functions expect a destination URL reference parameter.
+In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `http::client::EspHttpClient` and see instantiation methods at your disposal.
 
-✅ Create a new `EspHttpClient` with default values.
+✅ Add the url `http://neverssl.com/` is in the main function. This is the address we will query.
 
-TODO currently no `docs.rs` documentation for the svc crates (ping Espressif about this, it's a known issue though)
+✅ Create a new `EspHttpClient` with default values. Look for a suitable constructor in the documentation.
 
-Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. This makes more sense with `POST` and `PUT` but must still be performed with `GET`. 
+
+Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. 
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
@@ -40,7 +39,7 @@ let request = client.get(some_url_ref)?;
 let writer = request.into_writer(0)?;
 let response = writer.into_response()?;
 ```
-✅ Implement sending a `GET` request and receiving a response.
+The parameter passed to `into_writer` is the number of bytes the client intends to send. Here we are not trying to send anything. 
 
 A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
@@ -48,11 +47,21 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Return an Error if the status is not in the 2xx range.
 
+```rust
+match status {
+        200..=299 => {
+        }
+        _ => anyhow::bail!("unexpected response code: {}", status),
+    }
+```
+The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), crate which contains various functionality to simplify application-level error handling. It supplies a universal `anyhow::Result<T>`, wrapping the success (`Ok`) case in T and removing the need to specify the Err type, as long as every error you return implements `std::error::Error`.
+
+
 ✅ Turn your `response` into a `embedded_svc::io::Read` reader by calling `response.reader()` and read the received data chunk by chunk into a `u8` buffer using `reader.do_read(&mut buf)`. `do_read` returns the number of bytes read - you're done when this value is `0`.
 
 ✅ Report the total number of bytes read.
 
-✅ Log the received data to the console.
+✅ Log the received data to the console. Hint, the response in the buffert is in bytes, so you might need [a method](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
 
 ## Extra Tasks
 
@@ -60,31 +69,9 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Write a custom `Error` enum to represent these errors. Implement the `std::error::Error` trait for your error.
 
-## HTTPS
-
-TODO check with Espressif: HTTPS support seems buggy - in my (Anatol) tests I get some unexpected HTTP header data before the actual body
-
-To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
-
-✅ Enable basic TLS certificate support in your project's `sdkconfig.defaults` by deleting the existing `CONFIG_MBEDTLS...` lines and adding:
-```cfg
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=y
-```
-
-Now, we create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
-
-```rust
-let client_config = EspHttpClientConfiguration {
-    use_global_ca_store: true,
-    crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
-    ..Default::default()
-}
-```
-
-✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from a `https` resource e.g. `https://espressif.com/`
 
 ## Troubleshooting
+
 - `error: cannot find macro llvm_asm in this scope`: set `channel = "nightly-2021-11-18"` in `rust-toolchain.toml` (as of February 2022, nightly Rust and the RISC-V ecosystem are somewhat incompatible)
 - `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match. 
 

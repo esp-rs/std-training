@@ -32,11 +32,9 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
-    // 1. Create a new EspHttpClient. (Check documentation) 
-   
+    // 1. Create a new EspHttpClient. (Check documentation)
 
     // 2. Open a GET request to `url`
-  
 
     // 3. Requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
     // (since we don't send anything - but have to do the writer step anyway)
@@ -54,7 +52,6 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
     // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
-
 
     Ok(())
 }
