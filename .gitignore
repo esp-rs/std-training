@@ -4,4 +4,8 @@ Cargo.lock
 cfg.toml
 __pycache__
 .DS_Store
+<<<<<<< HEAD
 .embuild/
+=======
+.embuild/
+>>>>>>> bef6d70838256c9194a7cf9fd0f96b1f7af339c7
