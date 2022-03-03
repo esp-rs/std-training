@@ -58,9 +58,6 @@ server.set_inline_handler(path, method, |request, response| {
 We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor` that measures the board's internal temperature. 
 
 ✅ Write a second handler that reports the chip temperature at `http://<sta ip>/temperature`, using the provided `temperature(val: f32)` function to generate the HTML String.
-
-TODO I'd rather avoid the `Arc<Mutex>` dance since I think it's on the far end of basic Rust knowledge - investigating options. On the other hand it's a pretty important topic… 
-
 ## Hints
 - if you want to send a response string, it needs to be converted into a `&[u8]` slice via `a_string.as_bytes()`
 - the temperature sensor needs exclusive (mutable) access. Passing it as owned value into the handler will not work (since it would get dropped after the first invocation) - you can fix this by making the handler a `move ||` closure, wrapping the sensor in an `Arc<Mutex<_>>`, keeping one `clone()` of this `Arc` in your main function and moving the other into the closure.
