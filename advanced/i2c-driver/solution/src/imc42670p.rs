@@ -35,12 +35,20 @@ where
     }
 
     /// Should return `0x67 (if it doesn't, something is amiss)
-    /// public method that can be accessed from outside this file
+    /// Public method that can be accessed from outside this file
     pub fn read_device_id_register(&mut self) -> Result<u16, E> {
         self.read_register(Register::WhoAmI)
     }
 
-    /// reads a register using a `write_read` method.
+    /// Writes into a register
+    /// This method is not public as it is only needed inside this file
+    fn write_register(&mut self, register: Register, value: u8) -> Result<(), E> {
+        let byte = value as u8;
+        self.i2c
+            .write(self.address as u8, &[register.address(), byte])
+    }
+
+    /// Reads a register using a `write_read` method.
     /// this method is not public as it is only needed inside this file
     fn read_register(&mut self, register: Register) -> Result<u16, E> {
         let mut data = [0; 2];
