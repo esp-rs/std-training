@@ -99,7 +99,9 @@ let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS)
 1. Initialize the LED peripheral and switch the LED on with an arbitrary value just to see that it works.
    ```rust
    let mut led = WS2812RMT::new()?;
-   led.set_pixel(20, 20, 20)?; // remove this line after you tried it once
+   
+    let arbitrary_color = RGB8::new(20, 0, 20);
+    led.set_pixel(arbitrary_color).unwrap(); // remove this line after you tried it once
    ```
 2. Light up the LED only when the button is pressed. You can do this for now by exchanging the print statement. 
    ```rust

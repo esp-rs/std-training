@@ -10,8 +10,8 @@ use esp_idf_sys::{
 };
 
 // These imports are needed for part 2.
-// use esp32_c3_dkc02_bsc as bsc;
-// use bsc::led::{RGB8, WS2812RMT};
+use esp32_c3_dkc02_bsc as bsc;
+use bsc::led::{RGB8, WS2812RMT};
 
 // 4. Create a `static mut` that holds the queue handle.
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
