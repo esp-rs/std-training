@@ -15,11 +15,6 @@ The final piece of the puzzle is low-level hardware access, which is again provi
 
 More information is available in the [ecosystem chapter](https://esp-rs.github.io/book/overview/using-the-standard-library.html) of the `esp-rs` book.
 
-TODO: 
-- move esp32c3 to advanced? (then: reword "split")
-- explain PAC, SVD, svd2rust, ?PAC vs HAL?
-- riscv crate - inline asm - change/check when stabilized
-
 ### Build toolchain
 
 🔎 As part of a project build, `esp-idf-sys` will download [esp-idf](https://github.com/espressif/esp-idf), the C-based Espressif toolchain. The download destination is configurable; to save disk space and download time, all examples/exercises in the workshop repository are set to use one single `global` toolchain, installed in `~/.espressif`. See the `ESP_IDF_TOOLS_INSTALL_DIR` parameter in `esp-idf-sys`'s [README](https://github.com/esp-rs/esp-idf-sys#configuration) for other options.
