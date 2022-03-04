@@ -1,13 +1,13 @@
 # Lower level I/O: How to manipulate Registers
 
-In general there are two ways to write firmware for the esp32. One is the bare-metal using only `[no_std]` Rust, and the other using `[std]` Rust and C-Bindings to the esp-idf.
+In general there are two ways to write firmware for the ESP32-C3. One is the bare-metal using only `[no_std]` Rust, and the other using `[std]` Rust and C-Bindings to the esp-idf.
 `[no_std]` Rust refers to Rust not using the standard library, only the core library, which is a subset of the standard library that does not depend on the existence of an operating system. 
 
 ## What do the ecosystems look like?
 
 ### `[std]` Rust and the esp-idf
 
-The most established way to use Rust on esp32-c3 is using C bindings to the esp-idf. We can use Rust's standard library when going this route, as we can use an operating system: FreeRTOS. Being able to use the standard library comes with benefits: We can use all types no matter if they are stack or heap allocated. We can use threads, Mutexes and other synchronization primitives.
+The most established way to use Rust on ESP32-C3 is using C bindings to the esp-idf. We can use Rust's standard library when going this route, as we can use an operating system: FreeRTOS. Being able to use the standard library comes with benefits: We can use all types no matter if they are stack or heap allocated. We can use threads, Mutexes and other synchronization primitives.
 
  The esp-idf is mostly written in C and as such is exposed to Rust in the canonical split crate style: 
 - a `sys` crate to provide the actual `unsafe` bindings ([esp-idf-sys](https://github.com/esp-rs/esp-idf-sys))
@@ -33,7 +33,7 @@ Whilst it is possible to write firmware with a PAC alone, some of it would unsaf
 
 Microcontrollers are usually soldered to some _Printed Circuit Board_ (or just _Board_), which defines the connections that are made to each pin. A _Board Support Crate_ (BSC, also known as a _Board Support Package_ or BSP) may be written for a given board. This provide yet another layer of abstraction and might, for example, provide an API to the various sensors and LEDs on that board - without the user necessarily needing to know which pins on your microcontroller are connected to those sensors or LEDs. 
 
-Although a [PAC](https://github.com/esp-rs/esp32c3) for the esp32c3 exists, bare-metal Rust is highly experimental on esp32c3 chips, so for now we will not work with it on the microcontroller directly. We will write a partial sensor driver in this approach as driver's should be platform agnostic. 
+Although a [PAC](https://github.com/esp-rs/esp32c3) for the ESP32-C3 exists, bare-metal Rust is highly experimental on ESP32-C3 chips, so for now we will not work with it on the microcontroller directly. We will write a partial sensor driver in this approach as driver's should be platform agnostic. 
 
 
 
