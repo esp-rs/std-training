@@ -1,6 +1,6 @@
 # Checking the hardware
 
-Connect the Espressif Rust Board to your computer. Verify that TODO describe what default behavior the stock firmware should exhibit (e.g. pulsing LED).
+Connect the Espressif Rust Board to your computer. Verify a tiny red control LED lights up.
 
 The device should also expose its UART serial port over USB:
 

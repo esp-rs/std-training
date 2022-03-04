@@ -1,8 +1,14 @@
 # HTTP client
 
+The goal of this exercise is to write a small HTTP client that connects to a website.
+
 ## Setup
 
 ✅ Go to `intro/http-client/exercise` directory.
+
+✅ Open the prepared project skeleton in `intro/http-client/exercise`. 
+
+✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as in the hardware test. 
 
 ✅ Open the docs for this project with the following command:
 
@@ -10,17 +16,13 @@
 $ cargo doc --open
 ```
 
-✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as previously.
-
-✅ Open the prepared project skeleton in `intro/http-client/exercise`. We'll read through the code together.
-
 ## Making a connection
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
 In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `http::client::EspHttpClient` and see instantiation methods at your disposal.
 
-✅ Add the url `http://neverssl.com/` is in the main function. This is the address we will query.
+✅ Add the url `http://neverssl.com/` to the main function. This is the address we will query.
 
 ✅ Create a new `EspHttpClient` with default values. Look for a suitable constructor in the documentation.
 
