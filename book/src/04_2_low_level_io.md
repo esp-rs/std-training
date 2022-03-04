@@ -2,6 +2,7 @@
 
 In general there are two ways to write firmware for the esp32. One is the bare-metal using only `[no_std]` Rust, and the other using `[std]` Rust and C-Bindings to the esp-idf.
 `[no_std]` Rust refers to Rust not using the standard library, only the core library, which is a subset of the standard library that does not depend on the existence of an operating system. 
+
 ## What do the ecosystems look like?
 
 ### `[std]` Rust and the esp-idf
