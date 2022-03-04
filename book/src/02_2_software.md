@@ -31,7 +31,7 @@ Several tools are required:
 - `bindgen` - generate Rust bindings for C APIs
 - `ldproxy` - Espressif build toolchain dependency
 
-Install them with the following command:
+✅ Install them with the following command:
 
 ```console
 $ cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy

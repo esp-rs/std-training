@@ -1,4 +1,4 @@
-[example-client]
+[host-client]
 mqtt_user = "horse"
 mqtt_pass = "CorrectHorseBatteryStaple"
 mqtt_host = "yourpc.local"
