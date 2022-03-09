@@ -54,6 +54,16 @@ The board LED should turn yellow on startup, and then, depending on whether a Wi
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
 
+## Extra information about building 
+
+If you want to try to build without flashing, you can run:
+ ```toml
+ cargo build --target riscv32imc-esp-espidf
+ ```
+
+ Additionally, if `cargo espflash --release --monitor /dev/ttyUSB0` has been successful, you can exit with `ctrl+C`, and run only the monitor with `espmonitor /dev/ttyUSB0` without flashing (special thanks to Anton Mak, Bjoern Quentin!)
+ This can save a lot of time as you do not need to re-flash the program in its entirety. 
+
 # Troubleshooting
 
 ## Build errors

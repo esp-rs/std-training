@@ -31,7 +31,11 @@ The first message you see will be:
 * ESP-IDF native build version: `4.4`
 * STD support: `true`
 
+You can also skip `cargo-generate` questions, by provinding all the needed information in one line:
 
+```toml
+cargo generate --vcs none --git https://github.com/esp- rs/esp-idf-template cargo --name rust-project --define mcu=esp32c3 --define toolchain=nightly --define espidfver=v4.4 --define std=true
+```
 
 
 We're going to build using the `native` variant of the Espressif build system.
