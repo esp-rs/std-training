@@ -3,6 +3,7 @@
 //! This `libstd` program is for the ESP32-C3-DevKitC-02 board.
 
 // Logging macros
+
 use log::*;
 
 // And alias for our Board Support Crate
@@ -33,7 +34,7 @@ fn main() -> anyhow::Result<()> {
 
     esp_idf_sys::link_patches();
 
-    info!("Hello, world!");
+    println!("Hello, world!");
 
     // Start the LED off yellow
     let mut led = bsc::led::WS2812RMT::new()?;
@@ -57,6 +58,8 @@ fn main() -> anyhow::Result<()> {
         led.set_pixel(RGB8::new(0, 0, 50))?;
         // Wait...
         std::thread::sleep(std::time::Duration::from_secs(1));
+        info!("Hello, world!");
+
         // Green!
         led.set_pixel(RGB8::new(0, 50, 0))?;
         // Wait...

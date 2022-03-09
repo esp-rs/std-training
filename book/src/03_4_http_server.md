@@ -61,3 +61,7 @@ We can also report dynamic information to a client. The skeleton includes a conf
 ## Hints
 - if you want to send a response string, it needs to be converted into a `&[u8]` slice via `a_string.as_bytes()`
 - the temperature sensor needs exclusive (mutable) access. Passing it as owned value into the handler will not work (since it would get dropped after the first invocation) - you can fix this by making the handler a `move ||` closure, wrapping the sensor in an `Arc<Mutex<_>>`, keeping one `clone()` of this `Arc` in your main function and moving the other into the closure.
+
+## Troubleshooting
+
+- `httpd_txrx: httpd_resp_send_err` can be solved by restarting, or `cargo clean` if nothing happens.
