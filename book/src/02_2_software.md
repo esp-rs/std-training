@@ -75,4 +75,4 @@ https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-ma
 
 - TODO copy from <https://embedded-trainings.ferrous-systems.com/installation.html>
 
-- When using VSCode, the "Better TOML" extension is a useful addition for editing configuration files. 
+- When using VSCode, the "Even Better TOML" extension is a useful addition for editing configuration files. 
