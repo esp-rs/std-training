@@ -68,7 +68,7 @@ $ brew install llvm
 
     2. restarting the terminal
 
-    3. if this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
+    3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
 ## Additional software (IDE + recommended plugins)
