@@ -54,7 +54,7 @@ The board LED should turn yellow on startup, and then, depending on whether a Wi
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
 
-## Extra information about building 
+## Extra information about building, flashing and monitoring
 
 If you want to try to build without flashing, you can run:
  ```toml
