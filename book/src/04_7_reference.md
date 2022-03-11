@@ -17,11 +17,6 @@ Open-Drain-Output: Open Drain outputs switch between "disconnected" and "connect
 
 Pull-Up-Input: A pin that is configured as pull-up input is set to VCC, as long as it is not overwritten by an external source. This setting prevents the pin from floating, which can cause noise in the system. 
 
-In embedded Rust these configurations should be built into the type system to prevent the use of pins in incorrect states. 
-
-Example:
-TODO
-
 ### Active high/low 
 
 A digital signal can be in two states: `high` and `low`. This is usually represented by the voltage difference between the signal and ground. It is arbitrary which of these voltage levels represents which logic states: So both `high` and `low` can be defined as an active state. 
