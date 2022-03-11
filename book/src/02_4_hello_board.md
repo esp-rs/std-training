@@ -61,7 +61,10 @@ If you want to try to build without flashing, you can run:
  cargo build --target riscv32imc-esp-espidf
  ```
 
- Additionally, if `cargo espflash --release --monitor /dev/ttyUSB0` has been successful, you can exit with `ctrl+C`, and run only the monitor with `espmonitor /dev/ttyUSB0` without flashing (special thanks to Anton Mak, Bjoern Quentin!)
+If `cargo espflash --release --monitor /dev/YOUR_SERIAL_DEVICE` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
+
+```sh
+espmonitor /dev/YOUR_SERIAL_DEVICE
  This can save a lot of time as you do not need to re-flash the program in its entirety. 
 
 # Troubleshooting
