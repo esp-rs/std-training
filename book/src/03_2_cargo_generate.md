@@ -31,9 +31,6 @@ The first message you see will be:
 * ESP-IDF native build version: `4.4`
 * STD support: `true`
 
-
-
-
 We're going to build using the `native` variant of the Espressif build system.
 
 ✅ Enable the native build system by opening `Cargo.toml` in your new `hello-world` project and adding `"native"` as default feature:
