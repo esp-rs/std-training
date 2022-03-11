@@ -89,3 +89,6 @@ name = "http-client"
 wifi_ssid = "..."
 wifi_psk = "..."
 ```
+
+- `Guru Meditation Error: Core 0 panic'ed (Load access fault). Exception was unhandled.`
+    This may caused by an `.unwrap()` in your code. Try replacing those by question marks.
