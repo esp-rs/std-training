@@ -25,7 +25,8 @@ wifi_psk = "Your Wifi password"
 ```
 
 
-✅ build, run and monitor the project, substituting the actual serial device name for `/dev/SERIAL_DEVICE`:
+✅ Build, run and monitor the project, substituting the actual serial device name for `/dev/SERIAL_DEVICE`:
+
 ```console
 $ cargo espflash --release --monitor /dev/SERIAL_DEVICE
 
@@ -57,15 +58,19 @@ Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ## Extra information about building, flashing and monitoring
 
 If you want to try to build without flashing, you can run:
- ```toml
+
+ ```console
  cargo build --target riscv32imc-esp-espidf
  ```
+This can save a lot of time as you do not need to re-flash the program in its entirety and flashing can take up quit some time.
+
 
 If `cargo espflash --release --monitor /dev/YOUR_SERIAL_DEVICE` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
 
-```sh
+```console
 espmonitor /dev/YOUR_SERIAL_DEVICE
- This can save a lot of time as you do not need to re-flash the program in its entirety. 
+```
+
 
 # Troubleshooting
 
