@@ -59,7 +59,7 @@ $ brew install llvm
 
 - Error `failed to run custom build command for libudev-sys v0.1.4` or `esp-idf-sys v0.30.X`:
 
-    Add time of writing, this can be solved by 
+    At time of writing, this can be solved by 
     1. running [this line](https://github.com/esp-rs/rust-build/blob/f773036483333f3b4618d988f9a1eda051573cb2/support/esp-rs-rust/Containerfile#L13) from the `esp-rs` container:
 
     `apt-get update \
