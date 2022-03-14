@@ -33,6 +33,6 @@ Chip Select is a binary signal to another device that can switch that device on 
 
 ### Bit Banging
 
-For protocols such as I2C or SPI we usually use peripherals of the MCU to convert the data we want to transmit into signals. In some cases, for example if the MCU does not support the protocol or if a non-standard form of the protocol is used, you need to write a program that turns the data into signals manually.  This is called bitbanging. 
+For protocols such as I2C or SPI we usually use peripherals within the MCU to convert the data we want to transmit into signals. In some cases, for example if the MCU does not support the protocol or if a non-standard form of the protocol is used, you need to write a program that turns the data into signals manually.  This is called bit-banging. 
 
 
