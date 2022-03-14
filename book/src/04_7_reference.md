@@ -31,7 +31,7 @@ In embedded Rust abstractions show the logic level and not the voltage level. So
 
 Chip select is a binary signal to an IC that can switch this IC on or off partially or entirely. It is usually a signal line connected to a GPIO. 
 
-### Bitbangig
+### Bit Banging
 
 For protocols such as I2C or SPI we usually use peripherals of the MCU to convert the data we want to transmit into signals. In some cases, for example if the MCU does not support the protocol or if a non-standard form of the protocol is used, you need to write a program that turns the data into signals manually.  This is called bitbanging. 
 
