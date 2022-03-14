@@ -1,6 +1,6 @@
 # Advanced Workshop
 
-In this course we're going to dive deeper into topics that are embedded-only and/or close to the hardware, especially focussing on lower level i/o. Other then in the first part, we'll not just use the higher level abstractions where for example something like pin configurations are hidden away. You'll learn how to configure them yourself. You're also going to learn how to write directly into registers and how to find out which register is needed in the first place. We'll talk about ownership issues and memory safety issues in the context of exercises.
+In this course we're going to dive deeper into topics that are embedded-only and/or close to the hardware, especially focussing on lower level i/o. Unlike in the first part, we'll not just use the higher level abstractions where for example something like pin configurations are hidden away. Instead you'll learn how to configure them yourself. You're also going to learn how to write directly into registers and how to find out which register is needed in the first place. We'll talk about ownership issues and memory safety issues in the context of exercises.
 
  This part consists of three exercises: 
 
