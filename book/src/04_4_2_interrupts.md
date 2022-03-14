@@ -2,7 +2,7 @@
 
 ✅ Modify the code so the RGB LED light changes to different random color upon each button press. The LED should not go out or change color if the button is not pressed for some time. 
 
-Continue with your previous solution or the code from `advanced/button-interrupt/solution/src/main.rs`
+Continue by adding to your previous solution or the code from `advanced/button-interrupt/solution/src/main.rs`
 You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main_led.rs`
 
 ## Solving Help

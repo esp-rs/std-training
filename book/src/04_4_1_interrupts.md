@@ -1,7 +1,7 @@
 # Building the Interrupt Handler
 
 The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed. 
-This exercise involves working with C bindings to the [esp-idf-sys](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/index.html) and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
+This exercise involves working with C bindings to the ESP-IDF and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
 You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
