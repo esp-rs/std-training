@@ -8,7 +8,11 @@ The fact that interrupt handlers can be called at any time provides a challenge 
 
 How do we handle this problem?
 
-In our example the `static mut` holds the state of the event queue: was there an interrupt or was there no interrupt? We read this state in `main()` only. While this technically can trigger a race condition because a `write` from the interrupt handler can overlap the `read` from `main()`, this would in the worst case cause an unnoticed interrupt. This is unproblematic in a way as other ways to handle this memory safe for example with critical sections or atomic operations would cause the same problem: If they are in action an interrupt would go unnoticed. 
+In our example, the ESP-IDF framework provides a `Queue` type which handles the shared-mutable state for us. We simply get a `QueueHandle` which unique identifies the particular `Queue` being used. However, the main thread is given this `QueueHandle_t` at run-time, and so we still need a small amount of shared-mutable state in order to share the `QueueHandle_t` with the interrupt routine. We use an `Option<QueueHandle_t>`, which we statically initialise to `None`, and later replace with `Some(queue_handle)` when the queue has been created by ESP-IDF.
+
+In the interrupt routine Rust forces us to handle the case where the `static mut` is still `None`. If this happens we can either return early, or we can `unwrap()` the value, which will exit the program with an error if the value was not previously set to `Some(queue_handle)`.
+
+There is still a risk that `main()` might be in the processing of changing the value of the variable (i.e. changing the `QueueHandle_t` value) just as the interrupt routine fires, leaving it in an inconsistent or invalid state. We mitigate this by making sure we only set the value once, and we do so before the interrupt is enabled. The compiler cannot check that this is safe, and so we must use the `unsafe` keyword when we read or write the value.
 
 Read more about this in the [Embedded Rust Book](https://docs.rust-embedded.org/book/concurrency/index.html)
 
