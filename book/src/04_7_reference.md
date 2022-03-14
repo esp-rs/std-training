@@ -7,7 +7,7 @@ We'll introduce a couple of concepts related to GPIOs:
 
 ### Pin Configurations
 
-GPIOs can be configured to four different ways depending on their connectedness. 
+GPIOs can be configured one of several different ways. The options available can vary depending in the design of the chip, but will usually include: 
 
 Floating: A floating pin is neither connected VCC nor ground. The voltage will match the residual voltage.
 
