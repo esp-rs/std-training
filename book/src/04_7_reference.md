@@ -1,7 +1,7 @@
 # Reference
 ## GPIO
 
-GPIO is short for General Purpose Input Output. GPIOs are digital or sometimes analogue signal pins that can be used as interfaces to other systems or devices. Their behavior is determined by software, their default is TODO word.
+GPIO is short for General Purpose Input Output. GPIOs are digital (or sometimes analogue) signal pins that can be used as interfaces to other systems or devices. Each pin can be in various states, but they will have a default state on power-up or after a system reset (usually a harmless one, like being a digital input). We can then write software to change them into the appropriate state for our needs.
 
 We'll introduce a couple of concepts related to GPIOs:
 
