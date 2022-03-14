@@ -9,7 +9,7 @@ We'll introduce a couple of concepts related to GPIOs:
 
 GPIOs can be configured one of several different ways. The options available can vary depending in the design of the chip, but will usually include: 
 
-Floating: A floating pin is neither connected VCC nor ground. The voltage will match the residual voltage.
+Floating: A floating pin is neither connected VCC nor Ground. It just floats around at whatever voltage is applied. Note though, that your circuit should externally pull the pin either low or high, as CMOS silicon devices (such as microcontrollers) can be fail to work correctly if you leave a pin higher than the 'low voltage threshold' or `Vtl`, but lower than the 'high voltage threshold' or `Vth` for more than a few microseconds.
 
 Push-Pull-Output: A pin that is configured as push–pull output can switch between high and low voltage.
 
