@@ -11,7 +11,7 @@ GPIOs can be configured one of several different ways. The options available can
 
 Floating: A floating pin is neither connected VCC nor Ground. It just floats around at whatever voltage is applied. Note though, that your circuit should externally pull the pin either low or high, as CMOS silicon devices (such as microcontrollers) can be fail to work correctly if you leave a pin higher than the 'low voltage threshold' or `Vtl`, but lower than the 'high voltage threshold' or `Vth` for more than a few microseconds.
 
-Push-Pull-Output: A pin that is configured as push–pull output can switch between high and low voltage.
+Push-Pull-Output: A pin that is configured as push–pull output can then be set to either drive a high voltage on to the pin (i.e. connect it to VCC), or a low voltage on to the pin (i.e. connect it to Ground). This is useful for LEDs, or buzzers or other devices that use small amounts of power.
 
 Open-Drain-Output: Open Drain outputs switch between "disconnected" and "connected to ground".
 
