@@ -29,7 +29,7 @@ In embedded Rust abstractions show the logic level and not the voltage level. So
 
 ### Chip Select 
 
-Chip select is a binary signal to an IC that can switch this IC on or off partially or entirely. It is usually a signal line connected to a GPIO. 
+Chip Select is a binary signal to another device that can switch that device on or off, either partially or entirely. It is usually a signal line connected to a GPIO, and commonly used to allow multiple devices to be connected to the same SPI bus - each device only listens when its Chip Select line is active. 
 
 ### Bit Banging
 
