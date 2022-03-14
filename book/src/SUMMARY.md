@@ -27,7 +27,5 @@
       - [Basic Interrupt Handler](./04_4_1_interrupts.md)
       - [Random LED Color](./04_4_2_interrupts.md)
       - [Solution](./04_4_3_interrupts.md)
-    - [RGB LED driver](./04_5_rgb_led.md) -->
-    - [misc: Watchdog vs. blocking I/O, threads, ?async?](./04_6_misc.md)
     - [Reference](./04_7_reference.md)
   
