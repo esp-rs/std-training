@@ -13,7 +13,7 @@ Floating: A floating pin is neither connected VCC nor Ground. It just floats aro
 
 Push-Pull-Output: A pin that is configured as push–pull output can then be set to either drive a high voltage on to the pin (i.e. connect it to VCC), or a low voltage on to the pin (i.e. connect it to Ground). This is useful for LEDs, or buzzers or other devices that use small amounts of power.
 
-Open-Drain-Output: Open Drain outputs switch between "disconnected" and "connected to ground".
+Open-Drain-Output: Open Drain outputs switch between "disconnected" and "connected to ground". It is expected that some external resistor will weakly pull the line up to VCC. This type of output is designed to allow multiple devices to be connected together - the line is 'low' if any of the devices connected to the line drive it low. If two or more devices drive it low at the same time, no damage occurs (connecting Ground to Ground is safe). If none of them drive it low, the resistor will pull it high by default.
 
 Pull-Up-Input: A pin that is configured as pull-up input is set to VCC, as long as it is not overwritten by an external source. This setting prevents the pin from floating, which can cause noise in the system. 
 
