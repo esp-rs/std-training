@@ -9,6 +9,14 @@ $ git clone "https://github.com/ferrous-systems/espressif-trainings.git"
 $ cd espressif-trainings
 ```
 
+❗ Windows users may have problems with long path names. Follow these steps to substitute the path:
+
+```console
+git clone git clone https://github.com/ferrous-systems/espressif-trainings.git
+subst r:\ espressif-trainings
+cd r:\
+```
+
 ## Repository contents
 
 - `advanced/` - code examples and exercises for the advanced course
