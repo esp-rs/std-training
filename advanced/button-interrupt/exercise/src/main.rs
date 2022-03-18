@@ -61,11 +61,8 @@ fn main() -> anyhow::Result<()> {
             // 8. Receive the event from the queue.
             // let res = ...;
             
-            // If the event has the value 0, nothing happens. if it has a different value, the button was pressed. 
-            match res {
-                1 => println!("button pressed!"),
-                _ => {},
-            };
+            // 9. Handle the value of res.
+            // ...
         }
     }
 }

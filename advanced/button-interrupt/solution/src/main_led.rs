@@ -75,15 +75,8 @@ fn main() -> anyhow::Result<()> {
         
             match res {
                 1 => {
-                    // Generates random rgb values
-                    let r = esp_random() as u8;
-                    let g = esp_random() as u8;
-                    let b = esp_random() as u8;
-
-                    let color = RGB8::new(r, g, b);
-
-                    light(&mut led, color);
-                    
+                    // Generates random rgb values and sets them in the led.
+                    random_light(&mut led);
                 },
                 _ => {},
             };
@@ -91,6 +84,15 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn light(led: &mut WS2812RMT, color: RGB8) {
+fn random_light(led: &mut WS2812RMT) {
+    let mut color = RGB8::new(0, 0, 0);
+    unsafe {
+        let r = esp_random() as u8;
+        let g = esp_random() as u8;
+        let b = esp_random() as u8;
+
+        color = RGB8::new(r, g, b);
+    }
+    
     led.set_pixel(color).unwrap();
 }
