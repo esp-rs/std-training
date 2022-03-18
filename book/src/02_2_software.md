@@ -12,8 +12,6 @@ Furthermore, for ESP32-C3, a *nightly* version of the Rust toolchain is currentl
 
 ✅ Install nightly Rust and add support for the target architecture using the following console commands:
 
-TODO nightly is currently broken, so we're using one from 2021. Once this is resolved, change **ALL** occurrences of `nightly-2021-11-18` to `nightly` (verify with recursive grep)
-
 ```console
 $ rustup install nightly-2021-11-18
 $ rustup component add rust-src --toolchain nightly-2021-11-18
@@ -72,7 +70,5 @@ $ brew install llvm
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
 ## Additional software (IDE + recommended plugins)
-
-- TODO copy from <https://embedded-trainings.ferrous-systems.com/installation.html>
 
 - When using VSCode, the "Even Better TOML" extension is a useful addition for editing configuration files. 

@@ -1,7 +1,5 @@
 # HTTPS CLIENT
 
-TODO check with Espressif: HTTPS support seems buggy - in my (Anatol) tests I get some unexpected HTTP header data before the actual body
-
 You will now make changes to your http client files.
 
 To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
