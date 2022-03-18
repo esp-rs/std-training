@@ -10,7 +10,7 @@
 2. Light up the LED only when the button is pressed. You can do this for now by exchanging the print statement. 
    ```rust
    1 => {
-        led.set_pixel(20, 20, 20)?;
+        led.set_pixel(arbitrary_color)?;
                     
         },
     _ => {},
@@ -28,30 +28,35 @@
         let b = esp_random() as u8;
 
         let color = RGB8::new(r, g, b);
-        led.set_pixel(r, g, b)?;
+        led.set_pixel(color)?;
                     
         },
     _ => {},
    ```
 
-
-If you run the code now, the LED should change it's color upon every button press. But the LED is also only on as long until the queue timeout is reached. To avoid this, we need to keep the state of the LED separate from the condition that an event is in the queue. 
-
-4. Create a new function that takes a mutable reference to the LED instance and a `RGB8` value as arguments. Change the color of the LED inside the function. Call the function in the match arm. 
+4. Optional: If you intend to reuse this code in another place, it makes sense to put it into its own function. This lets us explore in detail, which parts of the code need to be in `unsafe` blocks.
 
 ```rust 
+    fn random_light(led: &mut WS2812RMT) {
+
+        let mut color = RGB8::new(0, 0, 0);
+        unsafe {
+            let r = esp_random() as u8;
+            let g = esp_random() as u8;
+            let b = esp_random() as u8;
+
+            color = RGB8::new(r, g, b);
+        }
+    
+        led.set_pixel(color).unwrap();
+    }
+
     unsafe {
         // ...
         match res {
                 1 => {
                     // Generates random rgb values
-                    let r = esp_random() as u8;
-                    let g = esp_random() as u8;
-                    let b = esp_random() as u8;
-
-                    let color = RGB8::new(r, g, b);
-
-                    light(&mut led, color);
+                    random_light(&mut led);
                     
                 },
                 _ => {},
@@ -59,8 +64,5 @@ If you run the code now, the LED should change it's color upon every button pres
         }
     }
 }
-
-fn light(led: &mut WS2812RMT, color: RGB8) {
-    led.set_pixel(color).unwrap();
-}
 ```
+
