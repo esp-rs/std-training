@@ -14,7 +14,7 @@ We use Icons to mark different kinds of information in the book:
 
 ## Required Hardware
 
-- Rust ESP Board TODO name + purchase link
+- Rust ESP Board (Not yet available for purchase)
 - USB-C cable suitable to connect the board to your development computer
 - Wi-Fi access point connected to the Internet
 
@@ -28,4 +28,4 @@ No additional debugger/probe hardware is required.
 
 ## Companion material
 
-- [Official esp-rs book](https://esp-rs.github.io/book/introduction.html) TODO further material there, embedonomicon, Rust embedded
+- [Official esp-rs book](https://esp-rs.github.io/book/introduction.html) 

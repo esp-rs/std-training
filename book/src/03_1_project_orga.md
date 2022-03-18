@@ -48,5 +48,3 @@ anyhow = "1"
 - `build.rs` - [Cargo build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html). Here: sets environment variables required for building.
 - `.cargo/config.toml` - sets the target architecture and controls build details. This is the place to override `ESP_IDF_TOOLS_INSTALL_DIR` if you wish to do so.
 - `sdkconfig.defaults` - overrides `esp-idf` specific parameters such as stack size or log level.
-
-TODO: BUG: `CONFIG_LOG_DEFAULT_LEVEL` currently does not get picked up by build

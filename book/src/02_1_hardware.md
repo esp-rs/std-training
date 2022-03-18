@@ -4,8 +4,6 @@ Connect the Espressif Rust Board to your computer. Verify a tiny red control LED
 
 The device should also expose its UART serial port over USB:
 
-TODO verify all commands and VID/PID with the final board
-
 **Windows**: a USB Serial Device (COM port) in the Device Manager under the Ports section
 
 **Linux**: a USB device under `lsusb`. The device will have a VID (vendor ID) of `0x10c4` and a PID (product ID) of `0xea60` -- the `0x` prefix will be omitted in the output of `lsusb`:
