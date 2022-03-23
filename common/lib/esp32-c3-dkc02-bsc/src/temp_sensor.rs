@@ -6,6 +6,7 @@ const ADC_FACTOR: f32 = 0.4386;
 const DAC_FACTOR: f32 = 27.88;
 const _SYS_OFFSET: f32 = 20.52;
 
+#[allow(unused)]
 enum DacOffset {
     L0 = 5,  /*< offset = -2, measure range: 50℃ ~ 125℃, error < 3℃. */
     L1 = 7,  /*< offset = -1, measure range: 20℃ ~ 100℃, error < 2℃. */
@@ -31,11 +32,14 @@ impl DacOffset {
         }
     }
 }
+
+#[allow(unused)]
 struct SensorConfig {
     dac_offset: DacOffset,
     clock_divider: u8,
 }
 
+#[allow(unused)]
 impl SensorConfig {
     fn new(dac_offset: DacOffset, clock_divider: u8) -> Self {
         Self {
