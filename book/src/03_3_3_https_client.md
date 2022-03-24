@@ -24,7 +24,6 @@ let client_config = EspHttpClientConfiguration {
 
 ## Troubleshooting (repeated from previous section)
 
-- `error: cannot find macro llvm_asm in this scope`: set `channel = "nightly-2021-11-18"` in `rust-toolchain.toml` (as of February 2022, nightly Rust and the RISC-V ecosystem are somewhat incompatible)
 - `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match. 
 
 ```toml
