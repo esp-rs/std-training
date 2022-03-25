@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 rgb = "0.8"
 
+[patch.crates-io]
+riscv = { git = "https://github.com/rust-embedded/riscv", branch = "master"}
