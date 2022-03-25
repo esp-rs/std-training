@@ -9,6 +9,3 @@ edition = "2021"
 
 [dependencies]
 embedded-hal = "0.2.7"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", branch = "master"}

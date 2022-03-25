@@ -13,6 +13,3 @@ anyhow = "1"
 anyhow = "1"
 uuid = { version = "0.8", features = ["v4"] }
 toml = "0.5"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", branch = "master"}
