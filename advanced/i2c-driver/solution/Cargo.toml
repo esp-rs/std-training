@@ -26,3 +26,6 @@ embedded-hal = "0.2.7"
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
+
+[patch.crates-io]
+riscv = { git = "https://github.com/rust-embedded/riscv", branch = "master"}

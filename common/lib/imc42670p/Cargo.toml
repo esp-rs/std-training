@@ -9,4 +9,3 @@ edition = "2021"
 
 [dependencies]
 embedded-hal = "0.2.7"
-
