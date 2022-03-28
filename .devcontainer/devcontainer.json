@@ -1,0 +1,39 @@
+{
+	"name": "esp-rs-env",
+	// "image": "docker.io/sergiogasquez/esp-rs-env:espidf_v4.4-esp32c3",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"ESP_IDF_VER": "v4.4",
+			"ESP_IDF_BRANCH": "release/v4.4",
+			"ESP_BOARD": "esp32c3"
+		}
+	},
+	"settings": {
+		"editor.formatOnPaste": true,
+    	"editor.formatOnSave": true,
+		"editor.formatOnSaveMode": "modifications",
+    	"editor.formatOnType": true,
+		"lldb.executable": "/usr/bin/lldb",
+		"files.watcherExclude": {
+			"**/target/**": true
+		},
+		"rust-analyzer.checkOnSave.command": "clippy",
+		"[rust]": {
+			"editor.defaultFormatter": "matklad.rust-analyzer"
+		},
+	},
+	"extensions": [
+		"matklad.rust-analyzer",
+		"tamasfe.even-better-toml",
+		"vadimcn.vscode-lldb",
+		"serayuzgur.crates",
+		"mutantdino.resourcemonitor",
+		"yzhang.markdown-all-in-one"
+	],
+	// Uncomment if using Podman and choose the proper device
+	// "runArgs": ["--userns=keep-id", "--device", "/dev/ttyUSB0", "--security-opt", "label=disable", "--annotation", "run.oci.keep_original_groups=1"],
+	"containerUser": "vscode",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind,consistency=cached",
+	"workspaceFolder": "/home/vscode/workspace/"
+}
