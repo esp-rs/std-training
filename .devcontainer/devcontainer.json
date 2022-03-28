@@ -1,14 +1,6 @@
 {
-	"name": "esp-rs-env",
-	// "image": "docker.io/sergiogasquez/esp-rs-env:espidf_v4.4-esp32c3",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"ESP_IDF_VER": "v4.4",
-			"ESP_IDF_BRANCH": "release/v4.4",
-			"ESP_BOARD": "esp32c3"
-		}
-	},
+	"name": "espressif-training",
+	"image": "docker.io/sergiogasquez/esp-rs-env:espidf_v4.4-esp32c3",
 	"settings": {
 		"editor.formatOnPaste": true,
     	"editor.formatOnSave": true,
