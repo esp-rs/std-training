@@ -1,6 +1,6 @@
 {
 	"name": "espressif-training",
-	"image": "docker.io/sergiogasquez/esp-rs-env:espidf_v4.4-esp32c3",
+	"image": "docker.io/sergiogasquez/esp-rs-env:esp32c3-training",
 	"settings": {
 		"editor.formatOnPaste": true,
     	"editor.formatOnSave": true,
