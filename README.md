@@ -33,14 +33,14 @@ There is:
 Please note, much of this material remains a work in progress!
 
 ## Devcontainer
-The repository includes the option to use [Visual Studio Code remote
-containers](https://code.visualstudio.com/docs/remote/containers), for more
-information on how to use it, refer to
-[esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer).
 
-The development container includes all the necesary dependencies alongsid helpful
-VS Code extension and settings, the downside is that
-[flashing boards is limited](https://github.com/SergioGasquez/esp-rs-devcontainer#flash).
+The repository includes the option to use [Visual Studio Code remote
+containers](https://code.visualstudio.com/docs/remote/containers), the
+development container includes all the necesary dependencies alongside helpful
+VS Code extension and settings. For more information on how to use it, refer to
+[esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer).
+> If using Podman, follow along the [Podman setup section](https://github.com/SergioGasquez/esp-rs-devcontainer#optional-podman).
+
 ## Development
 
 Each Rust example crate provided here can be built in the usual fashion. See
