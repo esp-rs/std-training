@@ -14,6 +14,5 @@ vscode:
     - matklad.rust-analyzer
     - tamasfe.even-better-toml
     - vadimcn.vscode-lldb
-    - serayuzgur.crates
     - mutantdino.resourcemonitor
     - yzhang.markdown-all-in-one
