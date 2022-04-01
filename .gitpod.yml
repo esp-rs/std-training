@@ -9,7 +9,6 @@ tasks:
       ln -s /home/vscode/.cargo/env /home/gitpod/.cargo/env
     command: |
       source /home/gitpod/.cargo/env
-      source /home/vscode/export-rust.sh
 vscode:
   extensions:
     - matklad.rust-analyzer
