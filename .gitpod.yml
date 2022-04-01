@@ -10,3 +10,11 @@ tasks:
     command: |
       source /home/gitpod/.cargo/env
       source /home/vscode/export-rust.sh
+vscode:
+  extensions:
+    - matklad.rust-analyzer
+    - tamasfe.even-better-toml
+    - vadimcn.vscode-lldb
+    - serayuzgur.crates
+    - mutantdino.resourcemonitor
+    - yzhang.markdown-all-in-one
