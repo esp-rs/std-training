@@ -44,6 +44,12 @@ VS Code extension and settings. For more information on how to use it, refer to
 Developing in an online dev enviroment is also available with [Gitpod](https://www.gitpod.io/):
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/github.com/SergioGasquez/espressif-trainings/tree/main)
+
+When using an online Gitpod enviroment, flashing and monitoring can be done
+with online tools, for more information have a look at [Flash](https://github.com/SergioGasquez/esp-rs-devcontainer#adafruit-esptool)
+and [Monitor](https://github.com/SergioGasquez/esp-rs-devcontainer#online-serial-monitor)
+sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer) repository.
+
 ## Development
 
 Each Rust example crate provided here can be built in the usual fashion. See
