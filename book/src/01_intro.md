@@ -10,4 +10,4 @@ Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products
 
 ## Rust knowledge
 
-Basic Rust like [The Rust Book](https://doc.rust-lang.org/book/) Chapters 1 - 6, Chapter 4 Ownerhip does not need to be fully understood.  
+Basic Rust like [The Rust Book](https://doc.rust-lang.org/book/) Chapters 1 - 6, Chapter 4 Ownership does not need to be fully understood.  
