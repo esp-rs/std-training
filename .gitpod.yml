@@ -15,6 +15,5 @@ vscode:
     - vadimcn.vscode-lldb
     - anwar.resourcemonitor
     - yzhang.markdown-all-in-one
-ports:
-  - port: 9012
-    onOpen: open-preview
+# ports:
+  # - port: 9012
