@@ -12,7 +12,7 @@
       "problemMatcher": [
         "$rustc"
       ],
-      "label": "ESP: Generate binary and launch server",
+      "label": "Build current project and run Wokwi simulation",
       "group": {
         "kind": "build",
         "isDefault": true
