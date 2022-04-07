@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": [
+        "cd ${relativeFileDirname}/.. &&",
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "ESP: Generate binary and launch server",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+  ]
+}
