@@ -25,6 +25,9 @@
   ],
   // Uncomment if using Podman and choose the proper device
   // "runArgs": ["--userns=keep-id", "--device", "/dev/ttyUSB0", "--security-opt", "label=disable", "--annotation", "run.oci.keep_original_groups=1"],
+  "forwardPorts": [
+    9012
+  ],
   "containerUser": "vscode",
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/home/vscode/workspace/"

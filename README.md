@@ -50,6 +50,13 @@ with online tools, for more information have a look at [Flash](https://github.co
 and [Monitor](https://github.com/SergioGasquez/esp-rs-devcontainer#online-serial-monitor)
 sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer) repository.
 
+### Wokwi Simulator
+The devcontainer includes the option of simulating the exercises with [Wokwi](https://wokwi.com/).
+In order to build and run a Wokwi simulation, the task `Build current project and run Wokwi simulation` 
+can be used, it must be invoked with the `main.rs` of the project we want to 
+focused in VS Code. The task will generate a binary file for the application and 
+run Wokwi simulation, this task can also be run with `Ctrl-Shift-B` or `Cmd-Shift-B`.
+
 ## Development
 
 Each Rust example crate provided here can be built in the usual fashion. See
