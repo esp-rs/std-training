@@ -1,4 +1,5 @@
 .vscode
+!.vscode/tasks.json
 target
 Cargo.lock
 cfg.toml
