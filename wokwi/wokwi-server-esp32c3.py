@@ -28,7 +28,7 @@ async def hello(websocket, path):
         "espBin": [
             [0x0000, base64_file('/home/vscode/workspace/wokwi/esp32c3_bootloader.bin')],
             [0x8000, base64_file('/home/vscode/workspace/wokwi/esp32c3_partition-table.bin')],
-            [0x10000, base64_file('/home/vscode/workspace/intro/hardware-check/app.bin')],
+            [0x10000, base64_file('{}/app.bin'.format(os.getcwd()))],
         ]
     }))
 
