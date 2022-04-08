@@ -12,10 +12,238 @@
       "problemMatcher": [
         "$rustc"
       ],
-      "label": "Build current project and run Wokwi simulation",
+      "label": "Build and run Wokwi simulation: Focused project",
       "group": {
         "kind": "build",
         "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/hardware-check"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/hardware-check",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/http-client/exercise"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/http-client/exercise",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/http-client/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/http-client/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/http-server/exercise"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/http-server/exercise",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/http-server/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/http-server/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/mqtt/exercise"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/mqtt/exercise",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/mqtt/host-client"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/mqtt/host-client",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/intro/mqtt/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: intro/mqtt/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/advanced/button-interrupt/exercise"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: advanced/button-interrupt/exercise",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/advanced/button-interrupt/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: advanced/button-interrupt/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/advanced/i2c-driver/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: advanced/i2c-driver/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": [
+        "cargo espflash --release save-image app.bin &&",
+        "pip3 install -r $HOME/workspace/wokwi/requirements.txt &&",
+        "python3 $HOME/workspace/wokwi/wokwi-server-esp32c3.py"
+      ],
+      "options": {
+        "cwd": "/home/vscode/workspace/advanced/i2c-sensor-reading/solution"
+      },
+      "problemMatcher": [
+        "$rustc"
+      ],
+      "label": "Build and run Wokwi simulation: advanced/i2c-sensor-reading/solution",
+      "group": {
+        "kind": "build",
+        "isDefault": false
       }
     },
   ]
