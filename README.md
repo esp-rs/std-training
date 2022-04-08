@@ -36,26 +36,56 @@ Please note, much of this material remains a work in progress!
 
 The repository includes the option to use [Visual Studio Code remote
 containers](https://code.visualstudio.com/docs/remote/containers), the
-development container includes all the necesary dependencies alongside helpful
+development container includes all the necessary dependencies alongside helpful
 VS Code extension and settings. For more information on how to use it, refer to
 [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer).
 > If using Podman, follow along the [Podman setup section](https://github.com/SergioGasquez/esp-rs-devcontainer#optional-podman).
 
-Developing in an online dev enviroment is also available with [Gitpod](https://www.gitpod.io/):
+Developing in an online dev environment is also available with [Gitpod](https://www.gitpod.io/):
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/github.com/SergioGasquez/espressif-trainings/tree/main)
 
-When using an online Gitpod enviroment, flashing and monitoring can be done
+When using an online Gitpod environment, flashing and monitoring can be done
 with online tools, for more information have a look at [Flash](https://github.com/SergioGasquez/esp-rs-devcontainer#adafruit-esptool)
 and [Monitor](https://github.com/SergioGasquez/esp-rs-devcontainer#online-serial-monitor)
 sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer) repository.
 
 ### Wokwi Simulator
 The devcontainer includes the option of simulating the exercises with [Wokwi](https://wokwi.com/).
-In order to build and run a Wokwi simulation, the task `Build current project and run Wokwi simulation` 
-In order to run a Wokwi simulation, the task `Build current project and run Wokwi simulation` defined in `.vscode/tasks.json` can be used.  For this open the `main.rs` file of your project you would like to compile & run. Please ensure the file is in focus in VS Code.
-focused in VS Code. The task will generate a binary file for the application and 
-run Wokwi simulation, this task can also be run with `Ctrl-Shift-B` or `Cmd-Shift-B`.
+In order to build and run a Wokwi simulation, several task are provided via `.vscode/tasks.json`:
+- `Build and run Wokwi simulation: Focused project` is the default build task. 
+  To use it, open the `main.rs` file of your project you would like to compile 
+  & run. Please ensure the file is in focus in VS Code. 
+> Default build task can be run from: 
+> - From the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (`Ctrl-Shift-P` or `Cmd-Shift-P`) run the `Tasks: Run Build Task` command 
+> - `Terminal`-> `Run Build Task` in the menu.
+> - With `Ctrl-Shift-B` or `Cmd-Shift-B`
+- `Build and run Wokwi simulation: <project>` Builds and run simulation for the
+  selected `<project>`. 
+> Task can be run from: 
+> - From the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (`Ctrl-Shift-P` or `Cmd-Shift-P`) run the `Tasks: Run Task` command 
+> - `Terminal`-> `Run Task` in the menu.
+
+A script, `run.sh`, under the `wokwi` folder, is also provided with the same purpose, build and run the Wokwi simulation for the different projects, in order
+to use it:
+1. Set the `CURRENT_PROJECT` environment variable:
+   `$ export CURRENT_PROJECT=<project>`. Possible values of `<project>` are:
+   - `intro/hardware-check`
+   - `intro/http-client/exercise`
+   - `intro/http-client/solution`
+   - `intro/http-server/exercise`
+   - `intro/http-server/solution`
+   - `intro/mqtt/exercise`
+   - `intro/mqtt/host-client`
+   - `intro/mqtt/solution`
+   - `advanced/button-interrupt/exercise`
+   - `advanced/button-interrupt/solution`
+   - `advanced/i2c-driver/solution`
+   - `advanced/i2c-sensor-reading/solution`
+2. Run the bash script: `$ bash wokwi/run.sh`
+
+> When using Gitpod online enviroment, using the script is the reccomended 
+> method since VScode task are not available
 
 ## Development
 
