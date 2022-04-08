@@ -1,6 +1,11 @@
 {
   "name": "espressif-training",
-  "image": "docker.io/sergiogasquez/esp-rs-env:esp32c3-training",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "CONTAINER_USER": "vscode"
+    }
+  },
   "settings": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
@@ -21,7 +26,7 @@
     "vadimcn.vscode-lldb",
     "serayuzgur.crates",
     "mutantdino.resourcemonitor",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
   ],
   // Uncomment if using Podman and choose the proper device
   // "runArgs": ["--userns=keep-id", "--device", "/dev/ttyUSB0", "--security-opt", "label=disable", "--annotation", "run.oci.keep_original_groups=1"],
