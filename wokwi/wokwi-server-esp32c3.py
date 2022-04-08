@@ -41,13 +41,11 @@ async def hello(websocket, path):
         else:
             print("> {}".format(msg))
 
-
 start_server = websockets.serve(hello, "127.0.0.1", PORT)
-
 asyncio.get_event_loop().run_until_complete(start_server)
-url = "https://wokwi.com/_alpha/wembed/325484699259503188?partner=espressif&port={}&data=demo".format(PORT)
+url = "https://wokwi.com/_alpha/wembed/325149339656651346?partner=espressif&port={}&data=demo".format(PORT)
 print("Web socket listening on port {}".format(PORT))
 print("")
-print("Opening https://wokwi.com/_alpha/wembed/325484699259503188?partner=espressif&port={}&data=demo".format(PORT))
+print("Opening https://wokwi.com/_alpha/wembed/325149339656651346?partner=espressif&port={}&data=demo".format(PORT))
 webbrowser.open(url)
 asyncio.get_event_loop().run_forever()
