@@ -53,7 +53,7 @@ sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcon
 ### Wokwi Simulator
 The devcontainer includes the option of simulating the exercises with [Wokwi](https://wokwi.com/).
 In order to build and run a Wokwi simulation, the task `Build current project and run Wokwi simulation` 
-can be used, it must be invoked with the `main.rs` of the project we want to 
+In order to run a Wokwi simulation, the task `Build current project and run Wokwi simulation` defined in `.vscode/tasks.json` can be used.  For this open the `main.rs` file of your project you would like to compile & run. Please ensure the file is in focus in VS Code.
 focused in VS Code. The task will generate a binary file for the application and 
 run Wokwi simulation, this task can also be run with `Ctrl-Shift-B` or `Cmd-Shift-B`.
 
