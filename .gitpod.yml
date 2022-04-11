@@ -1,5 +1,6 @@
-image: sergiogasquez/esp-rs-env:esp32c3-training
-
+# image: sergiogasquez/esp-rs-env:esp32c3-training
+image:
+  file: .devcontainer/Dockerfile
 tasks:
   - name: Adopt environment in the container image to gitpod user
     command: |
@@ -16,4 +17,4 @@ vscode:
     - anwar.resourcemonitor
     - yzhang.markdown-all-in-one
 # ports:
-  # - port: 9012
+#   - port: 9012
