@@ -1,6 +1,8 @@
-# image: sergiogasquez/esp-rs-env:esp32c3-training
-image:
-  file: .devcontainer/Dockerfile
+# Choose between building from Dockerfile or pulling the built image.
+image: sergiogasquez/esp-rs-env:esp32c3-training
+# image:
+# Due to https://github.com/gitpod-io/gitpod/issues/7754 building from Dockerfile is not working
+#   file: .devcontainer/Dockerfile
 tasks:
   - name: Adopt environment in the container image to gitpod user
     command: |
