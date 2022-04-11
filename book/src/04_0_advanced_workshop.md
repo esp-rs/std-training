@@ -8,7 +8,7 @@ In this course we're going to dive deeper into topics that are embedded-only and
 
  ## Preparations
  
- Please go through the [preparations](./02_preparations.md) chapter to prepare for this workshop.
+ Please go through the [preparations](./02_0_preparations.md) chapter to prepare for this workshop.
 
  ## Reference
 
