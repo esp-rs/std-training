@@ -41,6 +41,10 @@ VS Code extension and settings. For more information on how to use it, refer to
 [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer).
 > If using Podman, follow along the [Podman setup section](https://github.com/SergioGasquez/esp-rs-devcontainer#optional-podman).
 
+The repository offers the choice to use a [built image, hosted on Dockerhub](https://hub.docker.com/repository/docker/sergiogasquez/esp-rs-env)
+,or to build it from a Dockerfile. The default choice is using the Dockerhub image
+since it's faster, in order to change it, edit `devcontainer.json`or `.gitpod.yml`.
+
 Developing in an online dev environment is also available with [Gitpod](https://www.gitpod.io/):
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/github.com/SergioGasquez/espressif-trainings/tree/main)
