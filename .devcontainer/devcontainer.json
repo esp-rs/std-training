@@ -1,11 +1,13 @@
 {
   "name": "espressif-training",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "CONTAINER_USER": "vscode"
-    }
-  },
+  // Choose between "image" and "build" properties to pull built image or build from Dockerfile
+  "image": "docker.io/sergiogasquez/esp-rs-env:esp32c3-training",
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   "args": {
+  //     "CONTAINER_USER": "vscode"
+  //   }
+  // },
   "settings": {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
