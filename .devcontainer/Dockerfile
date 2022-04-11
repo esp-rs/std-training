@@ -7,7 +7,7 @@ RUN apt-get update \
     python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 clang \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 RUN pip3 install websockets==10.2
-ARG CONTAINER_USER
+ARG CONTAINER_USER=gitpod
 RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
 USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
