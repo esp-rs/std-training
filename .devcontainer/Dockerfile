@@ -27,7 +27,7 @@ RUN git clone --recursive --depth 1 --shallow-submodules -b ${ESP_IDF_BRANCH} \
     https://github.com/espressif/esp-idf.git $HOME/esp-idf
 RUN $HOME/esp-idf/install.sh ${ESP_BOARD}
 ENV IDF_PATH=$HOME/esp-idf
-RUN git clone -b feature/fetch-dependencies https://github.com/SergioGasquez/espressif-trainings.git && \
+RUN git clone https://github.com/ferrous-systems/espressif-trainings.git && \
     # Hardware Check
     cd $HOME/espressif-trainings/intro/hardware-check && \
     $HOME/.cargo/bin/cargo fetch && \
