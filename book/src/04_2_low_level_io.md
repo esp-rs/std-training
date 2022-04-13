@@ -29,11 +29,11 @@ In Rust the mapping from Registers to Code works like this:
 
 Registers and their fields on a device are described in _System View Description_ (SVD) files. `svd2rust` is used to generate _Peripheral Access Crates_ (PACs) from these SVD files. The PACs provide a thin wrapper over the various memory-mapped registers defined for the particular model of micro-controller you are using.
 
-Whilst it is possible to write firmware with a PAC alone, some of it would unsafe or otherwise inconvenient as it only provides the most basic access to the peripherals of the microcontroller. So there is another layer, the _Hardware Abstraction Layer_ (HAL). HALs provide a more user friendly API for the chip, and often implement common traits defined in the generic [`embedded-hal`](https://github.com/rust-embedded/embedded-hal).
+Whilst it is possible to write firmware with a PAC alone, some of it would prove unsafe or otherwise inconvenient as it only provides the most basic access to the peripherals of the microcontroller. So there is another layer, the _Hardware Abstraction Layer_ (HAL). HALs provide a more user friendly API for the chip, and often implement common traits defined in the generic [`embedded-hal`](https://github.com/rust-embedded/embedded-hal).
 
-Microcontrollers are usually soldered to some _Printed Circuit Board_ (or just _Board_), which defines the connections that are made to each pin. A _Board Support Crate_ (BSC, also known as a _Board Support Package_ or BSP) may be written for a given board. This provide yet another layer of abstraction and might, for example, provide an API to the various sensors and LEDs on that board - without the user necessarily needing to know which pins on your microcontroller are connected to those sensors or LEDs. 
+Microcontrollers are usually soldered to some _Printed Circuit Board_ (or just _Board_), which defines the connections that are made to each pin. A _Board Support Crate_ (BSC, also known as a _Board Support Package_ or BSP) may be written for a given board. This provides yet another layer of abstraction and might, for example, provide an API to the various sensors and LEDs on that board - without the user necessarily needing to know which pins on your microcontroller are connected to those sensors or LEDs.
 
-Although a [PAC](https://github.com/esp-rs/esp32c3) for the ESP32-C3 exists, bare-metal Rust is highly experimental on ESP32-C3 chips, so for now we will not work with it on the microcontroller directly. We will write a partial sensor driver in this approach as driver's should be platform agnostic. 
+Although a [PAC](https://github.com/esp-rs/esp-pacs/tree/main/esp32c3) for the ESP32-C3 exists, bare-metal Rust is highly experimental on ESP32-C3 chips, so for now we will not work with it on the microcontroller directly. We will write a partial sensor driver in this approach as driver's should be platform agnostic.
 
 
 
