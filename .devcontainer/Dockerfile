@@ -13,9 +13,9 @@ RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
 USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
-    --default-toolchain nightly-2022-03-10 -y
+    --default-toolchain nightly-2022-03-30 -y
 ENV PATH=${PATH}:$HOME/.cargo/bin:$HOME/.cargo/bin
-RUN $HOME/.cargo/bin/rustup component add rust-src --toolchain nightly-2022-03-10
+RUN $HOME/.cargo/bin/rustup component add rust-src --toolchain nightly-2022-03-30
 RUN $HOME/.cargo/bin/rustup target add riscv32i-unknown-none-elf
 RUN $HOME/.cargo/bin/cargo install cargo-generate espmonitor bindgen ldproxy
 RUN $HOME/.cargo/bin/cargo install cargo-espflash --version 1.4.0
