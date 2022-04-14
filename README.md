@@ -34,28 +34,27 @@ Please note, much of this material remains a work in progress!
 
 ## Devcontainer
 
-The repository includes the option to use [Visual Studio Code remote
-containers](https://code.visualstudio.com/docs/remote/containers), the
-development container includes all the necessary dependencies alongside helpful
-VS Code extension and settings. For more information on how to use it, refer to
-[esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer).
-> If using Podman, follow along the [Podman setup section](https://github.com/SergioGasquez/esp-rs-devcontainer#optional-podman).
+The repository includes a Dockerfile with all the necesary depencendies installed.
+The Dockerile can be used with [Visual Studio Code remote
+containers](https://code.visualstudio.com/docs/remote/containers) in order to
+have a fully working enviroment with dependencies alongside VS Code extension and settings.
 
-The repository offers the choice to use a [built image, hosted on Dockerhub](https://hub.docker.com/repository/docker/sergiogasquez/esp-rs-env)
-,or to build it from a Dockerfile. The default choice is using the Dockerhub image
-since it's faster, in order to change it, edit `devcontainer.json`or `.gitpod.yml`.
+A Dockerfile is provided for users that would like to build the container from scrach but,
+the default method is pulling a [built image hosted on Dockerhub](https://hub.docker.com/repository/docker/sergiogasquez/esp-rs-env). In order to build the container from the Dockerfile, edit `devcontainer.json`
 
-Developing in an online dev environment is also available with [Gitpod](https://www.gitpod.io/):
+Developing in an online environment is also available with [Gitpod](https://www.gitpod.io/):
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/github.com/SergioGasquez/espressif-trainings/tree/main)
 
-When using an online Gitpod environment, flashing and monitoring can be done
-with online tools, for more information have a look at [Flash](https://github.com/SergioGasquez/esp-rs-devcontainer#adafruit-esptool)
+When using devcontainers, flashing and monitoring is limited but it can be done
+with online tools for more information have a look at [Flash](https://github.com/SergioGasquez/esp-rs-devcontainer#adafruit-esptool)
 and [Monitor](https://github.com/SergioGasquez/esp-rs-devcontainer#online-serial-monitor)
-sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer) repository.
-
+sections of [esp-rs-devcontainer](https://github.com/SergioGasquez/esp-rs-devcontainer) repository. Of course, flashing and monitoring from the host device is also a choice.
 ### Wokwi Simulator
 The devcontainer includes the option of simulating the exercises with [Wokwi](https://wokwi.com/).
+> Wokwi simulation get paused if the Wokwi browser tab is not focused. This could
+> affect the execution of some projects.
+
 In order to build and run a Wokwi simulation, several task are provided via `.vscode/tasks.json`:
 - `Build and run Wokwi simulation: Focused project` is the default build task. 
   To use it, open the `main.rs` file of your project you would like to compile 
@@ -88,8 +87,7 @@ to use it:
    - `advanced/i2c-sensor-reading/solution`
 2. Run the bash script: `$ bash wokwi/run.sh`
 
-> When using Gitpod online enviroment, using the script is the reccomended 
-> method since VScode task are not available
+> When using Gitpod online enviroment, VScode tasks are not available.
 
 ## Development
 

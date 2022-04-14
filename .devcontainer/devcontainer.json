@@ -4,9 +4,6 @@
   "image": "docker.io/sergiogasquez/esp-rs-env:esp32c3-training",
   // "build": {
   //   "dockerfile": "Dockerfile",
-  //   "args": {
-  //     "CONTAINER_USER": "vscode"
-  //   }
   // },
   "settings": {
     "editor.formatOnPaste": true,
@@ -35,7 +32,6 @@
   "forwardPorts": [
     9012
   ],
-  "containerUser": "vscode",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace,type=bind,consistency=cached",
-  "workspaceFolder": "/home/vscode/workspace/"
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/esp/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/home/esp/workspace/"
 }

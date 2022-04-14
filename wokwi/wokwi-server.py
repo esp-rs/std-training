@@ -24,11 +24,11 @@ async def hello(websocket, path):
     # Send the simulation payload
     await websocket.send(json.dumps({
         "type": "start",
-        "elf": base64_file('/home/vscode/workspace/wokwi/dummy.elf'),
+        "elf": base64_file('{}/wokwi/dummy.elf'.format(os.getcwd())),
         "espBin": [
-            [0x0000, base64_file('/home/vscode/workspace/wokwi/esp32c3_bootloader.bin')],
-            [0x8000, base64_file('/home/vscode/workspace/wokwi/esp32c3_partition-table.bin')],
-            [0x10000, base64_file('{}/app.bin'.format(os.getcwd()))],
+            [0x0000, base64_file('{}/wokwi/esp32c3_bootloader.bin'.format(os.getcwd()))],
+            [0x8000, base64_file('{}/wokwi/esp32c3_partition-table.bin'.format(os.getcwd()))],
+            [0x10000, base64_file('{}/app.bin'.format(os.getenv('CURRENT_PROJECT')))],
         ]
     }))
 
@@ -43,6 +43,7 @@ async def hello(websocket, path):
 
 start_server = websockets.serve(hello, "127.0.0.1", PORT)
 asyncio.get_event_loop().run_until_complete(start_server)
+
 # ESP32C3 Rust Board
 board = 328638850887844436
 # ESP32-C3-DevKitC-02
