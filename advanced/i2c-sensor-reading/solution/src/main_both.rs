@@ -23,8 +23,8 @@ fn main() -> anyhow::Result<()>  {
 
     let peripherals = Peripherals::take().unwrap();
 
-    let sda = peripherals.pins.gpio4;
-    let scl = peripherals.pins.gpio5;
+    let sda = peripherals.pins.gpio10;
+    let scl = peripherals.pins.gpio8;
 
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
@@ -37,7 +37,7 @@ fn main() -> anyhow::Result<()>  {
     let proxy_1 =bus.acquire_i2c();
     let proxy_2 =bus.acquire_i2c();
 
-    let mut imu = IMC42670P::new(proxy_1, SlaveAddr::B110_1001)?;
+    let mut imu = IMC42670P::new(proxy_1, SlaveAddr::B110_1000)?;
     println!("Sensor init");
     let device_id = imu.read_device_id_register()?;
     println!("Device ID: {}", device_id);
