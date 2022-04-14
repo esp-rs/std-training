@@ -6,10 +6,10 @@ image: sergiogasquez/esp-rs-env:esp32c3-training
 tasks:
   - name: Adopt environment in the container image to gitpod user
     command: |
-      ln -s /home/vscode/.rustup /home/gitpod/.rustup
+      ln -s /home/esp/.rustup /home/gitpod/.rustup
       mkdir /home/gitpod/.cargo
-      ln -s /home/vscode/.cargo/bin /home/gitpod/.cargo/bin
-      ln -s /home/vscode/.cargo/env /home/gitpod/.cargo/env
+      ln -s /home/esp/.cargo/bin /home/gitpod/.cargo/bin
+      ln -s /home/esp/.cargo/env /home/gitpod/.cargo/env
       source /home/gitpod/.cargo/env
 vscode:
   extensions:
