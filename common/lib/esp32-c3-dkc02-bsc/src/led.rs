@@ -106,7 +106,7 @@ impl WS2812RMT {
         let config = rmt_config_t {
             rmt_mode: rmt_mode_t_RMT_MODE_TX,
             channel: 0,
-            gpio_num: 8,
+            gpio_num: 7,
             clk_div: 2,
             mem_block_num: 1,
             flags: 0,
@@ -142,7 +142,7 @@ impl WS2812RMT {
             esp!(rmt_write_sample(
                 self.config.channel,
                 &[color.g, color.r, color.b] as *const u8, // WS2812 expects GRB, not RGB
-                3,
+                1000,
                 true,
             ))?;
             esp!(rmt_wait_tx_done(
