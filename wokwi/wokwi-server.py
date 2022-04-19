@@ -48,7 +48,7 @@ asyncio.get_event_loop().run_until_complete(start_server)
 # board = 325149339656651346
 # ESP32C3 Rust Board
 board = 328638850887844436
-if "intro/hardware-check" in os.getenv('CURRENT_PROJECT') or "intro/mqtt" in os.getenv('CURRENT_PROJECT'):
+if "intro/hardware-check" in os.getenv('CURRENT_PROJECT') or "intro/mqtt" in os.getenv('CURRENT_PROJECT') or "advanced/button-interrupt" in os.getenv('CURRENT_PROJECT'):
     # ESP32C3 Rust Board with Neopixel
     board = 328904135759888980
 url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo".format(board,PORT)
