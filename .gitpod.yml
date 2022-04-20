@@ -20,3 +20,4 @@ vscode:
     - yzhang.markdown-all-in-one
 ports:
   - port: 9012
+    visibility: public
