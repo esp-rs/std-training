@@ -51,7 +51,12 @@ board = 328638850887844436
 if "intro/hardware-check" in os.getenv('CURRENT_PROJECT') or "intro/mqtt" in os.getenv('CURRENT_PROJECT') or "advanced/button-interrupt" in os.getenv('CURRENT_PROJECT'):
     # ESP32C3 Rust Board with Neopixel
     board = 328904135759888980
-url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo".format(board,PORT)
+if(os.getenv('USER') == "gitpod"):
+    gp_url = subprocess.getoutput("gp url {}".format(PORT))
+    gp_url = gp_url[8:]
+    url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo&_host{}".format(board,PORT,gp_url)
+else:
+    url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo".format(board,PORT)
 print("Web socket listening on port {}".format(PORT))
 print("")
 print("Please, open the following URL: {}".format(url))
