@@ -4,7 +4,8 @@ use std::sync::Arc;
 
 use anyhow::bail;
 use embedded_svc::wifi::{
-    self, ClientConfiguration, ClientConnectionStatus, ClientIpStatus, ClientStatus, Wifi as _,
+    self, AuthMethod, ClientConfiguration, ClientConnectionStatus, ClientIpStatus, ClientStatus,
+    Wifi as _,
 };
 use esp_idf_svc::{
     netif::EspNetifStack, nvs::EspDefaultNvs, sysloop::EspSysLoopStack, wifi::EspWifi,
@@ -20,11 +21,13 @@ pub struct Wifi {
 }
 
 pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
+    let mut auth_method = AuthMethod::WPA2Personal;
     if ssid.len() == 0 {
         anyhow::bail!("missing WiFi name")
     }
     if psk.len() == 0 {
-        anyhow::bail!("missing WiFi password")
+        auth_method = AuthMethod::None;
+        info!("Wifi password is empty");
     }
     let netif_stack = Arc::new(EspNetifStack::new()?);
     let sys_loop_stack = Arc::new(EspSysLoopStack::new()?);
@@ -60,6 +63,7 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
         ssid: ssid.into(),
         password: psk.into(),
         channel,
+        auth_method: auth_method,
         ..Default::default()
     }))?;
 
