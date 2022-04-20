@@ -8,7 +8,7 @@ import os
 import subprocess
 import websockets
 import webbrowser
-
+import time
 
 PORT = 9012
 
@@ -55,11 +55,13 @@ if "intro/hardware-check" in os.getenv('CURRENT_PROJECT') or "intro/mqtt" in os.
 if(os.getenv('USER') == "gitpod"):
     gp_url = subprocess.getoutput("gp url {}".format(PORT))
     gp_url = gp_url[8:]
-    url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo&_host={}".format(board,PORT,gp_url)
+    url = "https://wokwi.com/_alpha/wembed/{}?_host={}".format(board,gp_url)
 else:
     url = "https://wokwi.com/_alpha/wembed/{}?partner=espressif&port={}&data=demo".format(board,PORT)
-print("Web socket listening on port {}".format(PORT))
-print("")
 print("Please, open the following URL: {}".format(url))
-webbrowser.open(url)
+if(os.getenv('USER') == "gitpod"):
+    time.sleep(2)
+    open_preview = subprocess.getoutput("gp preview {}".format(url))
+else:
+    webbrowser.open(url)
 asyncio.get_event_loop().run_forever()
