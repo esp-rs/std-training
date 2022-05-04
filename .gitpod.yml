@@ -1,0 +1,18 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+ - name: Setup environment variables for Rust and ESP-IDF
+   command: |
+     export IDF_TOOLS_PATH=/home/gitpod/.espressif
+     source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh
+vscode:
+  extensions:
+    - matklad.rust-analyzer
+    - tamasfe.even-better-toml
+    - vadimcn.vscode-lldb
+    - anwar.resourcemonitor
+    - yzhang.markdown-all-in-one
+    - serayuzgur.crates
+ports:
+  - port: 9012
+    visibility: public
