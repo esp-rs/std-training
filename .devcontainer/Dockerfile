@@ -14,17 +14,15 @@ WORKDIR /home/${CONTAINER_USER}
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y
-ENV PATH=${PATH}:$HOME/.cargo/bin:$HOME/.cargo/bin
+ENV PATH=${PATH}:$HOME/.cargo/bin
 RUN $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION}
 RUN $HOME/.cargo/bin/rustup target add riscv32i-unknown-none-elf
-RUN $HOME/.cargo/bin/cargo install cargo-generate espmonitor bindgen ldproxy
-RUN $HOME/.cargo/bin/cargo install cargo-espflash --version 1.4.1
+RUN $HOME/.cargo/bin/cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
 ENV ESP_IDF_TOOLS_INSTALL_DIR=global
 ENV ESP_BOARD=esp32c3
-ENV ESP_IDF_VER=v4.4
 ENV ESP_IDF_VERSION=release/v4.4
-ENV ESP_IDF_BRANCH=release/v4.4
-RUN git clone --recursive --depth 1 --shallow-submodules -b ${ESP_IDF_BRANCH} \
+RUN git clone --recursive --depth 1 --shallow-submodules -b ${ESP_IDF_VERSION} \
     https://github.com/espressif/esp-idf.git $HOME/esp-idf
 RUN $HOME/esp-idf/install.sh ${ESP_BOARD}
 ENV IDF_PATH=$HOME/esp-idf
+CMD "/bin/bash"
