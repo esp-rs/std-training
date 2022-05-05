@@ -69,16 +69,29 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
 
     info!("getting Wifi status");
 
-    let status = wifi.get_status();
+    let wifi::Status(mut client_status, _) = wifi.get_status();
 
-    if let wifi::Status(
-        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(_))),
-        _,
-    ) = status
+    while ClientStatus::Started(ClientConnectionStatus::Connecting) == client_status {
+        info!("WiFi connecting");
+        std::thread::sleep(std::time::Duration::from_millis(500));
+        wifi::Status(client_status, _) = wifi.get_status();
+    }
+
+    while ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Waiting))
+        == client_status
+    {
+        info!("WiFi connected, waiting for IP");
+        std::thread::sleep(std::time::Duration::from_millis(500));
+        wifi::Status(client_status, _) = wifi.get_status();
+    }
+
+    if let ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(
+        _client_settings,
+    ))) = client_status
     {
         info!("Wifi connected!");
     } else {
-        bail!("Unexpected Wifi status: {:?}", status);
+        bail!("Unexpected Wifi status: {:?}", client_status);
     }
 
     let wifi = Wifi {
