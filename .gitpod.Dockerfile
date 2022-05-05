@@ -16,19 +16,14 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32i-unknown-none-elf \
     && $HOME/.cargo/bin/cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
-# ADD --chown=${CONTAINER_USER}:${CONTAINER_GROUP} \
-#     https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1-linux-x86_64.sh \
-#     /home/${CONTAINER_USER}/cmake-install.sh
-# RUN chmod a+x /home/gitpod/cmake-install.sh \
-#     && mkdir -p /home/gitpod/opt \
-#     && ./cmake-install.sh --prefix=/home/gitpod/opt --skip-license
-ENV ESP_IDF_TOOLS_INSTALL_DIR=global
+# ENV ESP_IDF_TOOLS_INSTALL_DIR=global
 ENV ESP_BOARD=esp32c3
 ENV ESP_IDF_VERSION=release/v4.4
 RUN mkdir -p /home/${CONTAINER_USER}/.espressif/frameworks/ \
     && git clone -b ${ESP_IDF_VERSION} --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
     /home/${CONTAINER_USER}/.espressif/frameworks/esp-idf-v4.4 \
+    && python3 .espressif/frameworks/esp-idf-v4.4/tools/idf_tools.py install cmake ninja \
     && /home/${CONTAINER_USER}/.espressif/frameworks/esp-idf-v4.4/install.sh ${ESP_BOARD} \
     && rm -rf /home/${CONTAINER_USER}/.espressif/dist \
     && rm -rf /home/${CONTAINER_USER}/.espressif/frameworks/esp-idf-v4.4/docs
