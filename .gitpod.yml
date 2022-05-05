@@ -1,9 +1,5 @@
 image:
   file: .gitpod.Dockerfile
-tasks:
- - name: Setup wokwi alias
-   command: |
-      alias wokwi='bash /workspace/ferrous-training/wokwi/run.sh'
 vscode:
   extensions:
     - matklad.rust-analyzer
