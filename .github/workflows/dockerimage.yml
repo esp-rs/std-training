@@ -2,8 +2,16 @@
 name: Build Docker Image
 
 on:
+  pull_request:
+    paths:
+      - '!book/**'
+    branches:
+      - main
   push:
-    branches: [main]
+    paths:
+      - '!book/**'
+    branches:
+      - main
 
 jobs:
   # To avoid uploading the Docker image to a registry yet
@@ -19,4 +27,6 @@ jobs:
         run: docker image build --tag esp --file .devcontainer/Dockerfile .
 
       - name: Test code examples in Docker image
-        run: docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached --rm -it esp:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh
+        run: |
+          docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
+                 --rm -it esp:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh
