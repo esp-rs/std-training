@@ -86,7 +86,7 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(message: EspMqttMessage, led: &mut WS2812RMT) {
+fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
         Complete(token) => {
             info!("{}", message.topic(token));
