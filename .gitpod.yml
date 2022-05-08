@@ -3,7 +3,7 @@ image:
 tasks:
  - name: Setup environment variables for ESP-IDF
    command: |
-     source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh
+     source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1
 vscode:
   extensions:
     - matklad.rust-analyzer
