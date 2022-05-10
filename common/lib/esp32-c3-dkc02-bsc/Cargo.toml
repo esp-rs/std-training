@@ -8,10 +8,10 @@ edition = "2021"
 
 [dependencies]
 esp32c3 = "=0.3.0"
-esp-idf-sys = { version = "=0.30.4" }
-esp-idf-svc = { version="=0.36.7", features = ["experimental", "alloc"] }
-esp-idf-hal = "=0.32.5"
-embedded-svc = "=0.16.5"
+esp-idf-sys = { version = "=0.31.5" }
+esp-idf-svc = { version="=0.39.1", features = ["experimental", "alloc"] }
+esp-idf-hal = "=0.35.1"
+embedded-svc = "=0.19"
 rgb = "0.8"
 log = "0.4"
 anyhow = "1"

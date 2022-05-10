@@ -17,10 +17,10 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-esp-idf-sys = { version = "=0.30.4", features = ["binstart"] }
+esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
 #esp-idf-svc = { git = "https://github.com/esp-rs/esp-idf-svc.git", features = ["experimental", "alloc"], rev="d7313416" }
-esp-idf-svc = { version="=0.36.7", features = ["experimental", "alloc"] }
-embedded-svc = "=0.16.5"
+esp-idf-svc = { version="=0.39.1", features = ["experimental", "alloc"] }
+embedded-svc = "=0.19"
 esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
 log = "0.4"
 anyhow = "1"
