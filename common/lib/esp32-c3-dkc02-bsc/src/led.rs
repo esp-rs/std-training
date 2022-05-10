@@ -142,7 +142,7 @@ impl WS2812RMT {
             esp!(rmt_write_sample(
                 self.config.channel,
                 &[color.g, color.r, color.b] as *const u8, // WS2812 expects GRB, not RGB
-                1000,
+                3,
                 true,
             ))?;
             esp!(rmt_wait_tx_done(
