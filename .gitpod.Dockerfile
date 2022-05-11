@@ -7,9 +7,8 @@ ARG CONTAINER_GROUP=gitpod
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 ARG ESP_IDF_VERSION=release/v4.4
 ARG ESP_BOARD=esp32c3
-RUN sudo install-packages git curl gcc ninja-build libudev-dev \
-    python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 clang \
-    && pip3 install websockets==10.2
+RUN sudo install-packages git curl gcc clang ninja-build libudev-dev \
+    python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 libpython2.7
 USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
 ENV PATH=${PATH}:/home/${CONTAINER_USER}/.cargo/bin
