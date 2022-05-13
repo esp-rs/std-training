@@ -99,12 +99,13 @@ $ docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/works
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
 named `/home/esp/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
-Using this Docker setup it's best to open two terminals, one connected to the Docker container, one on the host system.
 
-To compile a project go to the same folder in the container & on your host system.
+Using this Docker setup requires certain commands to run inside the container, while other have to be executed on the host system.
+It's recommended to keep two terminals open, one connected to the Docker container, one on the host system.
 
-* run `cargo build` inside the container
-* use `cargo espflash` on the host system to transfer the binary onto the device
+* in the container: compile the project
+* on the host: use the `cargo-espflash` sub-command to flash the program onto the embedded hardware
+
 
 ## Additional Software
 
