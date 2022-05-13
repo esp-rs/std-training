@@ -5,6 +5,8 @@ ENV LANG=C.UTF-8
 ARG CONTAINER_USER=esp
 ARG CONTAINER_GROUP=esp
 ARG NIGHTLY_VERSION=nightly-2022-03-10
+ARG ESP_IDF_VERSION=release/v4.4
+ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
     && apt-get install -y git curl ninja-build clang libudev-dev \
@@ -22,16 +24,21 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32i-unknown-none-elf
 
-RUN $HOME/.cargo/bin/cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
+RUN $HOME/.cargo/bin/cargo install cargo-espflash espmonitor bindgen ldproxy
 
-ENV ESP_BOARD=esp32c3
-ENV ESP_IDF_VERSION=release/v4.4
 RUN mkdir -p .espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
     .espressif/frameworks/esp-idf-v4.4 \
+    && python3 .espressif/frameworks/esp-idf-v4.4/tools/idf_tools.py install cmake \
     && .espressif/frameworks/esp-idf-v4.4/install.sh ${ESP_BOARD} \
     && rm -rf .espressif/dist \
-    && rm -rf .espressif/frameworks/esp-idf-v4.4/docs
+    && rm -rf .espressif/frameworks/esp-idf-v4.4/docs \
+    && rm -rf .espressif/frameworks/esp-idf-v4.4/examples \
+    && rm -rf .espressif/frameworks/esp-idf-v4.4/tools/esp_app_trace \
+    && rm -rf .espressif/frameworks/esp-idf-v4.4/tools/test_idf_size
+
+ENV IDF_TOOLS_PATH=/home/${CONTAINER_USER}/.espressif
+RUN echo "source /home/${CONTAINER_USER}/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1" >> ~/.bashrc
 
 CMD "/bin/bash"
