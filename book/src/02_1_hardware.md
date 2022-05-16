@@ -13,12 +13,14 @@ $ lsusb | grep UART
 Bus 001 Device 011: ID 10c4:ea60 Silicon Laboratories, Inc. CP2102N USB to UART Bridge Controller  Serial: a4c4193ceaa0eb119085d1acdf749906
 ```
 
-The device will also show up in the `/dev` directory as a `ttyUSB` device:
+The device will also show up in the `/dev` directory as a `tty.usbmodem` device:
 
 ``` console
-$ ls /dev/ttyUSB*
-/dev/ttyUSB0
+$ ls /dev/tty.usbmodem*
+/dev/tty.usbmodem0
 ```
+
+(If you are using a ESP32-C3-DevKitC-02 the command is `$ ls /dev/ttyUSB*` )
 
 **macOS**:
 
@@ -26,20 +28,11 @@ The device will show up as part of the USB tree in `system_profiler`:
 
 ```console
 
-$ system_profiler SPUSBDataType | grep -A 11 "USB to UART"
+$ system_profiler SPUSBDataType | grep -A 11 "USB JTAG"
 
-CP2102N USB to UART Bridge Controller:
+USB JTAG/serial debug unit:
 
-  Product ID: 0xea60
-  Vendor ID: 0x10c4  (Silicon Laboratories, Inc.)
+  Product ID: 0x1001
+  Vendor ID: 0x303a
   (...)
 ```
-
-The device will also show up in the `/dev` directory as `tty.usbserial<XXXX>`
-
-```console
-$ ls /dev/tty.usbserial*
-/dev/tty.usbserial-114430
-
-```
-

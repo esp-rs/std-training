@@ -7,11 +7,8 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
-use imc42670p::{IMC42670P, SlaveAddr};
 
 use shtcx::{self, PowerMode};
-
-use shared_bus;
 
 // goals of this exercise:
 // instantiate i2c peripheral
@@ -23,8 +20,11 @@ fn main() -> anyhow::Result<()>  {
 
     let peripherals = Peripherals::take().unwrap();
 
-    let sda = peripherals.pins.gpio4;
-    let scl = peripherals.pins.gpio5;
+    let sda = peripherals.pins.gpio10;
+    let scl = peripherals.pins.gpio8;
+    // If you are using an ESP32-C3-DevKitC-02, change to:
+    // let sda = peripherals.pins.gpio4;
+    // let scl = peripherals.pins.gpio5;
 
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
