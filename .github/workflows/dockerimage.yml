@@ -2,22 +2,19 @@
 name: Build Docker Image
 
 on:
-  pull_request:
-    paths:
-      - '!book/**'
-    branches:
-      - main
   push:
-    paths:
-      - '!book/**'
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "book/"
 
 jobs:
   # To avoid uploading the Docker image to a registry yet
   # the image is built here & immediately used to test all exercises in.
   # TODO at a later point split that into separate jobs
   build_image_and_test:
+    name: Build & test Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
