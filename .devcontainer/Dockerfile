@@ -1,9 +1,11 @@
+# There are a few Dockerfile restrictions when using Github Actions
+# See: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions
+
 FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 ARG CONTAINER_USER=esp
-ARG CONTAINER_GROUP=esp
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 ARG ESP_IDF_VERSION=release/v4.4
 ARG ESP_BOARD=esp32c3
@@ -14,9 +16,6 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
-RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
-USER ${CONTAINER_USER}
-WORKDIR /home/${CONTAINER_USER}
 ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \

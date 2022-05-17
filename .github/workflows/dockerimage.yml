@@ -25,5 +25,5 @@ jobs:
 
       - name: Test code examples in Docker image
         run: |
-          docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
-                 --rm -i esp:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh
+          docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached \
+                 --rm esp:latest /bin/bash /workspace/.devcontainer/test.sh
