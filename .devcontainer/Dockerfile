@@ -5,7 +5,6 @@ FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
-ARG CONTAINER_USER=esp
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 ARG ESP_IDF_VERSION=release/v4.4
 ARG ESP_BOARD=esp32c3
@@ -23,7 +22,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32i-unknown-none-elf
 
-RUN $HOME/.cargo/bin/cargo install cargo-espflash espmonitor bindgen ldproxy
+RUN $HOME/.cargo/bin/cargo install cargo-espflash espmonitor ldproxy
 
 RUN mkdir -p .espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
@@ -37,7 +36,7 @@ RUN mkdir -p .espressif/frameworks/ \
     && rm -rf .espressif/frameworks/esp-idf-v4.4/tools/esp_app_trace \
     && rm -rf .espressif/frameworks/esp-idf-v4.4/tools/test_idf_size
 
-ENV IDF_TOOLS_PATH=/home/${CONTAINER_USER}/.espressif
-RUN echo "source /home/${CONTAINER_USER}/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1" >> ~/.bashrc
+ENV IDF_TOOLS_PATH=/root/.espressif
+RUN echo "source /root/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1" >> ~/.bashrc
 
 CMD "/bin/bash"
