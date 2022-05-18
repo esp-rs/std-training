@@ -56,6 +56,14 @@ Optional, but recommended: To save disk space and download time, set the toolcha
 ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 ```
 
+✅ Open `hello-world/rust-toolchain.toml` and change the file to look like this:
+
+```toml
+[toolchain]
+
+channel = "nightly-2022-03-10" # change this line
+```
+
 ✅ Run your project by using the following command out of the `hello_world` directory.
 
 ```shell

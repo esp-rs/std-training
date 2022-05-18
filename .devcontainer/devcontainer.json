@@ -3,8 +3,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "NIGHTLY_VERSION": "nightly-2022-03-10",
-      "CONTAINER_USER": "esp"
+      "NIGHTLY_VERSION": "nightly-2022-03-10"
     }
   },
   "settings": {
@@ -18,17 +17,18 @@
     },
     "rust-analyzer.checkOnSave.command": "clippy",
     "[rust]": {
-      "editor.defaultFormatter": "matklad.rust-analyzer"
-    },
+      "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    }
   },
   "extensions": [
-    "matklad.rust-analyzer",
+    "rust-lang.rust-analyzer",
     "tamasfe.even-better-toml",
     "vadimcn.vscode-lldb",
     "serayuzgur.crates",
     "mutantdino.resourcemonitor",
-    "yzhang.markdown-all-in-one",
+    "yzhang.markdown-all-in-one"
   ],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/home/esp/workspace,type=bind,consistency=cached",
-  "workspaceFolder": "/home/esp/workspace/"
+  "remoteUser": "root",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
 }
