@@ -94,11 +94,11 @@ Building the image takes a while depending on the OS & hardware (20-30 minutes).
 To start the new Docker container run:
 
 ```console
-$ docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached -it esp /bin/bash
+$ docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
 ```
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
-named `/home/esp/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
+named `/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
 
 Using this Docker setup requires certain commands to run inside the container, while other have to be executed on the host system.
 It's recommended to keep two terminals open, one connected to the Docker container, one on the host system.

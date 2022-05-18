@@ -1,23 +1,20 @@
 ---
-name: Build Docker Image
+name: Docker Image
 
 on:
-  pull_request:
-    paths:
-      - '!book/**'
-    branches:
-      - main
   push:
-    paths:
-      - '!book/**'
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "book/"
 
 jobs:
   # To avoid uploading the Docker image to a registry yet
   # the image is built here & immediately used to test all exercises in.
   # TODO at a later point split that into separate jobs
   build_image_and_test:
+    name: Build & test image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -28,5 +25,5 @@ jobs:
 
       - name: Test code examples in Docker image
         run: |
-          docker run --user esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
-                 --rm -it esp:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh
+          docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached \
+                 --rm esp:latest /bin/bash /workspace/.devcontainer/test.sh

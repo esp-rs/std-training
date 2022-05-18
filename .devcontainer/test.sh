@@ -2,7 +2,7 @@
 
 set -ef
 
-WORK_DIR=$HOME/workspace
+WORK_DIR=/workspace
 
 echo "Compiling all exercises & library crates"
 for file in $(find ${WORK_DIR} -name "Cargo.toml")
