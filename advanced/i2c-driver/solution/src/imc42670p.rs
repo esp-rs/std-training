@@ -1,5 +1,4 @@
 #![deny(unsafe_code)]
-#![no_std]
 
 use embedded_hal::blocking::i2c;
 
@@ -42,6 +41,7 @@ where
 
     /// Writes into a register
     /// This method is not public as it is only needed inside this file
+    #[allow(unused)]
     fn write_register(&mut self, register: Register, value: u8) -> Result<(), E> {
         let byte = value as u8;
         self.i2c

@@ -84,6 +84,7 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
+#[allow(unused)]
 fn random_light(led: &mut WS2812RMT) {
     let mut color = RGB8::new(0, 0, 0);
     unsafe {
