@@ -12,7 +12,7 @@ $ cd espressif-trainings
 ❗ Windows users may have problems with long path names. Follow these steps to substitute the path:
 
 ```console
-git clone git clone https://github.com/ferrous-systems/espressif-trainings.git
+git clone https://github.com/ferrous-systems/espressif-trainings.git
 subst r:\ espressif-trainings
 cd r:\
 ```
