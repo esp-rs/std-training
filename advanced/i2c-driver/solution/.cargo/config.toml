@@ -28,7 +28,7 @@ build-std-features = ["panic_immediate_abort"]
 
 [env]
 # Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF upcoming (v4.4)
-ESP_IDF_VERSION = { value = "branch:release/v4.4" }
+ESP_IDF_VERSION = { value = "tag:v4.4.1" }
 # Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF master (v5.0)
 #ESP_IDF_VERSION = { value = "master" }
 
