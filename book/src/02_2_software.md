@@ -23,21 +23,16 @@ To build for the Xtensa architecture (*not* part of this material), a fork of th
 ## Espressif toolchain
 
 Several tools are required:
-- `cargo-generate` - general purpose project setup wizard
 - `cargo-espflash` - upload firmware to the microcontroller
-- `espmonitor` - monitor firmware log messages
-- `bindgen` - generate Rust bindings for C APIs
 - `ldproxy` - Espressif build toolchain dependency
 
 ✅ Install them with the following command:
 
 ```console
-$ cargo install cargo-generate cargo-espflash espmonitor bindgen ldproxy
+$ cargo install cargo-espflash ldproxy
 ```
 
 ## Toolchain dependencies
-
-`bindgen` relies upon a few compiler packages. How to install these depends on your operating system - here are a few examples, further documentation (including Windows) can be found in the official [bindgen requirements](https://rust-lang.github.io/rust-bindgen/requirements.html) document.
 
 ### Debian/Ubuntu
 
