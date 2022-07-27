@@ -4,13 +4,14 @@ use std::sync::Arc;
 
 use anyhow::bail;
 use embedded_svc::wifi::{
-    self, AuthMethod, ClientConfiguration, ClientConnectionStatus, ClientIpStatus, ClientStatus,
-    Wifi as _,
+    self, AuthMethod, ClientConfiguration, ClientConnectionStatus, ClientStatus, Wifi as _,
 };
 use esp_idf_svc::{
     netif::EspNetifStack, nvs::EspDefaultNvs, sysloop::EspSysLoopStack, wifi::EspWifi,
 };
 use log::info;
+
+const SLEEP_DURATION_BETWEEN_TRIES: std::time::Duration = std::time::Duration::from_millis(500);
 
 #[allow(unused)]
 pub struct Wifi {
@@ -21,11 +22,11 @@ pub struct Wifi {
 }
 
 pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
-    let mut auth_method = AuthMethod::WPA2Personal;
-    if ssid.len() == 0 {
+    let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
+    if ssid.is_empty() {
         anyhow::bail!("missing WiFi name")
     }
-    if psk.len() == 0 {
+    if psk.is_empty() {
         auth_method = AuthMethod::None;
         info!("Wifi password is empty");
     }
@@ -63,22 +64,34 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
         ssid: ssid.into(),
         password: psk.into(),
         channel,
-        auth_method: auth_method,
+        auth_method,
         ..Default::default()
     }))?;
 
     info!("getting Wifi status");
 
-    let status = wifi.get_status();
-
-    if let wifi::Status(
-        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(_))),
-        _,
-    ) = status
-    {
-        info!("Wifi connected!");
-    } else {
-        bail!("Unexpected Wifi status: {:?}", status);
+    let mut status = wifi.get_status();
+    // loop over the status' value until it is either connected or disconnected
+    // catch all is to make sure that at least if more states are added, the enum here
+    // remains exhaustive even though logically it might not stand up the test of time
+    while let wifi::Status(ClientStatus::Started(ref client_connection_status), _) = status {
+        match client_connection_status {
+            ClientConnectionStatus::Connected(_) => {
+                info!("Connected to Wifi");
+                break;
+            }
+            ClientConnectionStatus::Disconnected => {
+                bail!("Disconnected from Wifi; Current status is: {:?}", status)
+            }
+            _ => {
+                info!(
+                    "Retrying to connect to Wifi; Polling after sleeping {:?}; Current status is: {:?}",
+                    SLEEP_DURATION_BETWEEN_TRIES, status
+                );
+                std::thread::sleep(SLEEP_DURATION_BETWEEN_TRIES);
+                status = wifi.get_status();
+            }
+        }
     }
 
     let wifi = Wifi {
