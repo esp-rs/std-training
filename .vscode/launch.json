@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "gdb",
+      "request": "attach",
+      "name": "Wokwi Debug",
+      "executable":"${workspaceFolder}/target/riscv32imc-esp-espidf/debug/esp_tra",
+      "target": "localhost:9333",
+      "remote": true,
+      "gdbpath":"/home/${input:user}/.espressif/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin/riscv32-esp-elf-gdb",
+      "cwd": "${workspaceRoot}",
+      "stopAtConnect": true,
+      "valuesFormatting": "parseText"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "user",
+      "description": "Select the user: esp for VsCode and Codespaces and gitpod for Gitpod:",
+      "options": [
+        "esp",
+        "gitpod"
+      ],
+      "default": "esp"
+    }
+  ]
+}
