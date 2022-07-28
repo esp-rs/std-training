@@ -5,6 +5,9 @@ with the Espressif ESP32-C3.
 
 We suggest you start by [reading the book](https://espressif-trainings.ferrous-systems.com).
 
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ferrous-systems/espressif-trainings)
+
 ## Contents
 
 There is:
