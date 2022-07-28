@@ -26,7 +26,14 @@
     "vadimcn.vscode-lldb",
     "serayuzgur.crates",
     "mutantdino.resourcemonitor",
-    "yzhang.markdown-all-in-one"
+    "yzhang.markdown-all-in-one",
+    "webfreak.debug",
+    "actboy168.tasks"
+  ],
+  "forwardPorts": [
+    9012,
+    9333,
+    8000
   ],
   "remoteUser": "root",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",

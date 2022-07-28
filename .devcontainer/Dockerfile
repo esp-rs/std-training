@@ -22,7 +22,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
 
-RUN $HOME/.cargo/bin/cargo install cargo-espflash ldproxy
+RUN $HOME/.cargo/bin/cargo install cargo-espflash ldproxy \
+    && $HOME/.cargo/bin/cargo install web-flash --git https://github.com/bjoernQ/esp-web-flash-server \
+    && RUSTFLAGS="--cfg tokio_unstable" cargo install wokwi-server --git https://github.com/MabezDev/wokwi-server --locked
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
