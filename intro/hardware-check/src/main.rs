@@ -33,8 +33,9 @@ fn main() -> anyhow::Result<()> {
     use bsc::led::RGB8;
 
     esp_idf_sys::link_patches();
+    esp_idf_svc::log::EspLogger::initialize_default();
 
-    println!("Hello, world!");
+    info!("Hello, world!");
 
     // Start the LED off yellow
     let mut led = bsc::led::WS2812RMT::new()?;
