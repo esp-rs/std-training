@@ -18,6 +18,7 @@ native = ["esp-idf-sys/native"]
 
 [dependencies]
 esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
+esp-idf-svc = { version="=0.42.1", features = ["experimental", "alloc"] }
 esp32-c3-dkc02-bsc = { path = "../../common/lib/esp32-c3-dkc02-bsc" }
 log = "0.4"
 anyhow = "1"
