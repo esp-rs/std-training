@@ -7,16 +7,13 @@ edition = "2021"
 
 
 [dependencies]
-esp32c3 = "=0.3.0"
+esp32c3 = "=0.4"
 esp-idf-sys = { version = "=0.31.5" }
-esp-idf-svc = { version="=0.42.1", features = ["experimental", "alloc"] }
+esp-idf-svc = { version= "=0.42.1", features = ["experimental", "alloc"] }
 esp-idf-hal = "=0.38"
 embedded-svc = "=0.22"
 rgb = "0.8"
 log = "0.4"
 anyhow = "1"
 toml-cfg = "0.1"
-riscv = { version = "0.7", features=["inline-asm"] }
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}
+riscv = { version = "0.8" }

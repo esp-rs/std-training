@@ -17,16 +17,13 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-esp-idf-svc = { version="=0.39.1", features = ["experimental", "alloc"] }
+esp-idf-svc = { version = "=0.42.1", features = ["experimental", "alloc"] }
 esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
 esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
-embedded-svc = "=0.19"
+embedded-svc = "=0.22"
 anyhow = "1.0"
 toml-cfg = "0.1"
 
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}

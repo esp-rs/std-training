@@ -24,6 +24,3 @@ esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}

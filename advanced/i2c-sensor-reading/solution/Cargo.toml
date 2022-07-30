@@ -17,8 +17,8 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-esp-idf-sys = { version = "0.31", features = ["binstart"] }
-esp-idf-hal = "0.35.1"
+esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
+esp-idf-hal = "=0.38"
 anyhow = "1"
 embedded-hal = "0.2.7"
 shtcx = "0.10.0"
@@ -31,6 +31,3 @@ imc42670p = { path = "../../../common/lib/imc42670p" }
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}
