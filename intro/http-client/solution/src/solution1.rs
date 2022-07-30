@@ -44,10 +44,10 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     let writer = request.into_writer(0)?;
 
-    // 4. Turn the writer into a response and check its status. 
+    // 4. Submit our write request and check the status code of the response. 
     // Successful http status codes are in the 200..=299 range.
 
-    let response = writer.into_response()?;
+    let response = writer.submit()?;
     let status = response.status();
     let mut total_size = 0;
 
