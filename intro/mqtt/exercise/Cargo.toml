@@ -18,21 +18,17 @@ native = ["esp-idf-sys/native"]
 
 [dependencies]
 esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
-#esp-idf-svc = { git = "https://github.com/esp-rs/esp-idf-svc.git", features = ["experimental", "alloc"], rev="d7313416" }
-esp-idf-svc = { version="=0.39.1", features = ["experimental", "alloc"] }
-embedded-svc = "=0.19"
+esp-idf-svc = { version="=0.42.1", features = ["experimental", "alloc"] }
+embedded-svc = "=0.22"
 esp32-c3-dkc02-bsc = { path = "../../../common/lib/esp32-c3-dkc02-bsc" }
 log = "0.4"
 anyhow = "1"
 toml-cfg = "0.1"
-esp32c3 = "0.3.0"
-riscv = { version = "0.7", features=["inline-asm"] }
+esp32c3 = "=0.4"
+riscv = { version = "0.8" }
 get-uuid = { path = "../../../common/lib/get-uuid" }
 mqtt-messages = { path = "../../../common/lib/mqtt-messages" }
 
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-
-[patch.crates-io]
-riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}
