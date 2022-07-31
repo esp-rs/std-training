@@ -7,10 +7,7 @@ use std::{
 
 use bsc::{temp_sensor::BoardTempSensor, wifi::wifi};
 use embedded_svc::{
-    http::{
-        server::{registry::Registry, Response, ResponseWrite},
-        Method,
-    },
+    http::server::{registry::Registry, Response},
     io::Write,
 };
 use esp32_c3_dkc02_bsc as bsc;
@@ -24,7 +21,6 @@ pub struct Config {
     #[default("")]
     wifi_psk: &'static str,
 }
-
 fn main() -> anyhow::Result<()> {
     esp_idf_sys::link_patches();
 
@@ -32,22 +28,22 @@ fn main() -> anyhow::Result<()> {
 
     let server_config = Configuration::default();
     let mut server = EspHttpServer::new(&server_config)?;
-    server.set_inline_handler("/", Method::Get, |request, response| {
+    server.handle_get("/", |_request, response| {
         let html = index_html();
-        let mut writer = response.into_writer(request)?;
-        writer.do_write_all(html.as_bytes())?;
-        writer.complete()
+        let mut writer = response.into_writer()?;
+        writer.write_all(html.as_bytes())?;
+        Ok(())
     })?;
 
     let temp_sensor_main = Arc::new(Mutex::new(BoardTempSensor::new_taking_peripherals()));
     let temp_sensor = temp_sensor_main.clone();
 
-    server.set_inline_handler("/temperature", Method::Get, move |request, response| {
+    server.handle_get("/temperature", move |_request, response| {
         let temp_val = temp_sensor.lock().unwrap().read_owning_peripherals();
         let html = temperature(temp_val);
-        let mut writer = response.into_writer(request)?;
-        writer.do_write_all(html.as_bytes())?;
-        writer.complete()
+        let mut writer = response.into_writer()?;
+        writer.write_all(html.as_bytes())?;
+        Ok(())
     })?;
 
     println!("server awaiting connection");

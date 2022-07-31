@@ -8,7 +8,7 @@ use std::{
 use bsc::{temp_sensor::BoardTempSensor, wifi::wifi};
 use embedded_svc::{
     http::{
-        server::{registry::Registry, Response, ResponseWrite},
+        server::{registry::Registry, Response},
         Method,
     },
     io::Write,
