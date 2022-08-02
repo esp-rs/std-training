@@ -1,0 +1,36 @@
+[package]
+name = "i2c-sensor-exercise"
+version = "0.1.0"
+authors = ["Tanks Transfeld <tanks.transfeld@ferrous-systems.com>"]
+edition = "2021"
+resolver = "2"
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true # Symbols are nice and they don't increase the size on Flash
+opt-level = "z"
+
+[features]
+default = ["native"]
+native = ["esp-idf-sys/native"]
+
+[dependencies]
+esp-idf-sys = { version = "0.31", features = ["binstart"] }
+esp-idf-hal = "0.35.1"
+anyhow = "1"
+embedded-hal = "0.2.7"
+shtcx = "0.10.0"
+lis3dh = "0.4.1"
+shared-bus = "0.2.2"
+imc42670p = { path = "../../../common/lib/imc42670p" }
+
+
+
+[build-dependencies]
+embuild = "0.28"
+anyhow = "1"
+
+[patch.crates-io]
+riscv = { git = "https://github.com/rust-embedded/riscv", rev = "396fb9b"}
