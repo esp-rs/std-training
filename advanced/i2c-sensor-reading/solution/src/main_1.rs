@@ -30,9 +30,22 @@ fn main() -> anyhow::Result<()>  {
         <MasterConfig as Default>::default().baudrate(400.kHz().into()),
     )?;
 
-       
-    // Create an instance of the SHTC3 sensor.
-    let mut sht = shtcx::shtc3(i2c);
+    let bus = shared_bus::BusManagerSimple::new(i2c);
+
+    let proxy_1 =bus.acquire_i2c();
+    let proxy_2 =bus.acquire_i2c();
+
+    let mut imu = IMC42670P::new(proxy_1, SlaveAddr::B110_1000)?;
+
+    println!("Sensor init");
+    let device_id = imu.read_device_id_register()?;
+    println!("Device ID: {}", device_id);
+  
+
+    imu.gyro_ln()?;
+
+
+    let mut sht = shtcx::shtc3(proxy_2);
     let device_id = sht.device_identifier().unwrap();
  
     // Read and print the sensor's device ID.
@@ -46,7 +59,8 @@ fn main() -> anyhow::Result<()>  {
         
 
         println!(
-            "TEMP: {} °C\n
+            " GYRO: X: {:.4}  Y: {:.4}  Z: {:.4}\n
+            TEMP: {} °C\n
             HUM: {:?} %\n
             \n 
             ",
