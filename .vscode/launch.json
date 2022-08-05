@@ -5,10 +5,11 @@
       "type": "gdb",
       "request": "attach",
       "name": "Wokwi Debug",
-      "executable":"${workspaceFolder}/target/riscv32imc-esp-espidf/debug/esp_tra",
+      // TODO Update executable path to the project to be debugged
+      "executable":"${workspaceFolder}/intro/hardware-check/target/riscv32imc-esp-espidf/debug/hardware-check",
       "target": "localhost:9333",
       "remote": true,
-      "gdbpath":"/home/${input:user}/.espressif/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin/riscv32-esp-elf-gdb",
+      "gdbpath":"${input:user}/.espressif/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin/riscv32-esp-elf-gdb",
       "cwd": "${workspaceRoot}",
       "stopAtConnect": true,
       "valuesFormatting": "parseText"
@@ -18,10 +19,10 @@
     {
       "type": "pickString",
       "id": "user",
-      "description": "Select the user: esp for VsCode and Codespaces and gitpod for Gitpod:",
+      "description": "Select the user: /root for VsCode and GH Codespaces and /home/gitpod for Gitpod:",
       "options": [
-        "esp",
-        "gitpod"
+        "/root",
+        "/home/gitpod"
       ],
       "default": "esp"
     }
