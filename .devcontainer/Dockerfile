@@ -24,7 +24,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
 
 RUN $HOME/.cargo/bin/cargo install cargo-espflash ldproxy \
     && $HOME/.cargo/bin/cargo install web-flash --git https://github.com/bjoernQ/esp-web-flash-server \
-    && RUSTFLAGS="--cfg tokio_unstable" cargo install wokwi-server --git https://github.com/MabezDev/wokwi-server --locked
+    && RUSTFLAGS="--cfg tokio_unstable" $HOME/.cargo/bin/cargo install wokwi-server --git https://github.com/MabezDev/wokwi-server --locked
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
