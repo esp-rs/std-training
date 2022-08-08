@@ -20,11 +20,11 @@ fn main() -> anyhow::Result<()>  {
 
     let peripherals = Peripherals::take().unwrap();
 
-    // Instanciate the i2c peripheral, correct pins are in the training material
+    // Instanciate the i2c peripheral, correct pins are in the training material.
 
   
    
-    // Create an instance of the shtcx sensor, find help in the documentation.
+    // Create an instance of the SHTC3 sensor, find help in the documentation.
 
 
 
@@ -32,8 +32,8 @@ fn main() -> anyhow::Result<()>  {
   
 
     loop {
-        // This loop initiates measurements, reads values and prints humidity in % and Temperature in 
-
+        
+        // This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
         FreeRtos.delay_ms(500u32);
     }
 }
