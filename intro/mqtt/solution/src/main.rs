@@ -6,7 +6,7 @@ use bsc::{
     wifi::wifi,
 };
 use embedded_svc::mqtt::client::{
-    Client, Details::Complete, Event::Received, Message, Publish, QoS,
+    Client, Details::Complete, Event::Received, Message, Publish, QoS, Connection, MessageImpl,
 };
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_svc::{
@@ -22,7 +22,7 @@ const UUID: &'static str = get_uuid::uuid();
 
 #[toml_cfg::toml_config]
 pub struct Config {
-    #[default("localhost")]
+    #[default("10.1.1.199")]
     mqtt_host: &'static str,
     #[default("")]
     mqtt_user: &'static str,
@@ -61,24 +61,23 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
-
-    let mut client =
-        EspMqttClient::new_with_callback(broker_url, &mqtt_config, move |message_event| {
-            if let Some(Ok(Received(message))) = message_event {
-                process_message(message, &mut led);
-            }
-        })?;
+    let (mut client, mut connection) =
+    EspMqttClient::new_with_conn(broker_url, &mqtt_config)?;
 
     let payload: &[u8] = &[];
-    client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
+    client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(mqtt_messages::color_topic(UUID), QoS::AtLeastOnce)?;
+    client.subscribe(&mqtt_messages::color_topic(UUID), QoS::AtLeastOnce)?;
 
     loop {
+        // TODO: switch to handling this in a callback or seperate thread
+        if let Some(Ok(Received(msg))) = connection.next() {
+            process_message(&msg, &mut led)
+        }
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
         client.publish(
-            mqtt_messages::temperature_data_topic(UUID),
+            &mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
             false,
             &temp.to_be_bytes() as &[u8],
@@ -86,18 +85,18 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
+fn process_message(message: &MessageImpl, led: &mut WS2812RMT) {
     match message.details() {
-        Complete(token) => {
-            info!("{}", message.topic(token));
-            let message_data: &[u8] = &message.data();
+        Complete =>  {
+            info!("{:?}", message);
+            let message_data: &[u8] = message.data();
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 info!("{}", color);
                 if let Err(e) = led.set_pixel(color) {
                     error!("could not set board LED: {:?}", e)
                 };
             }
-        }
+        },
         _ => error!("could not set board LED"),
     }
 }
