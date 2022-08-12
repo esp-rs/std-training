@@ -29,11 +29,7 @@ where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
     /// Create a new instance of the ICM42670P.
-<<<<<<< HEAD:common/lib/icm42670p/src/lib.rs
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
-=======
-    pub fn new(i2c: I2C, address: SlaveAddr) -> Result<Self, E> {
->>>>>>> correct sensor name:common/lib/imc42670p/src/lib.rs
 
         let icm42670p = ICM42670P { i2c, address };
 
