@@ -21,6 +21,14 @@ esp-idf-sys = { version = "0.31", features = ["binstart"] }
 esp-idf-hal = "0.35.1"
 anyhow = "1"
 embedded-hal = "0.2.7"
+<<<<<<< HEAD:advanced/i2c-driver/exercise/Cargo.toml
+=======
+shtcx = "0.10.0"
+lis3dh = "0.4.1"
+shared-bus = "0.2.2"
+icm42670p = { path = "../../../common/lib/icm42670p" }
+
+>>>>>>> correct sensor name:advanced/i2c-sensor-reading/solution/Cargo.toml
 
 
 [build-dependencies]

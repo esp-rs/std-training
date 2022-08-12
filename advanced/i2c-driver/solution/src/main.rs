@@ -7,7 +7,11 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
+<<<<<<< HEAD
 use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
+=======
+use i2c_driver_exercise::icm42670p::{ICM42670P, SlaveAddr};
+>>>>>>> correct sensor name
 
 // Dont change this file. Work in the lib.rs and modify it so main.rs runs.
 
@@ -25,8 +29,14 @@ fn main() -> anyhow::Result<()> {
         <MasterConfig as Default>::default().baudrate(400.kHz().into()),
     )?;
 
+<<<<<<< HEAD
     let mut sensor = ICM42670P::new(i2c, DeviceAddr::AD0)?;
 
+=======
+    let mut sensor = ICM42670P::new(i2c, SlaveAddr::AD0)?;
+    // If you are using an ESP32-C3-DevKitC-02, change to:
+    // let mut sensor = ICM42670P::new(i2c, SlaveAddr::AD1)?;
+>>>>>>> correct sensor name
     println!("Sensor init");
     let device_id = sensor.read_device_id_register()?;
 

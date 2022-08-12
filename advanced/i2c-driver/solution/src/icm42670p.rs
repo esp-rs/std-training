@@ -6,7 +6,11 @@ use embedded_hal::blocking::i2c;
 /// Datasheet: https://3cfeqx1hf82y3xcoull08ihx-wpengine.netdna-ssl.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
 #[derive(Debug)]
 pub struct ICM42670P<I2C> {
+<<<<<<< HEAD:advanced/i2c-driver/solution/src/icm42670p.rs
     // The concrete I²C device implementation.
+=======
+    /// The concrete I²C device implementation.
+>>>>>>> correct sensor name:advanced/i2c-driver/solution/src/imc42670p.rs
     i2c: I2C,
 
     // Device address
@@ -23,13 +27,24 @@ pub enum DeviceAddr {
     AD1 = 0b110_1001,
 }
 
+<<<<<<< HEAD:advanced/i2c-driver/solution/src/icm42670p.rs
 impl<I2C, E> ICM42670P<I2C>
+=======
+impl<I2C, E>ICM42670P<I2C>
+>>>>>>> correct sensor name:advanced/i2c-driver/solution/src/imc42670p.rs
 where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
     /// Creates a new instance of the sensor, taking ownership of the i2c peripheral.
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
+<<<<<<< HEAD:advanced/i2c-driver/solution/src/icm42670p.rs
         Ok(Self { i2c, address })
+=======
+
+        let icm42670p = ICM42670P { i2c, address };
+
+        Ok(icm42670p)
+>>>>>>> correct sensor name:advanced/i2c-driver/solution/src/imc42670p.rs
     }
 
     /// Returns the device's ID `0x67
