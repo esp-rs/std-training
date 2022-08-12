@@ -1,5 +1,7 @@
 use anyhow;
+use embedded_hal::blocking::delay::DelayMs;
 use esp_idf_hal::{
+    delay::FreeRtos,
     i2c::{config::MasterConfig, Master, MasterPins, I2C0},
     peripherals::Peripherals,
     prelude::*,
@@ -31,5 +33,7 @@ fn main() -> anyhow::Result<()> {
     assert_eq!(device_id, 96_u8);
     println!("Hello, world, I am sensor {}", device_id);
 
-    loop {}
+    loop {
+        FreeRtos.delay_ms(500u32);
+    }
 }
