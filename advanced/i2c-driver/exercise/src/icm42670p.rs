@@ -37,7 +37,7 @@ where
     /// Returns the device's ID `0x67 
     //(if it doesn't, something is amiss)
     // Public method that can be accessed from outside this file.
-    pub fn read_device_id_register(&mut self) -> Result<u16, E> {
+    pub fn read_device_id_register(&mut self) -> Result<u8, E> {
         // reads the Device ID register
         // TODO!
     }
@@ -53,10 +53,10 @@ where
 
     /// Reads a register using a `write_read` method.
     // This method is not public as it is only needed inside this file.
-    fn read_register(&mut self, register: Register) -> Result<u16, E> {
+    fn read_register(&mut self, register: Register) -> Result<u8, E> {
         // buffer for values
         // i2c write_read
-        // return u16 from ke bytes
+        // return u8 from le bytes
         // TODO!
 }
 

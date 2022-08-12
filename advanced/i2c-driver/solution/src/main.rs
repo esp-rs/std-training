@@ -28,7 +28,7 @@ fn main() -> anyhow::Result<()> {
     println!("Sensor init");
     let device_id = sensor.read_device_id_register()?;
 
-    assert_eq!(device_id, 103_u16);
+    assert_eq!(device_id, 96_u8);
     println!("Hello, world, I am sensor {}", device_id);
 
     loop {}
