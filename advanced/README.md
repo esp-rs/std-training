@@ -9,11 +9,11 @@ Folders are listed in alphabetical order, not in the order they are taught in th
 `button-interrupt/solution/src/main_led.rs` contains the solution for the second step of the exercise. 
 ## I2C Driver exercise (WIP)
 
-`i2c-driver/exercise/src/imc42670p.rs` will be gap text of a very basic i2c IMU sensor driver. The task is to complete the file, so that running `main.rs` will log the device ID of the driver. The this gap text driver is based on the version of the same name that lives in common, but provides a little bit more functionality.
+`i2c-driver/exercise/src/icm42670p.rs` will be gap text of a very basic i2c IMU sensor driver. The task is to complete the file, so that running `main.rs` will log the device ID of the driver. The this gap text driver is based on the version of the same name that lives in common, but provides a little bit more functionality.
 
 `i2c-driver/exercise/src/main.rs` will contain working code. Running it without modifying the driver file will yield errors. 
 
-`i2c-driver/solution/src/imc42670p.rs` provides a solution to the task. 
+`i2c-driver/solution/src/icm42670p.rs` provides a solution to the task. 
 
 ## I2C Sensor Reading Exercise (WIP)
 

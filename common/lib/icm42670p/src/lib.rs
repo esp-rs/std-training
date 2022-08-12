@@ -3,11 +3,11 @@
 
 use embedded_hal::blocking::i2c;
 
-/// IMC42670P device driver.
+/// ICM42670P device driver.
 /// Datasheet: https://3cfeqx1hf82y3xcoull08ihx-wpengine.netdna-ssl.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
 /// 
 #[derive(Debug)]
-pub struct IMC42670P<I2C> {
+pub struct ICM42670P<I2C> {
     /// The concrete I²C device implementation.
     i2c: I2C,
 
@@ -24,16 +24,16 @@ pub enum SlaveAddr {
     B110_1001 = 0b110_1001,
 }
 
-impl<I2C, E>IMC42670P<I2C>
+impl<I2C, E>ICM42670P<I2C>
 where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
-    /// Create a new instance of the IMC42670P.
+    /// Create a new instance of the ICM42670P.
     pub fn new(i2c: I2C, address: SlaveAddr) -> Result<Self, E> {
 
-        let imc42670p = IMC42670P { i2c, address };
+        let icm42670p = ICM42670P { i2c, address };
 
-        Ok(imc42670p)
+        Ok(icm42670p)
     }
 
     /// Reads device ID.
