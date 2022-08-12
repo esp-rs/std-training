@@ -7,7 +7,7 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
-use icm42670p::{ICM42670P, SlaveAddr};
+use icm42670p::{ICM42670P, DeviceAddr};
 
 use shtcx::{self, PowerMode};
 
@@ -25,9 +25,7 @@ fn main() -> anyhow::Result<()>  {
 
     let sda = peripherals.pins.gpio10;
     let scl = peripherals.pins.gpio8;
-    // If you are using an ESP32-C3-DevKitC-02, change to:
-    // let sda = peripherals.pins.gpio4;
-    // let scl = peripherals.pins.gpio5;
+
 
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
@@ -40,9 +38,8 @@ fn main() -> anyhow::Result<()>  {
     let proxy_1 =bus.acquire_i2c();
     let proxy_2 =bus.acquire_i2c();
 
-    let mut imu = ICM42670P::new(proxy_1, SlaveAddr::B110_1000)?;
-    // If you are using an ESP32-C3-DevKitC-02, change to:
-    // let mut imu = ICM42670P::new(proxy_1, SlaveAddr::B110_1001)?;
+    let mut imu = ICM42670P::new(proxy_1, DeviceAddr::B110_1000)?;
+
     println!("Sensor init");
     let device_id = imu.read_device_id_register()?;
     println!("Device ID: {}", device_id);
