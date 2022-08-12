@@ -24,7 +24,7 @@ embedded-hal = "0.2.7"
 shtcx = "0.10.0"
 lis3dh = "0.4.1"
 shared-bus = "0.2.4"
-imc42670p = { path = "../../common/lib/imc42670p" }
+icm42670p = { path = "../../../common/lib/icm42670p" }
 
 
 
