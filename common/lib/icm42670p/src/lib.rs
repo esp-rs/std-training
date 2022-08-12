@@ -12,12 +12,12 @@ pub struct ICM42670P<I2C> {
     i2c: I2C,
 
     /// Device address
-    address: SlaveAddr,
+    address: DeviceAddr,
 }
 
 /// see Table 3.3.2
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub enum SlaveAddr {
+pub enum DeviceAddr {
     /// ADP_AD0 = 0
     B110_1000 = 0b110_1000,
     /// ADP_AD0 = 1
@@ -29,7 +29,7 @@ where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
     /// Create a new instance of the ICM42670P.
-    pub fn new(i2c: I2C, address: SlaveAddr) -> Result<Self, E> {
+    pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
 
         let icm42670p = ICM42670P { i2c, address };
 

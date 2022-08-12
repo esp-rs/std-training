@@ -17,26 +17,24 @@ pub struct ICM42670P<I2C> {
 /// Contains the possible variants of the devices addesses as binary numbers.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum DeviceAddr {
-
     /// 0x68
     AD0 = 0b110_1000,
     /// 0x69
     AD1 = 0b110_1001,
 }
 
-impl<I2C, E>ICM42670P<I2C>
+impl<I2C, E> ICM42670P<I2C>
 where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
     /// Creates a new instance of the sensor, taking ownership of the i2c peripheral.
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
-
         let icm42670p = ICM42670P { i2c, address };
 
         Ok(icm42670p)
     }
 
-    /// Returns the device's ID `0x67 
+    /// Returns the device's ID `0x67
     //(if it doesn't, something is amiss)
     // Public method that can be accessed from outside this file.
     pub fn read_device_id_register(&mut self) -> Result<u16, E> {

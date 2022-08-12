@@ -7,7 +7,7 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
-use icm42670p::{ICM42670P, SlaveAddr};
+use icm42670p::{ICM42670P, DeviceAddr};
 
 use shtcx::{self, PowerMode};
 
@@ -55,7 +55,6 @@ fn main() -> anyhow::Result<()>  {
   
     // Start the ICM42670p in low noise mode.
     imu.gyro_ln()?;
-
 
 
 
