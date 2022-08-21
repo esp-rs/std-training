@@ -1,7 +1,6 @@
 // based on https://github.com/ivmarkov/rust-esp32-std-demo/blob/main/src/main.rs
 
-use std::sync::Arc;
-
+use std::{sync::Arc, time::*};
 use anyhow::bail;
 use embedded_svc::wifi::{
     self, AuthMethod, ClientConfiguration, ClientConnectionStatus, ClientIpStatus, ClientStatus,
@@ -66,6 +65,11 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
         auth_method: auth_method,
         ..Default::default()
     }))?;
+
+    wifi.wait_status_with_timeout(
+        Duration::from_secs(20),
+        |status| !wifi.get_status().is_transitional()
+    ).map_err(|e| anyhow::anyhow!("Unexpected Wifi status: {:?}", e))?;
 
     info!("getting Wifi status");
 
