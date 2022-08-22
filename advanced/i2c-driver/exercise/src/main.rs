@@ -7,9 +7,9 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
-use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
+use i2c_driver_exercise::icm42670p::{ICM42670P, DeviceAddr};
 
-// Dont change this file. Work in the lib.rs and modify it so main.rs runs.
+// Dont change this file. Work in the icm42670p.rs and modify it so main.rs runs.
 
 fn main() -> anyhow::Result<()> {
     link_patches();
@@ -26,14 +26,16 @@ fn main() -> anyhow::Result<()> {
     )?;
 
     let mut sensor = ICM42670P::new(i2c, DeviceAddr::AD0)?;
-
     println!("Sensor init");
     let device_id = sensor.read_device_id_register()?;
 
     assert_eq!(device_id, 96_u8);
     println!("Hello, world, I am sensor {}", device_id);
 
-    loop {
-        FreeRtos.delay_ms(500u32);
-    }
+   loop {
+    FreeRtos.delay_ms(500u32);
+   };
+
+
 }
+
