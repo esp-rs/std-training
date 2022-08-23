@@ -35,7 +35,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     let mut client = EspHttpClient::new_default()?;
    
     // 2. Open a GET request to `url`
-    let request = client.get(url)?;
+    let request = client.get(url.as_ref())?;
 
     // 3. Requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
     // (since we don't send anything - but have to do the writer step anyway)
@@ -47,7 +47,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     // 4. Submit our write request and check the status code of the response. 
     // Successful http status codes are in the 200..=299 range.
 
-    let response = writer.submit()?;
+    let mut response = writer.submit()?;
     let status = response.status();
     let mut total_size = 0;
 
@@ -59,7 +59,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
             let mut buf = [0_u8;256];
             let mut reader = response.reader();
             loop {
-                if let Ok(size) = Read::do_read(&mut reader, &mut buf){
+                if let Ok(size) = Read::read(&mut reader, &mut buf){
                     if size == 0 { break; }
                     total_size += size;
                     // 6. try converting the bytes into a Rust (UTF-8) string and print it

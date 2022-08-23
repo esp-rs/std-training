@@ -35,11 +35,11 @@ The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.A
 
 
 ```Rust
-let request = client.get(some_url_ref)?;
+let request = client.get(url.as_ref())?;
 // the parameter passed to `into_writer` is the number of bytes
 // the client intends to send
 let writer = request.into_writer(0)?;
-let response = writer.into_response()?;
+let response = writer.submit()?;
 ```
 The parameter passed to `into_writer` is the number of bytes the client intends to send. Here we are not trying to send anything. 
 
