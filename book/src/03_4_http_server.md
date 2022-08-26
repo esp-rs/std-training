@@ -65,3 +65,4 @@ We can also report dynamic information to a client. The skeleton includes a conf
 ## Troubleshooting
 
 - `httpd_txrx: httpd_resp_send_err` can be solved by restarting, or `cargo clean` if nothing happens.
+- Make sure computer and rust board are using the same wifi network.
