@@ -65,6 +65,25 @@ $ brew install llvm
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
 
+- Board not accessible with USB-C cable
+    A typical connection error looks like this:
+
+    ```console
+    Serial port: /dev/tty.usbserial-110
+    Connecting...
+    
+    Unable to connect, retrying with extra delay...
+    Unable to connect, retrying with default delay...
+    Unable to connect, retrying with extra delay...
+    Error: espflash::connection_failed
+    
+    × Error while connecting to device
+    ╰─▶ Failed to connect to the device
+    help: Ensure that the device is connected and the reset and boot pins are not being held down
+    ```
+    Workaround: 1. press and hold boot button on the board, start flash command, release boot button after flashing process starts or 2. use a hub.
+
+    [Source](https://georgik.rocks/unable-to-flash-esp32-with-these-usb-c-cables/).
 ## Docker
 
 > ❗️ Please **note** the Docker container provides an alternative option to **compile** the Rust exercises in.
