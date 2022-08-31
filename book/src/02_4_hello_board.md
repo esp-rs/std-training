@@ -103,7 +103,30 @@ Your Espressif toolchain installation might be damaged. Delete it and rerun the 
 ```console
 $ rm -rf ~/.espressif
 ```
+---
 
+ ```console
+Serial port: /dev/tty.usbserial-110
+Connecting...
+
+Unable to connect, retrying with extra delay...
+Unable to connect, retrying with default delay...
+Unable to connect, retrying with extra delay...
+Error: espflash::connection_failed
+
+× Error while connecting to device
+╰─▶ Failed to connect to the device
+help: Ensure that the device is connected and the reset and boot pins are not being held down
+```
+
+The board is not accessible with USB-C cable. A typical connection error looks like this:
+
+   
+Workarounds: 
+1. press and hold boot button on the board, start flash command, release boot button after flashing process starts
+2. use a hub.
+
+[Source](https://georgik.rocks/unable-to-flash-esp32-with-these-usb-c-cables/).
 ## Connecting to Wifi
 
 - You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.

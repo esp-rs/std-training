@@ -64,26 +64,26 @@ $ brew install llvm
     3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
+    ⚠️ In [step 2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html#step-2-get-esp-idf), do not clone the `https://github.com/espressif/esp-idf.git` repository. For this training, we are using a tagged branch.
 
-- Board not accessible with USB-C cable
-    A typical connection error looks like this:
+    Instead, do the following:
 
     ```console
-    Serial port: /dev/tty.usbserial-110
-    Connecting...
-    
-    Unable to connect, retrying with extra delay...
-    Unable to connect, retrying with default delay...
-    Unable to connect, retrying with extra delay...
-    Error: espflash::connection_failed
-    
-    × Error while connecting to device
-    ╰─▶ Failed to connect to the device
-    help: Ensure that the device is connected and the reset and boot pins are not being held down
+    git clone --recursive --depth 1 --shallow-submodules git@github.com:espressif/esp-idf.git --branch "v4.4.1" esp-idf-v4.4
+    cd esp-idf-v4.4
+    ./install.sh esp32c3
+    . ./export.sh
     ```
-    Workaround: 1. press and hold boot button on the board, start flash command, release boot button after flashing process starts or 2. use a hub.
 
-    [Source](https://georgik.rocks/unable-to-flash-esp32-with-these-usb-c-cables/).
+    If you change terminal, you will need to source the `export.sh` file:
+
+    ```console
+    source ~/esp/esp-idf-v4.4/export.sh 
+    ```
+
+    4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
+
+
 ## Docker
 
 > ❗️ Please **note** the Docker container provides an alternative option to **compile** the Rust exercises in.
