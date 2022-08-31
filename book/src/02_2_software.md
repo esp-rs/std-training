@@ -64,7 +64,7 @@ $ brew install llvm
     3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
-    ⚠️ In [step 2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html#step-2-get-esp-idf), do not clone the `https://github.com/espressif/esp-idf.git` repository. For this training, we are using a tagged branch.
+    ⚠️ In [step 2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html#step-2-get-esp-idf), do not clone the `https://github.com/espressif/esp-idf.git` repository. For this training, we are using a git tag.
 
     Instead, do the following:
 
