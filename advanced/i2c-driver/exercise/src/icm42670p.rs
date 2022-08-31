@@ -58,6 +58,7 @@ where
         // i2c write_read
         // return u8 from le bytes
         // TODO!
+    }
 }
 
 // See Table 14.1 in documentation
