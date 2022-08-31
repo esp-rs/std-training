@@ -64,6 +64,25 @@ $ brew install llvm
     3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
 
+    ⚠️ In [step 2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html#step-2-get-esp-idf), do not clone the `https://github.com/espressif/esp-idf.git` repository. For this training, we are using a tagged branch.
+
+    Instead, do the following:
+
+    ```console
+    git clone --recursive --depth 1 --shallow-submodules git@github.com:espressif/esp-idf.git --branch "v4.4.1" esp-idf-v4.4
+    cd esp-idf-v4.4
+    ./install.sh esp32c3
+    . ./export.sh
+    ```
+
+    If you change terminal, you will need to source the `export.sh` file:
+
+    ```console
+    source ~/esp/esp-idf-v4.4/export.sh 
+    ```
+
+    4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
+
 
 ## Docker
 
