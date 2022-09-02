@@ -1,4 +1,4 @@
-use std::{convert::TryFrom, thread::sleep, time::Duration};
+use std::{convert::TryFrom, thread, thread::sleep, time::Duration};
 
 use bsc::{
     led::{RGB8, WS2812RMT},
@@ -6,7 +6,10 @@ use bsc::{
     wifi::wifi,
 };
 use embedded_svc::mqtt::client::{
-    Client, Details::Complete, Event::Received, Message, Publish, QoS,
+    Client, Connection,
+    Details::Complete,
+    Event::{Connected, Published, Received},
+    Message, MessageImpl, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_svc::{
@@ -16,7 +19,7 @@ use esp_idf_svc::{
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{hello_topic, ColorData};
+use mqtt_messages::{hello_topic, temperature_data_topic, ColorData};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -61,24 +64,23 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
-
     let mut client =
-        EspMqttClient::new_with_callback(broker_url, &mqtt_config, move |message_event| {
-            if let Some(Ok(Received(message))) = message_event {
-                process_message(message, &mut led);
-            }
+        EspMqttClient::new(broker_url, &mqtt_config, move |msg_event| match msg_event {
+            Ok(Received(msg)) => process_message(msg, &mut led),
+            _ => info!("Received from MQTT: {:?}", msg_event),
         })?;
+    info!("MQTT client started.");
 
     let payload: &[u8] = &[];
-    client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
+    println!("MQTT Listening for messages");
 
-    client.subscribe(mqtt_messages::color_topic(UUID), QoS::AtLeastOnce)?;
+    client.subscribe(&mqtt_messages::color_topic(UUID), QoS::AtLeastOnce);
 
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
         client.publish(
-            mqtt_messages::temperature_data_topic(UUID),
+            &mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
             false,
             &temp.to_be_bytes() as &[u8],
@@ -88,9 +90,9 @@ fn main() -> anyhow::Result<()> {
 
 fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
-        Complete(token) => {
-            info!("{}", message.topic(token));
-            let message_data: &[u8] = &message.data();
+        Complete => {
+            info!("{:?}", message);
+            let message_data: &[u8] = message.data();
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 info!("{}", color);
                 if let Err(e) = led.set_pixel(color) {

@@ -11,6 +11,7 @@ use esp_idf_svc::{
     netif::EspNetifStack, nvs::EspDefaultNvs, sysloop::EspSysLoopStack, wifi::EspWifi,
 };
 use log::info;
+use std::time::Duration;
 
 #[allow(unused)]
 pub struct Wifi {
@@ -21,11 +22,11 @@ pub struct Wifi {
 }
 
 pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
-    let mut auth_method = AuthMethod::WPA2Personal;
-    if ssid.len() == 0 {
+    let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
+    if ssid.is_empty() {
         anyhow::bail!("missing WiFi name")
     }
-    if psk.len() == 0 {
+    if psk.is_empty() {
         auth_method = AuthMethod::None;
         info!("Wifi password is empty");
     }
@@ -63,22 +64,32 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
         ssid: ssid.into(),
         password: psk.into(),
         channel,
-        auth_method: auth_method,
+        auth_method,
         ..Default::default()
     }))?;
 
     info!("getting Wifi status");
 
+    wifi.wait_status_with_timeout(Duration::from_secs(2100), |status| {
+        !status.is_transitional()
+    })
+    .map_err(|err| anyhow::anyhow!("Unexpected Wifi status (Transitional state): {:?}", err))?;
+
     let status = wifi.get_status();
 
     if let wifi::Status(
-        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(_))),
+        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(
+            _ip_settings,
+        ))),
         _,
     ) = status
     {
-        info!("Wifi connected!");
+        info!("Wifi connected");
     } else {
-        bail!("Unexpected Wifi status: {:?}", status);
+        bail!(
+            "Could not connect to Wifi - Unexpected Wifi status: {:?}",
+            status
+        );
     }
 
     let wifi = Wifi {
