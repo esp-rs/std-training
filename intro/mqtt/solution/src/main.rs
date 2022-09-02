@@ -64,11 +64,11 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
-    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |msg_event| {
-        if let Ok(Received(msg)) = msg_event {
-            process_message(msg, &mut led);
-        }
-    })?;
+    let mut client =
+        EspMqttClient::new(broker_url, &mqtt_config, move |msg_event| match msg_event {
+            Ok(Received(msg)) => process_message(msg, &mut led),
+            _ => info!("Received from MQTT: {:?}", msg_event),
+        })?;
     info!("MQTT client started.");
 
     let payload: &[u8] = &[];
@@ -84,9 +84,8 @@ fn main() -> anyhow::Result<()> {
             QoS::AtLeastOnce,
             false,
             &temp.to_be_bytes() as &[u8],
-        );
+        )?;
     }
-    Ok(())
 }
 
 fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
