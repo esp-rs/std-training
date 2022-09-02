@@ -64,29 +64,19 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
-    let (mut client, mut connection) = EspMqttClient::new_with_conn(broker_url, &mqtt_config)?;
+    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |msg_event| {
+        if let Ok(Received(msg)) = msg_event {
+            process_message(msg, &mut led);
+        }
+    })?;
     info!("MQTT client started.");
-    //info!("MQTT client: {:?}", &client);
-    //info!("MQTT connection: {:?}", &connection);
 
     let payload: &[u8] = &[];
     println!("MQTT Listening for messages");
 
-    //thread::spawn(move || {
-    //client.subscribe(&mqtt_messages::color_topic(UUID), QoS::AtLeastOnce);
-    loop {
-        // TODO: switch to handling this in a callback or seperate thread
-        if let Some(Ok(r)) = connection.next() {
-            info!("Entry point :: {:?}", r);
+    client.subscribe(&mqtt_messages::color_topic(UUID), QoS::AtLeastOnce);
 
-            match r {
-                Received(recieved_bytes) => info!("Some received bytes {:?}", recieved_bytes),
-                Connected(tof) => info!("True or false {:?}", tof),
-                Published(message_id) => info!("MQTT Message : Published({})", message_id),
-                _ => info!("Some stuff: {:?}", r),
-            }
-            //process_message(&msg, &mut led);
-        }
+    loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
         client.publish(
@@ -96,14 +86,10 @@ fn main() -> anyhow::Result<()> {
             &temp.to_be_bytes() as &[u8],
         );
     }
-
-    println!("MQTT connection loop exit");
-    //});
-
     Ok(())
 }
 
-fn process_message(message: &MessageImpl, led: &mut WS2812RMT) {
+fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
         Complete => {
             info!("{:?}", message);
