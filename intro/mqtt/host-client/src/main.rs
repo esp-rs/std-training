@@ -39,15 +39,15 @@ fn main() -> Result<(), Box<dyn Error>> {
             let b = rng.gen();
             let color = RGB8::new(r, g, b);
             println!("setting new color: {}", color);
-            let color = ColorData::BoardLed(color);
-            //let command = Command::BoardLed(color);
+            //let color = ColorData::BoardLed(color);
+            let command = Command::BoardLed(color);
             client
                 .publish(
-                    color.topic(UUID),
+                    command.topic(UUID),
                     //command.topic(UUID),
                     QoS::AtLeastOnce,
                     false,
-                    color.data(),
+                    command.data(),
                     //command.data().clone(),
                 )
                 .unwrap();
