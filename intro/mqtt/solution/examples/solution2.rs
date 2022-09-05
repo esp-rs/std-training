@@ -1,5 +1,4 @@
 use std::{
-    borrow::Cow,
     convert::{TryFrom, TryInto},
     thread::sleep,
     time::Duration,
@@ -13,7 +12,7 @@ use bsc::{
 use embedded_svc::mqtt::client::{
     Client,
     Details::{Complete, InitialChunk, SubsequentChunk},
-    Event::{self, Received},
+    Event::Received,
     Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
@@ -23,7 +22,7 @@ use esp_idf_svc::{
 };
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
-use log::{error, info};
+use log::{error, info, warn};
 use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 
 const UUID: &'static str = get_uuid::uuid();
@@ -71,11 +70,15 @@ fn main() -> anyhow::Result<()> {
     };
 
     let mut inflight = vec![];
-    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |message_event| {
-        if let Ok(Received(message)) = message_event {
-            process_message(message, &mut inflight, &mut led);
-        }
-    })?;
+    let mut client =
+        EspMqttClient::new(
+            broker_url,
+            &mqtt_config,
+            move |message_event| match message_event {
+                Ok(Received(message)) => process_message(message, &mut inflight, &mut led),
+                _ => info!("Received: {:?}", message_event),
+            },
+        )?;
 
     let payload: &[u8] = &[];
     client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
@@ -99,8 +102,14 @@ fn process_message(message: &EspMqttMessage, inflight: &mut Vec<u8>, led: &mut W
     match message.details() {
         Complete => {
             let topic = message.topic().unwrap();
+            println!("TOPIC {topic}");
+            println!("DATA {:?}", message.data());
             // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
             // and if it matches, process the remaining part
+            println!(
+                "topic.split(&cmd_topic_fragment(UUID)).nth(0) {:?}",
+                topic.split(&cmd_topic_fragment(UUID)).nth(0)
+            );
             if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
                 // try and parse the remaining path and the data sent along as `BoardLed` command
                 let raw = RawCommandData {

@@ -15,6 +15,7 @@ pub fn cmd_topic_fragment(uuid: &str) -> String {
 ///
 /// Used to send ColorData(rgb)
 pub fn color_topic(uuid: &str) -> String {
+    println!("Printing from lib: {:?}", format!("{}/color_topic", uuid));
     format!("{}/color_topic", uuid)
 }
 
@@ -35,7 +36,9 @@ impl Command {
 
     pub fn topic(&self, uuid: &str) -> String {
         match self {
-            Command::BoardLed(_) => format!("{}{}", cmd_topic_fragment(uuid), Self::BOARD_LED),
+            Command::BoardLed(_) => {
+                format!("{}{}", cmd_topic_fragment(uuid), Self::BOARD_LED)
+            }
         }
     }
 
