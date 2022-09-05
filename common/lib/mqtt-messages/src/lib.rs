@@ -1,7 +1,7 @@
-use std::borrow::{Borrow, Cow};
-
 use rgb::ComponentSlice;
 pub use rgb::RGB8;
+use std::borrow::{Borrow, Cow};
+use std::str;
 
 /// Handles `EspMqttMessage` with MQTT hierarchy
 ///
@@ -66,7 +66,7 @@ impl ColorData {
         }
     }
 }
-
+#[derive(Debug)]
 pub struct RawCommandData<'a> {
     pub path: &'a str,
     pub data: Cow<'a, [u8]>,
@@ -94,7 +94,8 @@ impl<'a> TryFrom<RawCommandData<'a>> for Command {
     type Error = ConvertError;
 
     fn try_from(value: RawCommandData) -> Result<Self, Self::Error> {
-        if value.path == Command::BOARD_LED {
+        //if value.path == Command::BOARD_LED {
+        if value.path == "" {
             let data: &[u8] = value.data.borrow();
             let data: [u8; 3] = data
                 .try_into()

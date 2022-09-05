@@ -106,24 +106,26 @@ fn process_message(message: &EspMqttMessage, inflight: &mut Vec<u8>, led: &mut W
             println!("DATA {:?}", message.data());
             // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
             // and if it matches, process the remaining part
-            println!(
-                "topic.split(&cmd_topic_fragment(UUID)).nth(0) {:?}",
-                topic.split(&cmd_topic_fragment(UUID)).nth(0)
-            );
-            if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
-                // try and parse the remaining path and the data sent along as `BoardLed` command
-                let raw = RawCommandData {
-                    path: command_str,
-                    data: message.data().try_into().unwrap(),
-                };
+            // println!(
+            //     "topic.split(&cmd_topic_fragment(UUID)).nth(0) {:?}",
+            //     topic.split(&cmd_topic_fragment(UUID)).nth(0)
+            // );
 
-                if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
-                    match led.set_pixel(color) {
-                        Err(e) => error!("could not set board LED: {:?}", e),
-                        _ => {}
-                    };
-                }
+            //if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
+            // try and parse the remaining path and the data sent along as `BoardLed` command
+            let raw = RawCommandData {
+                path: "",
+                data: message.data().try_into().unwrap(),
+            };
+            println!("RAW {:?}", raw);
+
+            if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
+                match led.set_pixel(color) {
+                    Err(e) => error!("could not set board LED: {:?}", e),
+                    _ => {}
+                };
             }
+            // }
         }
         InitialChunk(chunk_info) => {
             let data = message.data();
