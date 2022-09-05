@@ -1,4 +1,9 @@
-use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
+use std::{
+    borrow::Cow,
+    convert::{TryFrom, TryInto},
+    thread::sleep,
+    time::Duration,
+};
 
 use bsc::{
     led::{RGB8, WS2812RMT},
@@ -66,27 +71,23 @@ fn main() -> anyhow::Result<()> {
     };
 
     let mut inflight = vec![];
-    let mut client =
-        EspMqttClient::new_with_callback(broker_url, &mqtt_config, move |message_event| {
-            if let Some(Ok(Received(message))) = message_event {
-                process_message(message, &mut inflight, &mut led);
-            }
-        })?;
+    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |message_event| {
+        if let Ok(Received(message)) = message_event {
+            process_message(message, &mut inflight, &mut led);
+        }
+    })?;
 
     let payload: &[u8] = &[];
-    client.publish(hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
+    client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
-    client.subscribe(
-        format!("{}#", mqtt_messages::cmd_topic_fragment(UUID)),
-        QoS::AtLeastOnce,
-    )?;
+    client.subscribe(&mqtt_messages::cmd_topic_fragment(UUID), QoS::AtLeastOnce)?;
 
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
 
         client.publish(
-            mqtt_messages::temperature_data_topic(UUID),
+            &mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
             false,
             &temp.to_be_bytes() as &[u8],
@@ -94,17 +95,17 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(message: EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
+fn process_message(message: &EspMqttMessage, inflight: &mut Vec<u8>, led: &mut WS2812RMT) {
     match message.details() {
-        Complete(token) => {
-            let topic = message.topic(token);
+        Complete => {
+            let topic = message.topic().unwrap();
             // use `split()` to look for '{UUID}/cmd/' as leading part of `topic`
             // and if it matches, process the remaining part
             if let Some(command_str) = topic.split(&cmd_topic_fragment(UUID)).nth(1) {
                 // try and parse the remaining path and the data sent along as `BoardLed` command
                 let raw = RawCommandData {
                     path: command_str,
-                    data: message.data(),
+                    data: message.data().try_into().unwrap(),
                 };
 
                 if let Ok(Command::BoardLed(color)) = Command::try_from(raw) {
