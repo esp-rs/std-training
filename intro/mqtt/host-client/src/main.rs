@@ -39,6 +39,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             let b = rng.gen();
             let color = RGB8::new(r, g, b);
             println!("setting new color: {}", color);
+<<<<<<< HEAD
             let color = ColorData::BoardLed(color);
             client
                 .publish(
@@ -46,6 +47,18 @@ fn main() -> Result<(), Box<dyn Error>> {
                     QoS::AtLeastOnce,
                     false,
                     color.data(),
+=======
+            //let color = ColorData::BoardLed(color);
+            let command = Command::BoardLed(color);
+            client
+                .publish(
+                    command.topic(UUID),
+                    //command.topic(UUID),
+                    QoS::AtLeastOnce,
+                    false,
+                    command.data(),
+                    //command.data().clone(),
+>>>>>>> WIP: solution2 debugging
                 )
                 .unwrap();
             thread::sleep(Duration::from_secs(1));
