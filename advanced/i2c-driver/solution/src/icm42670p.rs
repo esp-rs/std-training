@@ -29,9 +29,7 @@ where
 {
     /// Creates a new instance of the sensor, taking ownership of the i2c peripheral.
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
-        let icm42670p = ICM42670P { i2c, address };
-
-        Ok(icm42670p)
+        Ok(Self { i2c, address })
     }
 
     /// Returns the device's ID `0x67
