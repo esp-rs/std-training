@@ -12,7 +12,6 @@ The device will have a VID (vendor ID) of `303a` and a PID (product ID) of `1001
 ``` console
 $ lsusb | grep USB
 Bus 006 Device 035: ID 303a:1001 Espressif USB JTAG/serial debug unit
-
 ```
 
 Another way to see the device is to see which permissions and port is associated to the device is to check the `/by-id` folder: 
@@ -21,13 +20,11 @@ $ ls -l /dev/serial/by-id
 lrwxrwxrwx 1 root root .... usb-Espressif_USB_JTAG_serial_debug_unit_60:55:F9:C0:27:18-if00 -> ../../ttyACM0
 
 (If you are using a ESP32-C3-DevKitC-02 the command is `$ ls /dev/ttyUSB*` )
+```
 
-**macOS**:
-
-The device will show up as part of the USB tree in `system_profiler`:
+**macOS**: The device will show up as part of the USB tree in `system_profiler`:
 
 ```console
-
 $ system_profiler SPUSBDataType | grep -A 11 "USB JTAG"
 
 USB JTAG/serial debug unit:
@@ -35,4 +32,11 @@ USB JTAG/serial debug unit:
   Product ID: 0x1001
   Vendor ID: 0x303a
   (...)
+```
+
+The device will also show up in the `/dev` directory as a `tty.usbmodem` device:
+
+``` console
+$ ls /dev/tty.usbmodem*
+/dev/tty.usbmodem0
 ```
