@@ -7,7 +7,13 @@ use esp_idf_hal::{
     prelude::*,
 };
 use esp_idf_sys::*;
-use i2c_driver_exercise::icm42670p::{ICM42670P, DeviceAddr};
+
+// uncomment the following line to run the solution, check lib.rs for further instructions
+// use i2c_driver_exercise::icm42670p_solution::{DeviceAddr, ICM42670P};
+
+// comment the following line out to run the exercise, check lib.rs for further instructions
+use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
+
 
 // Dont change this file. Work in the icm42670p.rs and modify it so main.rs runs.
 
@@ -26,16 +32,14 @@ fn main() -> anyhow::Result<()> {
     )?;
 
     let mut sensor = ICM42670P::new(i2c, DeviceAddr::AD0)?;
+
     println!("Sensor init");
     let device_id = sensor.read_device_id_register()?;
 
     assert_eq!(device_id, 96_u8);
     println!("Hello, world, I am sensor {}", device_id);
 
-   loop {
-    FreeRtos.delay_ms(500u32);
-   };
-
-
+    loop {
+        FreeRtos.delay_ms(500u32);
+    }
 }
-

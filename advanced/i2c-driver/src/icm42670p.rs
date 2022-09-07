@@ -6,9 +6,9 @@ use embedded_hal::blocking::i2c;
 /// Datasheet: https://3cfeqx1hf82y3xcoull08ihx-wpengine.netdna-ssl.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
 #[derive(Debug)]
 pub struct ICM42670P<I2C> {
-    /// The concrete I²C device implementation.
+    // The concrete I²C device implementation.
     //  TODO! field 1 
-    /// Device address
+    // Device address
     //  TODO! field 2 
 }
 
@@ -65,7 +65,7 @@ where
 /// This enum represents the device's registers
 #[derive(Clone, Copy)]
 pub enum Register {
-    WhoAmI = // // TODO! Fill in the register
+    WhoAmI = // TODO! Fill in the register
 }
 
 impl Register {
