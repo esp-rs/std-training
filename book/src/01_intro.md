@@ -8,7 +8,7 @@ This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is d
 
 The advanced course takes it from there to dive deeper into topics like interrupt handling, low-level peripheral access and writing your own drivers.
 
-⚠️ You will be able to chat with our experts during the training if you are participating to the training. In addition, we strongly suggest to join the [community](https://matrix.to/#/#esp-rs:matrix.org) on the Matrix for all technical questions or delivery issues! The community is open to everyone.
+You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and  issues! The community is open to everyone.
 
 ## The board
 
