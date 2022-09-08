@@ -13,6 +13,10 @@ The advanced course takes it from there to dive deeper into topics like interrup
 ## The board
 
 An [Espressif Rust Board](https://github.com/esp-rs/esp-rust-board) is mandatory[^note] for working with this book - emulators like QEMU are not supported. 
+
+
+The board design and images, pin layout and schematics can be also found in this repository.
+
 If you subscribed to one of the trainings, a board will be provided to you directly by Espressif.
 Some exercises also require wireless internet access.
 
@@ -20,12 +24,6 @@ Some exercises also require wireless internet access.
 
 Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3) platform, a [RISC-V](https://riscv.org/) based microcontroller with strong IoT capabilities, facilitated by integrated Wi-Fi and Bluetooth 5 (LE) functionality as well as large RAM + flash size for sophisticated applications. A substantial amount of this course is also applicable for Xtensa the other architecture Espressif uses, in particular the [ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). For low-level access the general principles apply as well, but actual hardware access will differ in various ways - refer to the technical reference manuals ([C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3_technical_reference_manual_en.pdf), [S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf)) or [other available technical documents](https://www.espressif.com/en/support/documents/technical-documents)  as needed.
 
-### Block diagram
-<p style="text-align:center;"><img src="./assets/block_diagram.png" width="100%"></p>
-
-### EESP32-C3-DevKit-RUST-1
-
-<p style="text-align:center;"><img src="./assets/rust_board_v1_diagram.svg" width="100%"></p>
 
 ## Rust knowledge
 
