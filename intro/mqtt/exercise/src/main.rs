@@ -57,6 +57,7 @@ fn main() -> anyhow::Result<()> {
 
     let _wifi = wifi(app_config.wifi_ssid, app_config.wifi_psk)?;
 
+    // Client configuration:
     let broker_url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
@@ -65,6 +66,8 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
+
+    let mqtt_config = MqttClientConfiguration::default();
 
     // Your Code:
 
