@@ -24,6 +24,7 @@ fn main() -> anyhow::Result<()>  {
     let sda = peripherals.pins.gpio10;
     let scl = peripherals.pins.gpio8;
 
+
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
         MasterPins { sda, scl },
