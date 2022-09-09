@@ -11,7 +11,7 @@ use esp_idf_sys::*;
 // uncomment the following line to run the solution, check lib.rs for further instructions
 // use i2c_driver_exercise::icm42670p_solution::{DeviceAddr, ICM42670P};
 
-// comment the following line out to run the exercise, check lib.rs for further instructions
+// comment out the following line to run the exercise, check lib.rs for further instructions
 use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
 
 
