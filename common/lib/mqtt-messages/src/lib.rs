@@ -15,7 +15,6 @@ pub fn cmd_topic_fragment(uuid: &str) -> String {
 ///
 /// Used to send ColorData(rgb)
 pub fn color_topic(uuid: &str) -> String {
-    println!("Printing from lib: {:?}", format!("{}/color_topic", uuid));
     format!("{}/color_topic", uuid)
 }
 
