@@ -20,11 +20,9 @@ fn main() -> anyhow::Result<()>  {
 
     let peripherals = Peripherals::take().unwrap();
 
+     // Instanciate the i2c peripheral, correct pins are in the training material.
     let sda = peripherals.pins.gpio10;
     let scl = peripherals.pins.gpio8;
-    // If you are using an ESP32-C3-DevKitC-02, change to:
-    // let sda = peripherals.pins.gpio4;
-    // let scl = peripherals.pins.gpio5;
 
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
@@ -32,22 +30,24 @@ fn main() -> anyhow::Result<()>  {
         <MasterConfig as Default>::default().baudrate(400.kHz().into()),
     )?;
 
-
+       
+    // Create an instance of the SHTC3 sensor.
     let mut sht = shtcx::shtc3(i2c);
     let device_id = sht.device_identifier().unwrap();
  
-
-    println!("Device ID: {}", device_id);
+    // Read and print the sensor's device ID.
+    println!("Device ID SHTC3: {}", device_id);
 
     loop {
+        // This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
         sht.start_measurement(PowerMode::NormalMode).unwrap();
         FreeRtos.delay_ms(100u32);
         let measurement = sht.get_measurement_result().unwrap(); 
         
 
         println!(
-            "TEMP: {}\n
-            HUM: {:?}\n
+            "TEMP: {} °C\n
+            HUM: {:?} %\n
             \n 
             ",
             measurement.temperature.as_degrees_celsius(), measurement.humidity.as_percent(),

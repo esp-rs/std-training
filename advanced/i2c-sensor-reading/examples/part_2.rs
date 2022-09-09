@@ -25,9 +25,6 @@ fn main() -> anyhow::Result<()>  {
 
     let sda = peripherals.pins.gpio10;
     let scl = peripherals.pins.gpio8;
-    // If you are using an ESP32-C3-DevKitC-02, change to:
-    // let sda = peripherals.pins.gpio4;
-    // let scl = peripherals.pins.gpio5;
 
     let i2c = Master::<I2C0, _, _>::new(
         peripherals.i2c0,
@@ -35,39 +32,45 @@ fn main() -> anyhow::Result<()>  {
         <MasterConfig as Default>::default().baudrate(400.kHz().into()),
     )?;
 
+    // Instantiate the bus manager, pass the i2c bus. 
     let bus = shared_bus::BusManagerSimple::new(i2c);
 
+    // Create two proxies. Now, each sensor can have their own instance of a proxy i2c, which resolves the ownership problem. 
     let proxy_1 =bus.acquire_i2c();
     let proxy_2 =bus.acquire_i2c();
 
-    let mut imu = IMC42670P::new(proxy_1, SlaveAddr::B110_1000)?;
-    // If you are using an ESP32-C3-DevKitC-02, change to:
-    // let mut imu = IMC42670P::new(proxy_1, SlaveAddr::B110_1001)?;
-    println!("Sensor init");
-    let device_id = imu.read_device_id_register()?;
-    println!("Device ID: {}", device_id);
-  
+    // Change your previous code, so that one of the proxies is passed to the SHTC3, instead of the original i2c bus. 
+    let mut sht = shtcx::shtc3(proxy_1);
 
+    // Read and print the device ID.
+    let device_id = sht.device_identifier().unwrap();
+    println!("Device ID SHTC3: {}", device_id);
+
+    // Create an instance of ICM42670p sensor. Pass the second proxy and the sensor's address. 
+    let mut imu = IMC42670P::new(proxy_2, SlaveAddr::B110_1000)?;
+
+    // Read the device's ID register and print the value. 
+    let device_id = imu.read_device_id_register()?;
+    println!("Device ID ICM42670p: {}", device_id);
+  
+    // Start the ICM42670p in low noise mode.
     imu.gyro_ln()?;
 
 
-    let mut sht = shtcx::shtc3(proxy_2);
-    let device_id = sht.device_identifier().unwrap();
- 
 
-    println!("Device ID: {}", device_id);
 
     loop {
+        // Read gyro data
         let gyro_data =imu.read_gyro()?;
         sht.start_measurement(PowerMode::NormalMode).unwrap();
         FreeRtos.delay_ms(100u32);
         let measurement = sht.get_measurement_result().unwrap(); 
         
-
+        // Print all values
         println!(
-            " GYRO: X: {:.4}  Y: {:.4}  Z: {:.4}\n
-            TEMP: {}\n
-            HUM: {:?}\n
+            " GYRO: X: {:.2}  Y: {:.2}  Z: {:.2}\n
+            TEMP: {} °C\n
+            HUM: {:?} %\n
             \n 
             ",
 
