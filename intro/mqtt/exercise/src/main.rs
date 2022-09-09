@@ -69,7 +69,7 @@ fn main() -> anyhow::Result<()> {
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    // let mut client = EspMqttClient::new_with_callback( ... )?;
+    // let mut client = EspMqttClient::new( ... )?;
 
     // 2. publish an empty hello message
 
