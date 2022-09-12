@@ -5,7 +5,7 @@ use std::str;
 
 /// Handles `EspMqttMessage` with MQTT hierarchy
 ///
-/// Can be used to send ColorData(rgb) with `Command`
+/// Can be used to send ColorData(rgb) with `Command` in a hierarchical context
 
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
