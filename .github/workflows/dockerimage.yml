@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths-ignore:
       - "book/"
+      - "book/**"
 
 jobs:
   # To avoid uploading the Docker image to a registry yet
