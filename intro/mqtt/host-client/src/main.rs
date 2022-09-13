@@ -39,21 +39,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             let b = rng.gen();
             let color = RGB8::new(r, g, b);
             println!("setting new color: {}", color);
-<<<<<<< HEAD
-<<<<<<< HEAD
             let color = ColorData::BoardLed(color);
-            client
-                .publish(
-                    color.topic(UUID),
-                    QoS::AtLeastOnce,
-                    false,
-                    color.data(),
-=======
-            //let color = ColorData::BoardLed(color);
-            let command = Command::BoardLed(color);
-=======
-            let color = ColorData::BoardLed(color);
->>>>>>> Get rid of mqtt example solution2, fix http-client to work for solution1.
             client
                 .publish(
                     color.topic(UUID),
@@ -63,9 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     command.data(),
                     //command.data().clone(),
 >>>>>>> WIP: solution2 debugging
-=======
                     color.data(),
->>>>>>> Get rid of mqtt example solution2, fix http-client to work for solution1.
                 )
                 .unwrap();
             thread::sleep(Duration::from_secs(1));
