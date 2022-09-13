@@ -45,10 +45,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                     color.topic(UUID),
                     QoS::AtLeastOnce,
                     false,
-<<<<<<< HEAD
-                    command.data(),
-                    //command.data().clone(),
->>>>>>> WIP: solution2 debugging
                     color.data(),
                 )
                 .unwrap();
