@@ -4,9 +4,9 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 
 ## Setup
 
-✅ Go to `intro/http-client/exercise` directory.
+✅ Go to `intro/http-client` directory.
 
-✅ Open the prepared project skeleton in `intro/http-client/exercise`. 
+✅ Open the prepared project skeleton in `intro/http-client`. 
 
 ✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as in the hardware test. 
 
@@ -16,6 +16,11 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 $ cargo doc --open
 ```
 
+`intro/http-client/examples/http_client.rs` contains the solution. you can run it with the following command:
+
+```
+cargo espflash --release --example http_client --monitor $SERIALDEVICE
+```
 ## Making a connection
 
 By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
@@ -43,7 +48,7 @@ let response = writer.submit()?;
 ```
 The parameter passed to `into_writer` is the number of bytes the client intends to send. Here we are not trying to send anything. 
 
-A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
+A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Followed by the raw html of the website.
 
 ✅ Verify the connection was successful.
 
@@ -63,7 +68,7 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ✅ Report the total number of bytes read.
 
-✅ Log the received data to the console. Hint, the response in the buffert is in bytes, so you might need [a method](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
+✅ Log the received data to the console. Hint, the response in the buffer is in bytes, so you might need [a method](https://doc.rust-lang.org/std/str/fn.from_utf8.html) to convert from bytes to `&str`.
 
 ## Extra Tasks
 
