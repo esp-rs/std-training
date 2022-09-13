@@ -27,7 +27,7 @@ let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
     }
 ```
 
-✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from a `https` resource e.g. `https://espressif.com/`
+✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from a `https` resource e.g. `https://espressif.com/`. the download will show as raw html in the terminal output.
 
 ## Troubleshooting (repeated from previous section)
 
