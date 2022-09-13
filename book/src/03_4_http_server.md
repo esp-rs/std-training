@@ -4,17 +4,24 @@ We're now turning our board into a tiny web server that upon receiving a `GET` r
 
 ## Setup
 
-You can find a prepared project skeleton in `intro/http-server/exercise`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
+You can find a prepared project skeleton in `intro/http-server/`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
+
+`intro/http-server/examples/https-server.rs` contains a solution. You can run it with the following command:
+
+```
+cargo espflash --release --example http_serve --monitor $SERIALDEVICE
+```
 
 ## Serving requests
 
 To connect to your board with your browser, you need to know the board's IP address. 
 
 
-✅ Run the skeleton code. The output should yield the board's IP address like this:
+✅ Run the skeleton code in `intro/http-server`. The output should yield the board's IP address like this:
 
 ```console
-I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ...
+I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ..
+server awaiting connection
 ```
 
 The `sta ip` is the "station", the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
@@ -29,7 +36,7 @@ Sending HTTP data to a client involves:
 - setting a separate request `handler` function for each requested path you want to serve content. Any unconfigured path will result in a `404` error. These handler functions are realized inline as Rust closures via:
 
 ```rust
-server.set_inline_handler(path, method, |request, response| {
+server.handle_get(path, |request, response| {
     // the `response` needs to write data to the client
     let mut writer = response.into_writer(request);
 
@@ -37,11 +44,11 @@ server.set_inline_handler(path, method, |request, response| {
     let some_buf = ...;
 
     // now you can write your desired data
-    writer.do_write_all(&some_buf);
+    writer.write_all(&some_buf);
 
     // once you're done the handler expects a `Completion` as result,
     // this is achieved via:
-    writer.complete()
+    Ok(())
 });
 
 ```
@@ -51,7 +58,7 @@ server.set_inline_handler(path, method, |request, response| {
 
 ✅ Verify that a connection to `http://<sta ip>/` yields a `404` (not found) error stating `This URI does not exist`.
 
-✅ Write a request handler for `GET` requests to the root path (`"/"`). The request handler sends a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
+✅ Write a request handler for requests to the root path (`"/"`). The request handler sends a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
 
 ## Dynamic data
 
