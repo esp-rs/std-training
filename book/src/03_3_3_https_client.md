@@ -1,8 +1,9 @@
 # HTTPS CLIENT
 
-You will now make changes to your http client files.
+You will now make changes to your http client files so that it also works for encrypted connections.
 
-`intro/http-client/examples/http_client.rs` contains the solution. you can run it with the following command:
+`intro/http-client/examples/http_client.rs` contains the solution. You can run it with the following command:
+(It won't build unless you have completed the first step of the exercise.)
 
 ```
 cargo espflash --release --example https_client --monitor $SERIALDEVICE
@@ -11,6 +12,7 @@ cargo espflash --release --example https_client --monitor $SERIALDEVICE
 To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
 
 ✅ Enable basic TLS certificate support in your project's `sdkconfig.defaults` by deleting the existing `CONFIG_MBEDTLS...` lines and adding:
+
 ```cfg
 CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
 CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=y
