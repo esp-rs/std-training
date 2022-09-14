@@ -1,25 +1,26 @@
-use std::{convert::TryFrom, thread, thread::sleep, time::Duration};
-
 use bsc::{
     led::{RGB8, WS2812RMT},
     temp_sensor::BoardTempSensor,
     wifi::wifi,
 };
 use embedded_svc::mqtt::client::{
-    Client, Connection,
-    Details::Complete,
-    Event::{Connected, Published, Received},
-    Message, MessageImpl, Publish, QoS,
+    Client,
+    Details::{Complete, InitialChunk, SubsequentChunk},
+    Event::{self, Received},
+    Message, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_svc::{
     log::EspLogger,
     mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
 };
+use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 use log::{error, info};
-use mqtt_messages::{hello_topic, temperature_data_topic, ColorData};
+
+// imported message topics
+use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 
 const UUID: &'static str = get_uuid::uuid();
 
@@ -38,6 +39,7 @@ pub struct Config {
 }
 
 fn main() -> anyhow::Result<()> {
+    // Setup
     esp_idf_sys::link_patches();
 
     EspLogger::initialize_default();
@@ -54,9 +56,8 @@ fn main() -> anyhow::Result<()> {
 
     let _wifi = wifi(app_config.wifi_ssid, app_config.wifi_psk)?;
 
-    let mqtt_config = MqttClientConfiguration::default();
-
-    let broker_url = if !app_config.mqtt_user.is_empty() {
+    // Client configuration:
+    let broker_url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -64,42 +65,31 @@ fn main() -> anyhow::Result<()> {
     } else {
         format!("mqtt://{}", app_config.mqtt_host)
     };
-    let mut client =
-        EspMqttClient::new(broker_url, &mqtt_config, move |msg_event| match msg_event {
-            Ok(Received(msg)) => process_message(msg, &mut led),
-            _ => info!("Received from MQTT: {:?}", msg_event),
-        })?;
-    info!("MQTT client started.");
 
+    let mqtt_config = MqttClientConfiguration::default();
+
+    // Your Code:
+
+    // 1. Create a client with default configuration and empty handler
+    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |message_event| {
+        // ... your handler code here - leave this empty for now
+        // we'll add functionality later in this chapter
+    })?;
+
+    // 2. publish an empty hello message
     let payload: &[u8] = &[];
-    println!("MQTT Listening for messages");
-
-    client.subscribe(&mqtt_messages::color_topic(UUID), QoS::AtLeastOnce);
+    client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
     loop {
         sleep(Duration::from_secs(1));
         let temp = temp_sensor.read_owning_peripherals();
+
+        // 3. publish CPU temperature
         client.publish(
             &mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
             false,
             &temp.to_be_bytes() as &[u8],
         )?;
-    }
-}
-
-fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
-    match message.details() {
-        Complete => {
-            info!("{:?}", message);
-            let message_data: &[u8] = message.data();
-            if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
-                info!("{}", color);
-                if let Err(e) = led.set_pixel(color) {
-                    error!("could not set board LED: {:?}", e)
-                };
-            }
-        }
-        _ => error!("could not set board LED"),
     }
 }

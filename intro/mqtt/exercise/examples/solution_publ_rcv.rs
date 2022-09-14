@@ -1,3 +1,4 @@
+//This solution is the same as main.rs
 use std::{convert::TryFrom, thread::sleep, time::Duration};
 
 use bsc::{
@@ -6,7 +7,7 @@ use bsc::{
     wifi::wifi,
 };
 use embedded_svc::mqtt::client::{
-    Client, Details::Complete, Event::Received, Message, Publish, QoS, Connection, MessageImpl,
+    Client, Details::Complete, Event::Received, Message, MessageImpl, Publish, QoS,
 };
 use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_svc::{
@@ -15,7 +16,7 @@ use esp_idf_svc::{
 };
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
-use log::{error, info};
+use log::{error, info, warn};
 use mqtt_messages::{hello_topic, ColorData};
 
 const UUID: &'static str = get_uuid::uuid();
@@ -62,8 +63,16 @@ fn main() -> anyhow::Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
-    let (mut client, mut connection) =
-    EspMqttClient::new_with_conn(broker_url, &mqtt_config)?;
+    // mqtt client with
+    let mut client =
+        EspMqttClient::new(
+            broker_url,
+            &mqtt_config,
+            move |message_event| match message_event {
+                Ok(Received(msg)) => process_message(msg, &mut led),
+                _ => warn!("Received from MQTT: {:?}", message_event),
+            },
+        )?;
 
     let payload: &[u8] = &[];
     client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
@@ -82,7 +91,7 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn process_message(message: &MessageImpl, led: &mut WS2812RMT) {
+fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
         Complete => {
             info!("{:?}", message);
@@ -93,7 +102,7 @@ fn process_message(message: &MessageImpl, led: &mut WS2812RMT) {
                     error!("could not set board LED: {:?}", e)
                 };
             }
-        },
+        }
         _ => error!("could not set board LED"),
     }
 }
