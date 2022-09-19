@@ -80,3 +80,5 @@ let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS)
 ```
 
 9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed. 
+    
+10. Run the program and push the `BOOT` button, so see how it works!
