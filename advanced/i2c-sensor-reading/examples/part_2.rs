@@ -47,7 +47,7 @@ fn main() -> anyhow::Result<()>  {
     println!("Device ID SHTC3: {}", device_id);
 
     // Create an instance of ICM42670p sensor. Pass the second proxy and the sensor's address. 
-    let mut imu = ICM42670P::new(proxy_2, SlaveAddr::B110_1000)?;
+    let mut imu = ICM42670P::new(proxy_2, DeviceAddr::B110_1000)?;
 
     // Read the device's ID register and print the value. 
     let device_id = imu.read_device_id_register()?;
