@@ -9,7 +9,7 @@ You can find a prepared project skeleton in `intro/http-server/`. It includes es
 `intro/http-server/examples/https-server.rs` contains a solution. You can run it with the following command:
 
 ```
-cargo espflash --release --example http_server --monitor $SERIALDEVICE
+cargo espflash --release --example http_serve --monitor $SERIALDEVICE
 ```
 
 ## Serving requests
