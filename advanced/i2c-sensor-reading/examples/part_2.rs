@@ -73,7 +73,7 @@ fn main() -> anyhow::Result<()>  {
             \n 
             ",
 
-            gyro_data.x, gyro_data.y, gyro_data.y, 
+            gyro_data.x, gyro_data.y, gyro_data.z, 
             measurement.temperature.as_degrees_celsius(), measurement.humidity.as_percent(),
         );
 
