@@ -7,6 +7,7 @@ ARG CONTAINER_GROUP=gitpod
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
+ARG CARGO_ESPFLASH=1.6.0
 RUN sudo install-packages git curl gcc clang ninja-build libudev-dev \
     python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 libpython2.7
 USER ${CONTAINER_USER}
@@ -16,7 +17,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf \
-    && $HOME/.cargo/bin/cargo install cargo-espflash ldproxy
+    && $HOME/.cargo/bin/cargo install --version ${CARGO_ESPFLASH} cargo-espflash ldproxy
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
