@@ -3,7 +3,7 @@ name: Docker Image
 
 on:
   push:
-    branches: [main]
+    branches: [main, update_ci]
   pull_request:
     branches: [main]
     paths-ignore:
