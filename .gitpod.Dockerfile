@@ -7,7 +7,7 @@ ARG CONTAINER_GROUP=gitpod
 ARG NIGHTLY_VERSION=nightly-2022-03-10
 ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
-ARG CARGO_ESPFLASH=v1.6.0
+ARG CARGO_ESPFLASH=1.6.0
 RUN sudo install-packages git curl gcc clang ninja-build libudev-dev \
     python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 libpython2.7
 USER ${CONTAINER_USER}
