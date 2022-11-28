@@ -23,7 +23,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf \
     && $HOME/.cargo/bin/rustup toolchain install stable-x86_64-unknown-linux-gnu
 
-RUN $HOME/.cargo/bin/cargo +stable install cargo-espflash --version 1.6.0 ldproxy
+RUN $HOME/.cargo/bin/cargo +stable install cargo-espflash ldproxy
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
