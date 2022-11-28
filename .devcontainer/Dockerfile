@@ -20,7 +20,8 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
-    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
+    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf \
+    && $HOME/.cargo/bin/rustup toolchain install stable-x86_64-unknown-linux-gnu
 
 RUN $HOME/.cargo/bin/cargo +stable install cargo-espflash --version 1.6.0 ldproxy
 
