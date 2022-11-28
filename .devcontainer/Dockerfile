@@ -20,9 +20,10 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
-    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
+    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf \
+    && cargo install cargo-binstall
 
-RUN $HOME/.cargo/bin/cargo install cargo-espflash ldproxy
+RUN y | $HOME/.cargo/bin/cargo binstall cargo-espflash ldproxy
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
