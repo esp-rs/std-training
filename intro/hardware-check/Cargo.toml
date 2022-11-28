@@ -27,3 +27,6 @@ toml-cfg = "0.1"
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
+
+[patch.crates-io]
+embedded-io = { git = "https://github.com/embassy-rs/embedded-io.git", tag = "v0.3.0"}
