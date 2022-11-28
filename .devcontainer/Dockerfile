@@ -25,6 +25,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
 
 RUN $HOME/.cargo/bin/cargo +stable install cargo-espflash ldproxy
 
+RUN $HOME/.cargo/bin/rustup default ${NIGHTLY_VERSION}
+
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
