@@ -14,7 +14,7 @@ We use Icons to mark different kinds of information in the book:
 
 ## Required Hardware
 
-- Rust ESP Board (Not yet available for purchase)
+- Rust ESP Board, available on Mouser, Aliexpress. [Full list of vendors](https://github.com/esp-rs/esp-rust-board).
 - USB-C cable suitable to connect the board to your development computer
 - Wi-Fi access point connected to the Internet
 
