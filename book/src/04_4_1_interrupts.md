@@ -3,8 +3,8 @@
 The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed. 
 This exercise involves working with C bindings to the ESP-IDF and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
 
-You can find a skeleton code for this exercise in `advanced/button-interrupt/exercise/src/main.rs.`
-You can find the solution for this exercise in `advanced/button-interrupt/solution/src/main.rs`
+You can find a skeleton code for this exercise in `advanced/button-interrupt/src/main.rs.`
+You can find the solution for this exercise in `advanced/button-interrupt/examples/solution.rs`
 
 ## Tasks
 
@@ -80,3 +80,5 @@ let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS)
 ```
 
 9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed. 
+    
+10. Run the program and push the `BOOT` button, so see how it works!

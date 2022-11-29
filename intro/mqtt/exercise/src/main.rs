@@ -57,6 +57,7 @@ fn main() -> anyhow::Result<()> {
 
     let _wifi = wifi(app_config.wifi_ssid, app_config.wifi_psk)?;
 
+    // Client configuration:
     let broker_url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
@@ -66,10 +67,12 @@ fn main() -> anyhow::Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
+    let mqtt_config = MqttClientConfiguration::default();
+
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    // let mut client = EspMqttClient::new_with_callback( ... )?;
+    // let mut client = EspMqttClient::new( ... )?;
 
     // 2. publish an empty hello message
 
