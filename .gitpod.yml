@@ -1,16 +1,17 @@
 image:
   file: .gitpod.Dockerfile
 tasks:
- - name: Setup environment variables for ESP-IDF
-   command: |
-     source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1
+  - name: Setup environment variables for ESP-IDF
+    command: |
+      source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1
 vscode:
   extensions:
     - matklad.rust-analyzer
     - tamasfe.even-better-toml
-    - vadimcn.vscode-lldb
     - anwar.resourcemonitor
     - yzhang.markdown-all-in-one
+    - webfreak.debug
+    - actboy168.tasks
     - serayuzgur.crates
 ports:
   - port: 9012

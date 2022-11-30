@@ -10,7 +10,7 @@ ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
-    && apt-get install -y git curl ninja-build clang libudev-dev \
+    && apt-get install -y git curl ninja-build clang libudev-dev unzip \
     python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
@@ -22,7 +22,17 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
     && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
 
-RUN $HOME/.cargo/bin/cargo install cargo-espflash ldproxy
+RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
+    curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
+    unzip "${HOME}/.cargo/bin/cargo-espflash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/cargo-espflash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/cargo-espflash" && \
+    curl -L "https://github.com/esp-rs/embuild/releases/latest/download/ldproxy-${ARCH}.zip" -o "${HOME}/.cargo/bin/ldproxy.zip" &&  \
+    unzip "${HOME}/.cargo/bin/ldproxy.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/ldproxy.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/ldproxy"
+
+
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
