@@ -21,7 +21,7 @@ esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
 esp-idf-hal = "=0.38"
 anyhow = "1"
 embedded-hal = "0.2.7"
-
+ignore = "=0.4.11"
 
 [build-dependencies]
 embuild = "0.28"
