@@ -1,7 +1,9 @@
 # Embedded Rust Trainings for Espressif
 
 This repository contains Training Material for learning to use Embedded Rust
-with the Espressif ESP32-C3.
+with the Espressif ESP32-C3. 
+
+⚠️ This material is based on unstable crates. It worked at the time of writing but following it today may not result in compiling code! However, it can be used as inspiration for getting started with Rust on Espressif. You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
 
 We suggest you start by [reading the book](https://espressif-trainings.ferrous-systems.com).
 

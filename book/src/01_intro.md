@@ -2,13 +2,15 @@
 
 # Introduction
 
+⚠️ This material is based on unstable crates. It worked at the time of writing but following it today may not result in compiling code! However, it can be used as inspiration for getting started with Rust on Espressif. You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
+
 ## Content of this material
 
 This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is divided into two workshops: introductory and advanced. The introductory trail will introduce you to basics of embedded development and how to make the embedded board interact with the outside world - reacting to commands and sending sensor data.
 
 The advanced course takes it from there to dive deeper into topics like interrupt handling, low-level peripheral access and writing your own drivers.
 
-You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and  issues! The community is open to everyone.
+
 
 ## The board
 
