@@ -64,7 +64,7 @@ ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 channel = "nightly-2022-03-10" # change this line
 ```
 
-✅ Run your project by using the following command out of the `hello_world` directory.
+✅ Run your project by using the following command out of the `hello-world` directory.
 
 ```shell
 $ cd hello-world
