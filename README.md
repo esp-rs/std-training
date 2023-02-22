@@ -5,16 +5,16 @@ with the Espressif ESP32-C3.
 
 ⚠️ This material is based on unstable crates. It worked at the time of writing but following it today may not result in compiling code! However, it can be used as inspiration for getting started with Rust on Espressif. You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
 
-We suggest you start by [reading the book](https://espressif-trainings.ferrous-systems.com).
+We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ferrous-systems/espressif-trainings)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
 
 ## Contents
 
 There is:
 
-* A book you can work through - ([Source](./book)) ([Published](https://espressif-trainings.ferrous-systems.com))
+* A book you can work through - ([Source](./book)) ([Published](https://esp-rs.github.io/espressif-trainings))
 * Some introductory level examples:
    * A basic hardware-check ([Source](./intro/hardware-check))
    * An HTTP Client ([Source](./intro/http-client))
@@ -49,7 +49,7 @@ running:
 
 ```console
 ~ $ cargo install mdbook
-~ $ git clone https://github.com/ferrous-systems/espressif-trainings.git
+~ $ git clone https://github.com/esp-rs/espressif-trainings.git
 ~ $ cd espressif-trainings/book
 ~/espressif-trainings/book $ mdbook serve
 ```
@@ -65,7 +65,7 @@ changes to our `main` branch.
 
 This work is continually updated and as such there are no 'releases'. Every
 commit to `main` gets published to
-<https://espressif-trainings.ferrous-systems.com> automatically.
+<https://esp-rs.github.io/espressif-trainings> automatically.
 
 ## Licence
 
@@ -91,7 +91,7 @@ conditions.
 ## Code of Conduct
 
 Contribution to this crate is organized under the terms of the [Rust Code of
-Conduct][CoC], and the maintainer of this crate, Ferrous Systems GmbH, promises
-to intervene to uphold that code of conduct.
+Conduct][CoC], and the maintainers of this crate promises to intervene to
+uphold that code of conduct.
 
 [CoC]: CODE_OF_CONDUCT.md
