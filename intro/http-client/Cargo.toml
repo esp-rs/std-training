@@ -23,6 +23,7 @@ esp32-c3-dkc02-bsc = { path = "../../common/lib/esp32-c3-dkc02-bsc" }
 embedded-svc = "=0.21"
 anyhow = "1.0"
 toml-cfg = "0.1"
+ignore = "=0.4.11"
 
 [build-dependencies]
 embuild = "0.28"

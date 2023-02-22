@@ -28,6 +28,7 @@ esp32c3 = "=0.4"
 riscv = { version = "0.8" }
 get-uuid = { path = "../../../common/lib/get-uuid" }
 mqtt-messages = { path = "../../../common/lib/mqtt-messages" }
+ignore = "=0.4.11"
 
 [build-dependencies]
 embuild = "0.28"

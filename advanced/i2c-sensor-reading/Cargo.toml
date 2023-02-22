@@ -25,8 +25,7 @@ shtcx = "0.10.0"
 lis3dh = "0.4.1"
 shared-bus = "0.2.4"
 icm42670p = { path = "../../common/lib/icm42670p" }
-
-
+ignore = "=0.4.11"
 
 [build-dependencies]
 embuild = "0.28"
