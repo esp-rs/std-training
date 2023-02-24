@@ -23,4 +23,6 @@ ESP_IDF_VERSION = { value = "tag:v4.4.1" }
 #ESP_IDF_SDKCONFIG = { value = "./sdkconfig.release", relative = true }
 #ESP_IDF_SDKCONFIG = { value = "./sdkconfig.debug", relative = true }
 ESP_IDF_SDKCONFIG_DEFAULTS = { value = "./sdkconfig.defaults", relative = true }
+# ESP-IDF will be installed in ~/.espressif so it can be reused across the different examples.
+# See also https://github.com/esp-rs/esp-idf-sys#esp_idf_tools_install_dir-esp_idf_tools_install_dir
 ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" }
