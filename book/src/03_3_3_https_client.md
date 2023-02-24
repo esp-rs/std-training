@@ -6,7 +6,7 @@ You will now make changes to your http client files so that it also works for en
 (It won't build unless you have completed the first step of the exercise.)
 
 ```
-cargo espflash --release --example https_client --monitor $SERIALDEVICE
+cargo run --example https_client
 ```
 
 To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
@@ -33,7 +33,7 @@ let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
 
 ## Troubleshooting (repeated from previous section)
 
-- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match. 
+- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
 
 ```toml
 # Cargo.toml

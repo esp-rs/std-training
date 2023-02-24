@@ -17,7 +17,7 @@ This program is for the Espressif [ESP32-C3-DevKitC-02 board]. It performs a bas
 Run:
 
 ```console
-$ cargo espflash --release --monitor /dev/SERIAL_DEVICE
+$ cargo run
 ```
 
 See [Book Section 2.4](https://espressif-trainings.ferrous-systems.com/02_4_hello_board.html)
