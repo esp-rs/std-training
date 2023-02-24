@@ -95,7 +95,7 @@ fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
     match message.details() {
         Complete => {
             info!("{:?}", message);
-            let message_data: &[u8] = message.data();
+            let message_data: &[u8] = &message.data();
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 info!("{}", color);
                 if let Err(e) = led.set_pixel(color) {
