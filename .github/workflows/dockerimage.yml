@@ -34,6 +34,8 @@ jobs:
             path: "intro/http-server"
           - name: "mqtt"
             path: "intro/mqtt/exercise"
+          - name: "mqtt - host client"
+            path: "intro/mqtt/host-client"
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
