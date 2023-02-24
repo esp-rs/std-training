@@ -1,8 +1,8 @@
 # Software
 
-Follow the steps below for a default installation of the ESP32-C3 platform tooling. 
+Follow the steps below for a default installation of the ESP32-C3 platform tooling.
 
-🔎 Should you desire a customized installation (e.g. building parts from source, or add support for Xtensa/ESP32-S3), instructions for doing so can be found in the [Installing Rust](https://esp-rs.github.io/book/dependencies/installing-rust.html) chapter of the *Rust on ESP* Book. 
+🔎 Should you desire a customized installation (e.g. building parts from source, or add support for Xtensa/ESP32-S3), instructions for doing so can be found in the [Installing Rust](https://esp-rs.github.io/book/dependencies/installing-rust.html) chapter of the *Rust on ESP* Book.
 
 ## Rust toolchain
 
@@ -23,13 +23,14 @@ To build for the Xtensa architecture (*not* part of this material), a fork of th
 ## Espressif toolchain
 
 Several tools are required:
-- `cargo-espflash` - upload firmware to the microcontroller
+- `cargo-espflash` - upload firmware to the microcontroller and open serial monitor with cargo integration
+- `espflash` - upload firmware to the microcontroller and open serial monitor
 - `ldproxy` - Espressif build toolchain dependency
 
 ✅ Install them with the following command:
 
 ```console
-$ cargo install cargo-espflash ldproxy
+$ cargo install cargo-espflash espflash ldproxy
 ```
 
 ## Toolchain dependencies
@@ -42,17 +43,17 @@ $ sudo apt install llvm-dev libclang-dev clang
 ### macOS
 
 (when using the Homebrew package manager, which we recommend)
-```console 
+```console
 $ brew install llvm
 ```
 
 ### Troubleshooting
 
-- Python 3 is a required dependency. It comes preinstalled on stock macOS and typically on desktop Linux distributions. An existing **Python 2** installation with the `virtualenv` add-on pointing to it is known to potentially cause build problems. 
+- Python 3 is a required dependency. It comes preinstalled on stock macOS and typically on desktop Linux distributions. An existing **Python 2** installation with the `virtualenv` add-on pointing to it is known to potentially cause build problems.
 
 - Error `failed to run custom build command for libudev-sys v0.1.4` or `esp-idf-sys v0.30.X`:
 
-    At time of writing, this can be solved by 
+    At time of writing, this can be solved by
     1. running [this line](https://github.com/esp-rs/rust-build/blob/f773036483333f3b4618d988f9a1eda051573cb2/support/esp-rs-rust/Containerfile#L13) from the `esp-rs` container:
 
     `apt-get update \
@@ -78,7 +79,7 @@ https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-ma
     If you change terminal, you will need to source the `export.sh` file:
 
     ```console
-    source ~/esp/esp-idf-v4.4/export.sh 
+    source ~/esp/esp-idf-v4.4/export.sh
     ```
 
     4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
