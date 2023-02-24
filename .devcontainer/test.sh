@@ -7,5 +7,5 @@ WORK_DIR=/workspace/$1
 echo "Compiling $1"
 
 cd /workspace/$1
-cargo clean
-cargo build
+$HOME/.cargo/bin/cargo clean
+$HOME/.cargo/bin/cargo build
