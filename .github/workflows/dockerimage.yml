@@ -12,7 +12,6 @@ on:
 jobs:
   # To avoid uploading the Docker image to a registry yet
   # the image is built here & immediately used to test all exercises in.
-  # TODO at a later point split that into separate jobs
   build_image_and_test:
     name: Build ${{ matrix.project.name }}
     runs-on: ubuntu-latest
