@@ -33,6 +33,8 @@ Several tools are required:
 $ cargo install cargo-espflash espflash ldproxy
 ```
 
+⚠️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
+
 ## Toolchain dependencies
 
 ### Debian/Ubuntu
