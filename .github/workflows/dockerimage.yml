@@ -1,7 +1,7 @@
 ---
 name: Docker Image
 
-on: 
+on:
   push: {}
   pull_request:
     branches: [main]
@@ -14,8 +14,25 @@ jobs:
   # the image is built here & immediately used to test all exercises in.
   # TODO at a later point split that into separate jobs
   build_image_and_test:
-    name: Build & test image
+    name: Build ${{ matrix.project.name }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - name: "button-interrupt"
+            path: "advanced/button-interrupt"
+          - name: "i2c-driver"
+            path: "advanced/i2c-driver"
+          - name: "i2c-sensor-reading"
+            path: "advanced/i2c-sensor-reading"
+          - name: "hardware-check"
+            path: "intro/hardware-check"
+          - name: "http-client"
+            path: "intro/http-client"
+          - name: "http-server"
+            path: "intro/http-server"
+          - name: "mqtt"
+            path: "intro/mqtt"
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -23,7 +40,7 @@ jobs:
       - name: Build Docker image
         run: docker image build --tag esp --file .devcontainer/Dockerfile .
 
-      - name: Test code examples in Docker image
+      - name: Test code example in Docker image
         run: |
           docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached \
-                 --rm esp:latest /bin/bash /workspace/.devcontainer/test.sh
+                 --rm esp:latest /bin/bash /workspace/.devcontainer/test.sh ${{ matrix.project.path }}

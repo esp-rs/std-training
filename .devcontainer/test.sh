@@ -2,13 +2,10 @@
 
 set -ef
 
-WORK_DIR=/workspace
+WORK_DIR=/workspace/$1
 
-echo "Compiling all exercises & library crates"
-for file in $(find ${WORK_DIR} -name "Cargo.toml")
-do
-    cd $(dirname $file)
-    echo "Checking $(pwd)"
-    $HOME/.cargo/bin/cargo clean
-    $HOME/.cargo/bin/cargo build
-done
+echo "Compiling $1"
+
+cd /workspace/$1
+cargo clean
+cargo build
