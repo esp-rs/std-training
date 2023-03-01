@@ -68,7 +68,7 @@ This can save a lot of time as you do not need to re-flash the program in its en
 If `cargo run` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
 
 ```console
-espmonitor /dev/YOUR_SERIAL_DEVICE
+cargo espflash monitor
 ```
 
 
