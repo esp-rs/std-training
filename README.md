@@ -89,7 +89,5 @@ conditions.
 ## Code of Conduct
 
 Contribution to this crate is organized under the terms of the [Rust Code of
-Conduct][CoC], and the maintainers of this crate promises to intervene to
+Conduct](https://www.rust-lang.org/policies/code-of-conduct), and the maintainers of this crate promises to intervene to
 uphold that code of conduct.
-
-[CoC]: CODE_OF_CONDUCT.md
