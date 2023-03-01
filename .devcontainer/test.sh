@@ -7,10 +7,8 @@ WORK_DIR=/workspace/$1
 echo "Compiling $1"
 
 cd /workspace/$1
-$HOME/.cargo/bin/cargo clean
-$HOME/.cargo/bin/cargo build
 
-if [ -f /workspace/$1/cfg.toml.example ]; then
+if [ -f cfg.toml.example ]; then
     # Rename file to cfg.toml
     mv cfg.toml.example cfg.toml
     # Replace defaults
@@ -20,6 +18,9 @@ if [ -f /workspace/$1/cfg.toml.example ]; then
     sed -i 's/mqtt_pass = "CorrectHorseBatteryStaple"/mqtt_pass = "pass"/g' cfg.toml
     sed -i 's/mqtt_host = "yourpc.local"/mqtt_host = "host"/g' cfg.toml
 fi
+
+$HOME/.cargo/bin/cargo clean
+$HOME/.cargo/bin/cargo build
 
 # Check examples
 if [[ "$1" == advanced/button-interrupt ]]; then
