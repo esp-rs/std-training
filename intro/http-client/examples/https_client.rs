@@ -37,7 +37,6 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     // 1. create a new EspHttpClient with SSL certificates enabled
     let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
         use_global_ca_store: true,
-        // TODO: Fix this
         crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
 
         ..Default::default()
