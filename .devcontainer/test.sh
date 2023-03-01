@@ -22,8 +22,7 @@ fi
 
 if [[ "$1" == intro/http-client ]]; then
     $HOME/.cargo/bin/cargo build --example http_client
-    # TODO: Update sdkconfig.defaults before buidling
-    # $HOME/.cargo/bin/cargo build --example https_client
+    $HOME/.cargo/bin/cargo build --example https_client
 fi
 
 if [[ "$1" == intro/http-server ]]; then

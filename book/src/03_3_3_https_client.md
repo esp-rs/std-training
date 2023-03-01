@@ -9,16 +9,7 @@ You will now make changes to your http client files so that it also works for en
 cargo run --example https_client
 ```
 
-To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
-
-✅ Enable basic TLS certificate support in your project's `sdkconfig.defaults` by deleting the existing `CONFIG_MBEDTLS...` lines and adding:
-
-```cfg
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=y
-```
-
-Now, we create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
+Create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
 
 ```rust
 let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
