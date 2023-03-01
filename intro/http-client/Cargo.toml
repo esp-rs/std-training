@@ -9,7 +9,7 @@ resolver = "2"
 opt-level = "s"
 
 [profile.dev]
-debug = true # Symbols are nice and they don't increase the size on Flash
+debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
@@ -28,4 +28,4 @@ ignore = "=0.4.11"
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
-
+toml-cfg = "0.1"
