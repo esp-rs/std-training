@@ -1,7 +1,8 @@
 # Embedded Rust Trainings for Espressif
 
-This repository contains Training Material for learning to use Embedded Rust
-with the Espressif ESP32-C3.
+[![Docker Image](https://github.com/esp-rs/espressif-trainings/actions/workflows/dockerimage.yml/badge.svg)](https://github.com/esp-rs/espressif-trainings/actions/workflows/dockerimage.yml)
+
+This repository contains Training Material for learning to use Embedded Rust with the Espressif ESP32-C3.
 
 We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
 
