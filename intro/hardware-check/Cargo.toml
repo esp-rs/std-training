@@ -28,3 +28,4 @@ ignore = "=0.4.11"
 [build-dependencies]
 embuild = "0.28"
 anyhow = "1"
+toml-cfg = "0.1"
