@@ -22,10 +22,6 @@ fi
 
 if [[ "$1" == intro/http-client ]]; then
     $HOME/.cargo/bin/cargo build --example http_client
-    # HTTPS Client example requires updating sdkconfig.defaults before buidling
-    sed -i 's/CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=n/CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y/g' sdkconfig.defaults
-    sed -i 's/CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=n/CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=y/g' sdkconfig.defaults
-    $HOME/.cargo/bin/cargo clean
     $HOME/.cargo/bin/cargo build --example https_client
 fi
 
