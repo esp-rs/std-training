@@ -1,12 +1,10 @@
 # Embedded Rust Trainings for Espressif
 
-This repository contains Training Material for learning to use Embedded Rust
-with the Espressif ESP32-C3. 
+[![Docker Image](https://github.com/esp-rs/espressif-trainings/actions/workflows/dockerimage.yml/badge.svg)](https://github.com/esp-rs/espressif-trainings/actions/workflows/dockerimage.yml)
 
-⚠️ This material is based on unstable crates. It worked at the time of writing but following it today may not result in compiling code! However, it can be used as inspiration for getting started with Rust on Espressif. You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
+This repository contains Training Material for learning to use Embedded Rust with the Espressif ESP32-C3.
 
 We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
-
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
 
@@ -78,7 +76,7 @@ __Share Alike__.
 
 In addition, the source code contained within this repository (either in the
 book, or as separate examples) is made available under either the
-[MIT](./LICENSE-MIT.txt) or [Apache-2.0](./LICENSE_APACHE.txt) licenses, at
+[MIT](./LICENSE-MIT.txt) or [Apache-2.0](./LICENSE-APACHE.txt) licenses, at
 your option.
 
 ## Contribution
@@ -91,7 +89,5 @@ conditions.
 ## Code of Conduct
 
 Contribution to this crate is organized under the terms of the [Rust Code of
-Conduct][CoC], and the maintainers of this crate promises to intervene to
+Conduct](https://www.rust-lang.org/policies/code-of-conduct), and the maintainers of this crate promises to intervene to
 uphold that code of conduct.
-
-[CoC]: CODE_OF_CONDUCT.md

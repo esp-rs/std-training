@@ -2,7 +2,7 @@
 
 Follow the steps below for a default installation of the ESP32-C3 platform tooling.
 
-🔎 Should you desire a customized installation (e.g. building parts from source, or add support for Xtensa/ESP32-S3), instructions for doing so can be found in the [Installing Rust](https://esp-rs.github.io/book/dependencies/installing-rust.html) chapter of the *Rust on ESP* Book.
+🔎 Should you desire a customized installation (e.g. building parts from source, or add support for Xtensa/ESP32-S3), instructions for doing so can be found in the [Rust on ESP targets](https://esp-rs.github.io/book/installation/index.html) chapter of the *Rust on ESP* Book.
 
 ## Rust toolchain
 
