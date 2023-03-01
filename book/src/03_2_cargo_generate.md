@@ -16,7 +16,7 @@ You'll be prompted for details regarding your new project. When given a choice b
 The first message you see will be:
 `⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you do not have a favorite config file, but you don't need one and you can ignore this warning.
 
-🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) that will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`. 
+🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) that will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`.
 
 
 > If you make a mistake, hit `Ctrl+C` and start anew.
@@ -41,7 +41,7 @@ default = ["native"] # add this line
 native = ["esp-idf-sys/native"]
 ```
 
-🔎 `.cargo/config.toml` contains local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package. 
+🔎 `.cargo/config.toml` contains local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package.
 `Cargo.toml` contains dependencies [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
 
 
@@ -52,7 +52,7 @@ Optional, but recommended: To save disk space and download time, set the toolcha
 
 ```toml
 [env]
-# ... 
+# ...
 ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 ```
 
@@ -68,7 +68,7 @@ channel = "nightly-2022-03-10" # change this line
 
 ```shell
 $ cd hello-world
-$ cargo espflash --release --monitor /dev/SERIAL_DEVICE
+$ cargo run
 ```
 
 ✅ The last lines of your output should look like this:
@@ -87,6 +87,6 @@ Hello, world!
 - `⛔ Git Error: authentication required`: your git configuration is probably set to override `https` github URLs to `ssh`. Check your global `~/.git/config` for `insteadOf` sections and disable them.
 - `Error: Failed to generate bindings`: add `default = ["native"]` to `Cargo.toml`
 - if you're using the deprecated `pio` build system, an [initial git commit of your project](https://github.com/espressif/esp-idf/issues/3920) will be required for a successful build.
-- if `cargo espflash` is stuck on `Connecting...`, you might have another monitor process still running (e.g. from the initial `hardware-check` test). Try finding and terminating it. If this doesn't help, disconnect and reconnect the board's USB cable.
+- if `cargo run` is stuck on `Connecting...`, you might have another monitor process still running (e.g. from the initial `hardware-check` test). Try finding and terminating it. If this doesn't help, disconnect and reconnect the board's USB cable.
 
 [^hint]: yield control back to the underlying operating system by `sleep`ing in a loop instead of busy waiting. (use `use std::thread::sleep`)

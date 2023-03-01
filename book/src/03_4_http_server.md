@@ -1,6 +1,6 @@
 # A simple HTTP server
 
-We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the internal temperature sensor. 
+We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the internal temperature sensor.
 
 ## Setup
 
@@ -9,12 +9,12 @@ You can find a prepared project skeleton in `intro/http-server/`. It includes es
 `intro/http-server/examples/https-server.rs` contains a solution. You can run it with the following command:
 
 ```
-cargo espflash --release --example http_serve --monitor $SERIALDEVICE
+cargo run --example http_server
 ```
 
 ## Serving requests
 
-To connect to your board with your browser, you need to know the board's IP address. 
+To connect to your board with your browser, you need to know the board's IP address.
 
 
 ✅ Run the skeleton code in `intro/http-server`. The output should yield the board's IP address like this:
@@ -52,9 +52,9 @@ server.handle_get(path, |request, response| {
 });
 
 ```
- 
 
-✅ Create a `EspHttpServer` instance using a default `esp_idf_svc::http::server::Configuration`. The default configuration will cause it to listen on port 80 automatically. 
+
+✅ Create a `EspHttpServer` instance using a default `esp_idf_svc::http::server::Configuration`. The default configuration will cause it to listen on port 80 automatically.
 
 ✅ Verify that a connection to `http://<sta ip>/` yields a `404` (not found) error stating `This URI does not exist`.
 
@@ -62,7 +62,7 @@ server.handle_get(path, |request, response| {
 
 ## Dynamic data
 
-We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor` that measures the board's internal temperature. 
+We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor` that measures the board's internal temperature.
 
 ✅ Write a second handler that reports the chip temperature at `http://<sta ip>/temperature`, using the provided `temperature(val: f32)` function to generate the HTML String.
 ## Hints

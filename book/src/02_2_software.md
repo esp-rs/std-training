@@ -23,14 +23,17 @@ To build for the Xtensa architecture (*not* part of this material), a fork of th
 ## Espressif toolchain
 
 Several tools are required:
-- `cargo-espflash` - upload firmware to the microcontroller
+- `cargo-espflash` - upload firmware to the microcontroller and open serial monitor with cargo integration
+- `espflash` - upload firmware to the microcontroller and open serial monitor
 - `ldproxy` - Espressif build toolchain dependency
 
 ✅ Install them with the following command:
 
 ```console
-$ cargo install cargo-espflash ldproxy
+$ cargo install cargo-espflash espflash ldproxy
 ```
+
+⚠️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
 
 ## Toolchain dependencies
 

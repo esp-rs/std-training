@@ -6,7 +6,7 @@ You will now make changes to your http client files so that it also works for en
 (It won't build unless you have completed the first step of the exercise.)
 
 ```
-cargo espflash --release --example https_client --monitor $SERIALDEVICE
+cargo run --example https_client
 ```
 
 Create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
