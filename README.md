@@ -76,7 +76,7 @@ __Share Alike__.
 
 In addition, the source code contained within this repository (either in the
 book, or as separate examples) is made available under either the
-[MIT](./LICENSE-MIT.txt) or [Apache-2.0](./LICENSE_APACHE.txt) licenses, at
+[MIT](./LICENSE-MIT.txt) or [Apache-2.0](./LICENSE-APACHE.txt) licenses, at
 your option.
 
 ## Contribution
