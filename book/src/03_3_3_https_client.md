@@ -9,16 +9,7 @@ You will now make changes to your http client files so that it also works for en
 cargo espflash --release --example https_client --monitor $SERIALDEVICE
 ```
 
-To establish a secure, encrypted HTTPS connection, we first need to add some certificates so a server's identity can be verified.
-
-✅ Enable basic TLS certificate support in your project's `sdkconfig.defaults` by deleting the existing `CONFIG_MBEDTLS...` lines and adding:
-
-```cfg
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
-CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_CMN=y
-```
-
-Now, we create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
+Create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
 
 ```rust
 let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
@@ -33,7 +24,7 @@ let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
 
 ## Troubleshooting (repeated from previous section)
 
-- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match. 
+- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
 
 ```toml
 # Cargo.toml
