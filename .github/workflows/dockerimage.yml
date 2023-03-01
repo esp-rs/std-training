@@ -1,5 +1,5 @@
 ---
-name: Docker Image
+name: CI
 
 on:
   push: {}
@@ -8,6 +8,8 @@ on:
     paths-ignore:
       - "book/"
       - "book/**"
+  schedule:
+    - cron: "50 7 * * *"
 
 jobs:
   # To avoid uploading the Docker image to a registry yet
