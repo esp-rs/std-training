@@ -53,7 +53,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     let writer = request.into_writer(0)?;
     // 4. submit our write request and check the status code of the response.
     // Successful http status codes are in the 200..=299 range.
-    let mut response = writer.submit()?;
+    let response = writer.into_response()?;
     let status = response.status();
     println!("response code: {}\n", status);
     match status {
@@ -63,7 +63,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
             let mut total_size = 0;
             let mut reader = response.reader();
             loop {
-                let size = reader.read(&mut buf)?;
+                let size = reader.do_read(&mut buf)?;
                 if size == 0 {
                     break;
                 }

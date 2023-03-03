@@ -6,9 +6,9 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 
 ✅ Go to `intro/http-client` directory.
 
-✅ Open the prepared project skeleton in `intro/http-client`. 
+✅ Open the prepared project skeleton in `intro/http-client`.
 
-✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as in the hardware test. 
+✅ Add your [network credentials](02_4_hello_board.md) to the `cfg.toml` as in the hardware test.
 
 ✅ Open the docs for this project with the following command:
 
@@ -19,7 +19,7 @@ $ cargo doc --open
 `intro/http-client/examples/http_client.rs` contains the solution. you can run it with the following command:
 
 ```
-cargo espflash --release --example http_client --monitor $SERIALDEVICE
+cargo run --example http_client
 ```
 ## Making a connection
 
@@ -32,7 +32,7 @@ In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClien
 ✅ Create a new `EspHttpClient` with default values. Look for a suitable constructor in the documentation.
 
 
-Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request. 
+Calling HTTP functions (e.g. `get(url)`) on this client returns an `EspHttpRequest`, which must be turned into a `Writer` to reflect the client's option to send some data alongside its request.
 
 After this optional send step the `Writer` can be turned into a `Response` from which the received server output can be read:
 
@@ -46,7 +46,7 @@ let request = client.get(url.as_ref())?;
 let writer = request.into_writer(0)?;
 let response = writer.submit()?;
 ```
-The parameter passed to `into_writer` is the number of bytes the client intends to send. Here we are not trying to send anything. 
+The parameter passed to `into_writer` is the number of bytes the client intends to send. Here we are not trying to send anything.
 
 A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Followed by the raw html of the website.
 
@@ -79,7 +79,7 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ## Troubleshooting
 
-- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match. 
+- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
 
 ```toml
 # Cargo.toml

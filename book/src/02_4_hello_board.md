@@ -8,7 +8,7 @@ You're now ready to do a consistency check.
 espressif-trainings$ cd intro/hardware-check
 ```
 
-To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided. 
+To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided.
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
@@ -21,14 +21,14 @@ $ cat cfg.toml
 
 [hardware-check]
 wifi_ssid = "Your Wifi name"
-wifi_psk = "Your Wifi password" 
+wifi_psk = "Your Wifi password"
 ```
 
 
-✅ Build, run and monitor the project, substituting the actual serial device name for `/dev/SERIAL_DEVICE`:
+✅ Build, flash and monitor the project:
 
 ```console
-$ cargo espflash --release --monitor /dev/SERIAL_DEVICE
+$ cargo run
 
 Serial port: /dev/SERIAL_DEVICE
 Connecting...
@@ -65,10 +65,10 @@ If you want to try to build without flashing, you can run:
 This can save a lot of time as you do not need to re-flash the program in its entirety and flashing can take up quit some time.
 
 
-If `cargo espflash --release --monitor /dev/YOUR_SERIAL_DEVICE` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
+If `cargo run` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
 
 ```console
-espmonitor /dev/YOUR_SERIAL_DEVICE
+cargo espflash monitor
 ```
 
 
@@ -121,8 +121,8 @@ help: Ensure that the device is connected and the reset and boot pins are not be
 
 The board is not accessible with USB-C cable. A typical connection error looks like this:
 
-   
-Workarounds: 
+
+Workarounds:
 1. press and hold boot button on the board, start flash command, release boot button after flashing process starts
 2. use a hub.
 
