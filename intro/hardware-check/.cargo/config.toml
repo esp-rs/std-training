@@ -3,7 +3,8 @@ target = "riscv32imc-esp-espidf"
 
 [target.riscv32imc-esp-espidf]
 linker = "ldproxy"
-runner = "espflash flash --release --monitor"
+# TODO: Fix runner
+runner = "espflash flash --monitor"
 # Future - necessary for the experimental "native build" of esp-idf-sys with ESP32C3
 # See also https://github.com/ivmarkov/embuild/issues/16
 rustflags = ["-C", "default-linker-libraries"]
