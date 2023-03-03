@@ -1,174 +1,34 @@
-use esp32c3::{Peripherals, APB_SARADC};
-use log::info;
+use core::fmt::Debug;
+use embedded_hal::blocking::i2c::{Write, WriteRead};
+use icm42670::{Address, Icm42670};
+use shtcx::{self, shtc3, PowerMode};
 
-const _XPD_WAIT_DEFAULT: u16 = 0xFF; /* Set wait cycle time(8MHz) from power up to reset enable. */
-const ADC_FACTOR: f32 = 0.4386;
-const DAC_FACTOR: f32 = 27.88;
-const _SYS_OFFSET: f32 = 20.52;
-
-#[allow(unused)]
-enum DacOffset {
-    L0 = 5,  /*< offset = -2, measure range: 50℃ ~ 125℃, error < 3℃. */
-    L1 = 7,  /*< offset = -1, measure range: 20℃ ~ 100℃, error < 2℃. */
-    L2 = 15, /*< offset =  0, measure range:-10℃ ~  80℃, error < 1℃. */
-    L3 = 11, /*< offset =  1, measure range:-30℃ ~  50℃, error < 2℃. */
-    L4 = 10, /*< offset =  2, measure range:-40℃ ~  20℃, error < 3℃. */
+pub struct BoardTempSensor<I2C> {
+    sht: shtcx::ShtC3<I2C>,
+    imu: Icm42670<I2C>,
 }
 
-impl Default for DacOffset {
-    fn default() -> Self {
-        DacOffset::L2
-    }
-}
-
-impl DacOffset {
-    fn offset(&self) -> i8 {
-        match self {
-            DacOffset::L0 => -2,
-            DacOffset::L1 => -1,
-            DacOffset::L2 => 0,
-            DacOffset::L3 => 1,
-            DacOffset::L4 => 2,
-        }
-    }
-}
-
-#[allow(unused)]
-struct SensorConfig {
-    dac_offset: DacOffset,
-    clock_divider: u8,
-}
-
-#[allow(unused)]
-impl SensorConfig {
-    fn new(dac_offset: DacOffset, clock_divider: u8) -> Self {
+impl<I2C, E> BoardTempSensor<I2C>
+where
+    I2C: Write<Error = E> + WriteRead<Error = E>,
+    E: Debug,
+{
+    pub fn new(sht_i2c: I2C, imu_i2c: I2C) -> Self {
+        let icm42670p = Icm42670::new(imu_i2c, Address::Primary).unwrap();
+        let sht = shtc3(sht_i2c);
         Self {
-            dac_offset,
-            clock_divider,
+            sht,
+            imu: icm42670p,
         }
     }
-}
 
-impl Default for SensorConfig {
-    fn default() -> Self {
-        Self {
-            clock_divider: 6,
-            dac_offset: Default::default(),
-        }
-    }
-}
+    // pub fn read_sht(&mut self) -> f32 {
+    //     let temp = self.sht.read_temperature(PowerMode::Normal).unwrap();
+    //     temp
+    // }
 
-pub struct BoardTempSensor {
-    config: SensorConfig,
-    efuse_calibration: f32,
-    peripherals: Option<Peripherals>,
-}
-
-impl BoardTempSensor {
-    pub fn new_taking_peripherals() -> Self {
-        let mut peripherals = Peripherals::take().unwrap();
-        let efuse_calibration = Self::common_init(&mut peripherals);
-        Self {
-            config: Default::default(),
-            efuse_calibration,
-            peripherals: Some(peripherals),
-        }
-    }
-    pub fn new(peripherals: &mut Peripherals) -> Self {
-        let efuse_calibration = Self::common_init(peripherals);
-        Self {
-            config: Default::default(),
-            efuse_calibration,
-            peripherals: None,
-        }
-    }
-    fn common_init(peripherals: &mut Peripherals) -> f32 {
-        // enable TSENS clock
-        peripherals
-            .SYSTEM
-            .perip_clk_en1
-            .modify(|_r, w| w.tsens_clk_en().set_bit());
-
-        // select XTAL clock for TSENS:
-        /*
-        APB_SARADC_TSENS_CLK_SEL
-        Choose working clock for temperature sensor. 0: FOSC_CLK. 1: XTAL_CLK. (R/W)
-        */
-        peripherals
-            .APB_SARADC
-            .tsens_ctrl2
-            .modify(|_r, w| w.tsens_clk_sel().set_bit());
-
-        // power up tsens
-        peripherals
-            .APB_SARADC
-            .apb_tsens_ctrl
-            .modify(|_r, w| w.tsens_pu().set_bit());
-
-        // TODO conflicting information - on the one hand,
-        /*
-        esp_efuse_table.c
-        static const esp_efuse_desc_t TEMP_CALIB[] = {
-        {EFUSE_BLK2, 131, 9}, 	 // Temperature calibration data,
-        };
-        */
-        // register is 128..160
-        // we want 131 .. 131+9
-        // -> offset 3, but python definition disagrees:
-
-        // from esptool/blob/master/espressif/efuse/esp32c3/mem_definition.py:
-        // # Name                      Category      Block Word Pos Type:len  WR_DIS RD_DIS Class         Description                Dictionary
-        // ('TEMP_SENSOR_CAL',         "calibration",   2,  4, 7,   "uint:9",   21,   None, "t_sensor",   "Temperature calibration", None),
-        //
-        // a "word" is 32 bit it seems, so that's base = 32*4 + 7 = 135, not 131
-
-        let register_contents = peripherals.EFUSE.rd_sys_part1_data4.read().bits();
-        info!("raw data: {:b}", register_contents);
-
-        // `as u8` truncates accordingly, otherwise we'd need e.g. & 0xff
-        let efuse_calibration_raw = (register_contents >> 7) as u8;
-
-        // TODO this is what the IDF C source does, but is it correct?
-        // TODO why does `mem_definition.py` say the length is 9?
-        let sign = if efuse_calibration_raw & 0b1000_0000 > 0 {
-            -1.
-        } else {
-            1.
-        };
-
-        let efuse_calibration = efuse_calibration_raw as f32 / 10. * sign;
-
-        info!("efuse calibration: {}", efuse_calibration);
-
-        efuse_calibration
-    }
-
-    fn read_impl(&self, adc: &mut APB_SARADC) -> f32 {
-        let register = adc.apb_tsens_ctrl.read();
-        let raw_value = register.tsens_out().bits();
-        let value = ADC_FACTOR * (raw_value as f32)
-            - DAC_FACTOR * self.config.dac_offset.offset() as f32
-            - self.efuse_calibration;
-
-        value
-    }
-
-    pub fn read(&self, adc: &mut APB_SARADC) -> f32 {
-        self.read_impl(adc)
-    }
-
-    pub fn read_owning_peripherals(&mut self) -> f32 {
-        let adc = &mut self.peripherals.as_mut().unwrap().APB_SARADC;
-        let register = adc.apb_tsens_ctrl.read();
-        let raw_value = register.tsens_out().bits();
-        let value = ADC_FACTOR * (raw_value as f32)
-            - DAC_FACTOR * self.config.dac_offset.offset() as f32
-            - self.efuse_calibration;
-
-        value
-    }
-
-    pub fn free(self) -> Option<Peripherals> {
-        self.peripherals
-    }
+    // pub fn read_imu(&mut self) -> f32 {
+    //     let temp = self.imu.read_temperature().unwrap();
+    //     temp
+    // }
 }
