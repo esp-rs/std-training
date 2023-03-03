@@ -1,45 +1,37 @@
-// based on https://github.com/ivmarkov/rust-esp32-std-demo/blob/main/src/main.rs
-
-use std::sync::Arc;
-
-use anyhow::bail;
-use embedded_svc::wifi::{
-    self, AuthMethod, ClientConfiguration, ClientConnectionStatus, ClientIpStatus, ClientStatus,
-    Wifi as _,
-};
-use esp_idf_svc::{
-    netif::EspNetifStack, nvs::EspDefaultNvs, sysloop::EspSysLoopStack, wifi::EspWifi,
-};
+use anyhow::{bail, Result};
+use embedded_svc::wifi::AuthMethod;
+use embedded_svc::wifi::AccessPointConfiguration;
+use embedded_svc::wifi::ClientConfiguration;
+use embedded_svc::wifi::Configuration;
+use embedded_svc::wifi::Wifi;
+use esp_idf_hal::peripheral;
+use esp_idf_svc::eventloop::EspSystemEventLoop;
+use esp_idf_svc::netif::EspNetif;
+use esp_idf_svc::netif::EspNetifWait;
+use esp_idf_svc::wifi::EspWifi;
+use esp_idf_svc::wifi::WifiWait;
 use log::info;
+use std::net::Ipv4Addr;
 use std::time::Duration;
 
-#[allow(unused)]
-pub struct Wifi {
-    esp_wifi: EspWifi,
-    netif_stack: Arc<EspNetifStack>,
-    sys_loop_stack: Arc<EspSysLoopStack>,
-    default_nvs: Arc<EspDefaultNvs>,
-}
+pub fn wifi(
+    ssid: &str,
+    pass: &str,
+    modem: impl peripheral::Peripheral<P = esp_idf_hal::modem::Modem> + 'static,
+    sysloop: EspSystemEventLoop,
+) -> Result<Box<EspWifi<'static>>> {
 
-pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
     let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
     if ssid.is_empty() {
         anyhow::bail!("missing WiFi name")
     }
-    if psk.is_empty() {
+    if pass.is_empty() {
         auth_method = AuthMethod::None;
         info!("Wifi password is empty");
     }
-    let netif_stack = Arc::new(EspNetifStack::new()?);
-    let sys_loop_stack = Arc::new(EspSysLoopStack::new()?);
-    let default_nvs = Arc::new(EspDefaultNvs::new()?);
-    let mut wifi = EspWifi::new(
-        netif_stack.clone(),
-        sys_loop_stack.clone(),
-        default_nvs.clone(),
-    )?;
+    let mut wifi = Box::new(EspWifi::new(modem, sysloop.clone(), None)?);
 
-    info!("Searching for Wifi network {}", ssid);
+    info!("Wifi created, about to scan");
 
     let ap_infos = wifi.scan()?;
 
@@ -59,45 +51,50 @@ pub fn wifi(ssid: &str, psk: &str) -> anyhow::Result<Wifi> {
         None
     };
 
-    info!("setting Wifi configuration");
-    wifi.set_configuration(&wifi::Configuration::Client(ClientConfiguration {
-        ssid: ssid.into(),
-        password: psk.into(),
-        channel,
-        auth_method,
-        ..Default::default()
-    }))?;
+    wifi.set_configuration(&Configuration::Mixed(
+        ClientConfiguration {
+            ssid: ssid.into(),
+            password: pass.into(),
+            channel,
+            auth_method,
+            ..Default::default()
+        },
+        AccessPointConfiguration {
+            ssid: "aptest".into(),
+            channel: channel.unwrap_or(1),
+            ..Default::default()
+        },
+    ))?;
 
-    info!("getting Wifi status");
+    wifi.start()?;
 
-    wifi.wait_status_with_timeout(Duration::from_secs(2100), |status| {
-        !status.is_transitional()
-    })
-    .map_err(|err| anyhow::anyhow!("Unexpected Wifi status (Transitional state): {:?}", err))?;
+    info!("Starting wifi...");
 
-    let status = wifi.get_status();
-
-    if let wifi::Status(
-        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(
-            _ip_settings,
-        ))),
-        _,
-    ) = status
+    if !WifiWait::new(&sysloop)?
+        .wait_with_timeout(Duration::from_secs(20), || wifi.is_started().unwrap())
     {
-        info!("Wifi connected");
-    } else {
-        bail!(
-            "Could not connect to Wifi - Unexpected Wifi status: {:?}",
-            status
-        );
+        bail!("Wifi did not start");
     }
 
-    let wifi = Wifi {
-        esp_wifi: wifi,
-        netif_stack,
-        sys_loop_stack,
-        default_nvs,
-    };
+    info!("Connecting wifi...");
+
+    wifi.connect()?;
+
+    if !EspNetifWait::new::<EspNetif>(wifi.sta_netif(), &sysloop)?.wait_with_timeout(
+        Duration::from_secs(20),
+        || {
+            wifi.is_connected().unwrap()
+                && wifi.sta_netif().get_ip_info().unwrap().ip != Ipv4Addr::new(0, 0, 0, 0)
+        },
+    ) {
+        bail!("Wifi did not connect or did not receive a DHCP lease");
+    }
+
+    let ip_info = wifi.sta_netif().get_ip_info()?;
+
+    info!("Wifi DHCP info: {:?}", ip_info);
+
+    // ping(ip_info.subnet.gateway)?;
 
     Ok(wifi)
 }
