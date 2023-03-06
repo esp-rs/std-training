@@ -3,7 +3,10 @@
 //! This `libstd` program is for the ESP32-C3-DevKitC-02 board.
 
 use anyhow::{bail, Result};
-use esp32_c3_dkc02_bsc::led::{RGB8, WS2812RMT};
+use esp32_c3_dkc02_bsc::{
+    led::{RGB8, WS2812RMT},
+    wifi::wifi,
+};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use log::info;
@@ -44,7 +47,7 @@ fn main() -> Result<()> {
     let app_config = CONFIG;
 
     // Connect to the Wi-Fi network
-    let _wifi = match bsc::wifi::wifi(
+    let _wifi = match wifi(
         app_config.wifi_ssid,
         app_config.wifi_psk,
         peripherals.modem,

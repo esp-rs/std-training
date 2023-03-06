@@ -33,7 +33,7 @@ fn main() -> Result<()> {
     let app_config = CONFIG;
 
     // Connect to the Wi-Fi network
-    let _wifi = bsc::wifi::wifi(
+    let _wifi = wifi(
         app_config.wifi_ssid,
         app_config.wifi_psk,
         peripherals.modem,
