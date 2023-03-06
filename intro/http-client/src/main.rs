@@ -1,17 +1,18 @@
+use anyhow::{bail, Result};
 use bsc::wifi::wifi;
 use core::str;
 use embedded_svc::{
-    http::{
-        client::{Client, Request, Response},
-        Headers, Status,
-    },
+    http::{client::Client, Status},
     io::Read,
 };
-use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_hal::prelude::Peripherals;
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-// use esp_idf_svc::http::client::{EspHttpClient, EspHttpClientConfiguration};
-use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    http::client::{Configuration, EspHttpConnection},
+};
+
+use esp32_c3_dkc02_bsc as bsc;
+use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -21,7 +22,7 @@ pub struct Config {
     wifi_psk: &'static str,
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
@@ -36,7 +37,7 @@ fn main() -> anyhow::Result<()> {
         app_config.wifi_ssid,
         app_config.wifi_psk,
         peripherals.modem,
-        sysloop.clone(),
+        sysloop,
     )?;
 
     // TODO your code here
@@ -45,7 +46,7 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
+fn get(url: impl AsRef<str>) -> Result<()> {
     // 1. Create a new EspHttpClient. (Check documentation)
 
     // 2. Open a GET request to `url`
