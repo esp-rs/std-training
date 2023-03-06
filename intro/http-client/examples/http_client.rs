@@ -1,12 +1,17 @@
 use anyhow::{bail, Result};
 use bsc::wifi::wifi;
 use core::str;
-use embedded_svc::http::{client::Client, Status};
-use embedded_svc::io::{Read, Write};
-use esp32_c3_dkc02_bsc as bsc;
+use embedded_svc::{
+    http::{client::Client, Status},
+    io::Read,
+};
 use esp_idf_hal::prelude::Peripherals;
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-use esp_idf_svc::http::client::{Configuration, EspHttpConnection};
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    http::client::{Configuration, EspHttpConnection},
+};
+
+use esp32_c3_dkc02_bsc as bsc;
 use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]
@@ -17,7 +22,7 @@ pub struct Config {
     wifi_psk: &'static str,
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
@@ -32,7 +37,7 @@ fn main() -> anyhow::Result<()> {
         app_config.wifi_ssid,
         app_config.wifi_psk,
         peripherals.modem,
-        sysloop.clone(),
+        sysloop,
     )?;
 
     get("http://neverssl.com/")?;
