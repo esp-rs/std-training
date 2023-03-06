@@ -13,8 +13,8 @@ Furthermore, for ESP32-C3, a specific *nightly* version of the Rust toolchain is
 ✅ Install nightly Rust and add support for the target architecture using the following console commands:
 
 ```console
-$ rustup install nightly-2022-03-10
-$ rustup component add rust-src --toolchain nightly-2022-03-10
+$ rustup install nightly-2023-02-28
+$ rustup component add rust-src --toolchain nightly-2023-02-28
 ```
 
 🔎 Rust is capable of cross-compiling to any supported target (see `rustup target list`). By default, only the native architecture of your system is installed.
