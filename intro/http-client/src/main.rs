@@ -50,22 +50,14 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     // 2. Open a GET request to `url`
 
-    // 3. Requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
-    // (since we don't send anything - but have to do the writer step anyway)
-    //
-    // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_http_client.html
-    // If this were a POST request, you'd set a write length > 0 and then writer.do_write(&some_buf);
-
-    // let writer = request...;
-
-    // 4. Turn the writer into a response and check its status. Successful http status codes are in the 200..=299 range.
+    // 3. Submit write request and check the status code of the response. Successful http status codes are in the 200..=299 range.
 
     // let response = writer...;
     // let status = ...;
     // println!("response code: {}\n", status);
 
-    // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
-    // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
+    // 4. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
+    // 5. Try converting the bytes into a Rust (UTF-8) string and print it.
 
     Ok(())
 }
