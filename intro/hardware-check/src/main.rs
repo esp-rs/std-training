@@ -5,6 +5,7 @@
 // Logging macros
 use log::*;
 
+use anyhow::{bail, Result};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 
@@ -32,7 +33,7 @@ pub struct Config {
 ///
 /// If the LED goes solid red, then it was unable to connect to your Wi-Fi
 /// network.
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
@@ -53,13 +54,13 @@ fn main() -> anyhow::Result<()> {
         app_config.wifi_ssid,
         app_config.wifi_psk,
         peripherals.modem,
-        sysloop.clone(),
+        sysloop,
     ) {
         Ok(inner) => inner,
         Err(err) => {
             // Red!
             led.set_pixel(RGB8::new(50, 0, 0))?;
-            anyhow::bail!("could not connect to Wi-Fi network: {:?}", err)
+            bail!("could not connect to Wi-Fi network: {:?}", err)
         }
     };
 
