@@ -1,3 +1,4 @@
+use anyhow::{bail, Result};
 use bsc::wifi::wifi;
 use core::str;
 use embedded_svc::http::{client::Client, Status};
@@ -39,7 +40,7 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
+fn get(url: impl AsRef<str>) -> Result<()> {
     // 1. Create a new EspHttpClient. (Check documentation)
     let connection = EspHttpConnection::new(&Configuration {
         ..Default::default()
@@ -49,16 +50,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     // // 2. Open a GET request to `url`
     let request = client.get(url.as_ref())?;
 
-    // // 3. Requests *may* send data to the server. Turn the request into a writer, specifying 0 bytes as write length
-    // // (since we don't send anything - but have to do the writer step anyway)
-    // // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/esp_http_client.html
-    // // If this were a POST request, you'd set a write length > 0 and then writer.do_write(&some_buf);
-    // let writer = request.into_writer(0)?;
-    let headers = [("Content-Type", "application/json")];
-    let mut request = client.post(url.as_ref(), &headers)?;
-    request.write_all("asdad".as_bytes())?;
-    request.flush()?;
-    // // 4. Submit our write request and check the status code of the response.
+    // // 3. Submit write request and check the status code of the response.
     // // Successful http status codes are in the 200..=299 range.
     let response = request.submit()?;
     let status = response.status();
@@ -67,7 +59,7 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
 
     match status {
         200..=299 => {
-            // 5. if the status is OK, read response data chunk by chunk into a buffer and print it until done
+            // 4. if the status is OK, read response data chunk by chunk into a buffer and print it until done
             let mut buf = [0_u8; 256];
             let mut reader = response;
             loop {
@@ -75,13 +67,13 @@ fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
                     if size == 0 {
                         break;
                     }
-                    // 6. try converting the bytes into a Rust (UTF-8) string and print it
+                    // 5. try converting the bytes into a Rust (UTF-8) string and print it
                     let response_text = str::from_utf8(&buf[..size])?;
                     println!("{}", response_text);
                 }
             }
         }
-        _ => anyhow::bail!("unexpected response code: {}", status),
+        _ => bail!("unexpected response code: {}", status),
     }
 
     Ok(())
