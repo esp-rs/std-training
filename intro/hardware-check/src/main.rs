@@ -7,7 +7,6 @@ use esp32_c3_dkc02_bsc::led::{RGB8, WS2812RMT};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use log::info;
-
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 

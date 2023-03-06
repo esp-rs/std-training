@@ -1,18 +1,20 @@
 use core::str;
+use embedded_svc::{
+    http::{
+        server::{registry::Registry, Response, ResponseWrite},
+        Method,
+    },
+    io::Write,
+};
+use esp32_c3_dkc02_bsc::{temp_sensor::BoardTempSensor, wifi::wifi};
+use esp_idf_svc::http::server::{Configuration, EspHttpServer};
 use std::{
     sync::{Arc, Mutex},
     thread::sleep,
     time::Duration,
 };
-
-use bsc::{temp_sensor::BoardTempSensor, wifi::wifi};
-use embedded_svc::{
-    http::{server::{registry::Registry, Response, ResponseWrite}, Method},
-    io::Write,
-};
-use esp32_c3_dkc02_bsc as bsc;
-use esp_idf_svc::http::server::{Configuration, EspHttpServer};
-use esp_idf_sys as _; // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -35,7 +37,6 @@ fn main() -> anyhow::Result<()> {
         writer.complete()
     })?;
 
-
     let temp_sensor_main = Arc::new(Mutex::new(BoardTempSensor::new_taking_peripherals()));
     let temp_sensor = temp_sensor_main.clone();
     server.set_inline_handler("/temperature", Method::Get, move |request, response| {
@@ -45,7 +46,6 @@ fn main() -> anyhow::Result<()> {
         writer.do_write_all(html.as_bytes())?;
         writer.complete()
     })?;
-
 
     println!("server awaiting connection");
 
