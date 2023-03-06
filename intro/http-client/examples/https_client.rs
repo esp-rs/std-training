@@ -35,12 +35,12 @@ fn main() -> anyhow::Result<()> {
 
 fn get(url: impl AsRef<str>) -> anyhow::Result<()> {
     // 1. create a new EspHttpClient with SSL certificates enabled
-    let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
+    let mut client = Client::wrap(EspHttpConnection::new(&Configuration {
         use_global_ca_store: true,
         crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
 
         ..Default::default()
-    })?;
+    })?);
 
     // 2. open a GET request to `url`
     let request = client.get(url.as_ref())?;
