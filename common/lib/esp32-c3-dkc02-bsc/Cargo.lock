@@ -47,7 +47,7 @@ version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e14bf7b4f565e5e717d7a7a65b2a05c0b8c96e4db636d6f780f03b15108cdd1b"
 dependencies = [
- "critical-section 0.2.7",
+ "critical-section",
 ]
 
 [[package]]
@@ -297,14 +297,8 @@ dependencies = [
  "bare-metal 1.0.0",
  "cfg-if",
  "cortex-m",
- "riscv 0.7.0",
+ "riscv",
 ]
-
-[[package]]
-name = "critical-section"
-version = "1.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6548a0ad5d2549e111e1f6a11a6c2e2d00ce6a3dafe22948d67c2b443f775e52"
 
 [[package]]
 name = "crossbeam-channel"
@@ -681,23 +675,11 @@ dependencies = [
  "esp-idf-hal",
  "esp-idf-svc",
  "esp-idf-sys",
- "esp32c3",
  "icm42670",
- "ignore",
  "log",
  "rgb",
- "riscv 0.10.1",
  "shtcx",
  "toml-cfg",
-]
-
-[[package]]
-name = "esp32c3"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "471e4ccbeb7b898927ff8e115288353b47cf9c948c75c1d25a0e71c9b97678ae"
-dependencies = [
- "vcell",
 ]
 
 [[package]]
@@ -1316,17 +1298,6 @@ dependencies = [
  "bare-metal 1.0.0",
  "bit_field",
  "riscv-target",
-]
-
-[[package]]
-name = "riscv"
-version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa3145d2fae3778b1e31ec2e827b228bdc6abd9b74bb5705ba46dcb82069bc4f"
-dependencies = [
- "bit_field",
- "critical-section 1.1.1",
- "embedded-hal 0.2.7",
 ]
 
 [[package]]
