@@ -2,14 +2,14 @@
 name = "http-server"
 version = "0.1.0"
 authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>"]
-edition = "2018"
+edition = "2021"
 resolver = "2"
 
 [profile.release]
 opt-level = "s"
 
 [profile.dev]
-debug = true # Symbols are nice and they don't increase the size on Flash
+debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]

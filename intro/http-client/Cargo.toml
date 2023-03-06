@@ -2,7 +2,7 @@
 name = "http-client"
 version = "0.1.0"
 authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>"]
-edition = "2018"
+edition = "2021"
 resolver = "2"
 
 [profile.release]
