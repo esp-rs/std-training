@@ -1,18 +1,15 @@
 use anyhow::{bail, Result};
-use embedded_svc::wifi::AuthMethod;
-use embedded_svc::wifi::AccessPointConfiguration;
-use embedded_svc::wifi::ClientConfiguration;
-use embedded_svc::wifi::Configuration;
-use embedded_svc::wifi::Wifi;
+use embedded_svc::wifi::{
+    AccessPointConfiguration, AuthMethod, ClientConfiguration, Configuration, Wifi,
+};
 use esp_idf_hal::peripheral;
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-use esp_idf_svc::netif::EspNetif;
-use esp_idf_svc::netif::EspNetifWait;
-use esp_idf_svc::wifi::EspWifi;
-use esp_idf_svc::wifi::WifiWait;
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    netif::{EspNetif, EspNetifWait},
+    wifi::{EspWifi, WifiWait},
+};
 use log::info;
-use std::net::Ipv4Addr;
-use std::time::Duration;
+use std::{net::Ipv4Addr, time::Duration};
 
 pub fn wifi(
     ssid: &str,
@@ -20,7 +17,6 @@ pub fn wifi(
     modem: impl peripheral::Peripheral<P = esp_idf_hal::modem::Modem> + 'static,
     sysloop: EspSystemEventLoop,
 ) -> Result<Box<EspWifi<'static>>> {
-
     let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
     if ssid.is_empty() {
         anyhow::bail!("missing WiFi name")

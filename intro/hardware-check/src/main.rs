@@ -2,16 +2,11 @@
 //!
 //! This `libstd` program is for the ESP32-C3-DevKitC-02 board.
 
-// Logging macros
-use log::*;
-
 use anyhow::{bail, Result};
+use esp32_c3_dkc02_bsc::led::{RGB8, WS2812RMT};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
-
-// And alias for our Board Support Crate
-use bsc::led::{RGB8, WS2812RMT};
-use esp32_c3_dkc02_bsc as bsc;
+use log::info;
 
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;

@@ -1,17 +1,17 @@
 use anyhow::{bail, Result};
-use bsc::wifi::wifi;
 use core::str;
 use embedded_svc::{
     http::{client::Client, Status},
     io::Read,
 };
+use esp32_c3_dkc02_bsc::wifi::wifi;
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     http::client::{Configuration, EspHttpConnection},
 };
 
-use esp32_c3_dkc02_bsc as bsc;
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]

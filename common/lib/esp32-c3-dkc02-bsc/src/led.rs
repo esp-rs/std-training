@@ -1,8 +1,8 @@
 use core::time::Duration;
-// use esp_idf_hal::peripherals::Peripherals;
-use esp_idf_hal::gpio;
-use esp_idf_hal::rmt::config::TransmitConfig;
-use esp_idf_hal::rmt::*;
+use esp_idf_hal::{
+    gpio,
+    rmt::{config::TransmitConfig, FixedLengthSignal, PinState, Pulse, TxRmtDriver, CHANNEL0},
+};
 
 pub use rgb::RGB8;
 
