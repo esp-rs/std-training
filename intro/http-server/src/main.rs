@@ -1,14 +1,15 @@
 use core::str;
-use embedded_svc::{
-    http::{server::Response, Method},
-    io::Write,
-};
+use embedded_svc::{http::Method, io::Write};
 use esp32_c3_dkc02_bsc::wifi::wifi;
-use esp_idf_hal::prelude::Peripherals;
+use esp_idf_hal::{
+    i2c::{I2cConfig, I2cDriver},
+    prelude::*,
+};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     http::server::{Configuration, EspHttpServer},
 };
+use shtcx::{self, shtc3, PowerMode};
 use std::{
     sync::{Arc, Mutex},
     thread::sleep,
@@ -43,24 +44,35 @@ fn main() -> anyhow::Result<()> {
         sysloop,
     )?;
 
-    let mut temp_sensor = BoardTempSensor::new_taking_peripherals();
+    // Initialize temperature sensor
+    let pins = peripherals.pins;
+    let sda = pins.gpio10;
+    let scl = pins.gpio8;
+    let i2c = peripherals.i2c0;
+    let config = I2cConfig::new().baudrate(100.kHz().into());
+    let i2c = I2cDriver::new(i2c, sda, scl, &config)?;
+    let temp_sensor_main = Arc::new(Mutex::new(shtc3(i2c)));
+    let mut temp_sensor = temp_sensor_main.clone();
+    temp_sensor
+        .lock()
+        .unwrap()
+        .start_measurement(PowerMode::NormalMode)
+        .unwrap();
 
     // TODO your code here:
     // let server_config = ...;
     // let mut server = EspHttpServer::new(...)?;
 
-    // server.set_inline_handler("/", Method::Get, |request, response| {
+    // server.fn_handler("/", Method::Get, |request| {
     // TODO your code here:
     // ...
     //})?;
 
     // TODO this is not true until you actually create one
-    println!("server awaiting connection");
+    println!("Server awaiting connection");
 
-    // prevent program from exiting
+    // Prevent program from exiting
     loop {
-        let current_temperature = temp_sensor.read_owning_peripherals();
-        println!("board temperature: {:.2}", current_temperature);
         sleep(Duration::from_millis(1000));
     }
 }

@@ -1,14 +1,15 @@
 use core::str;
-use embedded_svc::{
-    http::{server::Response, Method},
-    io::Write,
-};
+use embedded_svc::{http::Method, io::Write};
 use esp32_c3_dkc02_bsc::wifi::wifi;
-use esp_idf_hal::prelude::Peripherals;
+use esp_idf_hal::{
+    i2c::{I2cConfig, I2cDriver},
+    prelude::*,
+};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     http::server::{Configuration, EspHttpServer},
 };
+use shtcx::{self, shtc3, PowerMode};
 use std::{
     sync::{Arc, Mutex},
     thread::sleep,
@@ -42,28 +43,52 @@ fn main() -> anyhow::Result<()> {
         sysloop,
     )?;
 
+    // Initialize temperature sensor
+    let pins = peripherals.pins;
+    let sda = pins.gpio10;
+    let scl = pins.gpio8;
+    let i2c = peripherals.i2c0;
+    let config = I2cConfig::new().baudrate(100.kHz().into());
+    let i2c = I2cDriver::new(i2c, sda, scl, &config)?;
+    let temp_sensor_main = Arc::new(Mutex::new(shtc3(i2c)));
+    let mut temp_sensor = temp_sensor_main.clone();
+    temp_sensor
+        .lock()
+        .unwrap()
+        .start_measurement(PowerMode::NormalMode)
+        .unwrap();
+
+    // Set HTTP server
     let server_config = Configuration::default();
     let mut server = EspHttpServer::new(&server_config)?;
-    server.set_inline_handler("/", Method::Get, |request, response| {
+    server.fn_handler("/", Method::Get, |request| {
         let html = index_html();
-        let mut writer = response.into_writer(request)?;
-        writer.do_write_all(html.as_bytes())?;
-        writer.complete()
+        request.into_ok_response()?.write_all(html.as_bytes())?;
+        Ok(())
     })?;
 
-    let temp_sensor_main = Arc::new(Mutex::new(BoardTempSensor::new_taking_peripherals()));
-    let temp_sensor = temp_sensor_main.clone();
-    server.set_inline_handler("/temperature", Method::Get, move |request, response| {
-        let temp_val = temp_sensor.lock().unwrap().read_owning_peripherals();
+    server.fn_handler("/temperature", Method::Get, move |request| {
+        let mut temp_val = temp_sensor
+            .lock()
+            .unwrap()
+            .get_measurement_result()
+            .unwrap()
+            .temperature
+            .as_degrees_celsius();
         let html = temperature(temp_val);
-        let mut writer = response.into_writer(request)?;
-        writer.do_write_all(html.as_bytes())?;
-        writer.complete()
+        request.into_ok_response()?.write_all(html.as_bytes())?;
+        Ok(())
     })?;
 
-    println!("server awaiting connection");
+    println!("Server awaiting connection");
 
+    // Prevent program from exiting
     loop {
+        temp_sensor_main
+            .lock()
+            .unwrap()
+            .start_measurement(PowerMode::NormalMode)
+            .unwrap();
         sleep(Duration::from_millis(1000));
     }
 }
@@ -87,9 +112,9 @@ fn templated(content: impl AsRef<str>) -> String {
 }
 
 fn index_html() -> String {
-    templated("Hello from mcu!")
+    templated("Hello from ESP32-C3!")
 }
 
 fn temperature(val: f32) -> String {
-    templated(format!("chip temperature: {:.2}°C", val))
+    templated(format!("Chip temperature: {:.2}°C", val))
 }
