@@ -45,6 +45,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         id: dockerfile-changed
         with:
+          since_last_remote_commit: true
           files: |
             **/Dockerfile
 
