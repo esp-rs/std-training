@@ -43,7 +43,8 @@ jobs:
         uses: tj-actions/changed-files@v35
         id: dockerfile-changed
         with:
-          files: .devcontainer/Dockerfile
+          files: |
+            **/Dockerfile
 
       - name: Build Docker image
         if: steps.dockerfile-changed.outputs.any_changed == 'true'
