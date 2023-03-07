@@ -38,23 +38,13 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Verify Changed files
-        uses: tj-actions/changed-files@v35
-        id: dockerfile-changed
-        with:
-          since_last_remote_commit: true
-          files: |
-            **/Dockerfile
 
       - name: Build Docker image
-        if: steps.dockerfile-changed.outputs.any_changed == 'true'
+        if: github.event_name != 'schedule'
         run: docker image build --tag espressif/rust-std-training --file .devcontainer/Dockerfile .
 
       - name: Pull Docker image
-        if: steps.dockerfile-changed.outputs.any_changed != 'true'
+        if: github.event_name == 'schedule'
         run: docker image pull espressif/rust-std-training
 
       - name: Test code example in Docker image
