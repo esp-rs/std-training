@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = [
     "Anatol Ulrich <anatol.ulrich@ferrous-systems.com>",
     "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",
+    "Sergio Gasquez <sergio.gasquez@gmail.com>",
 ]
 edition = "2021"
 resolver = "2"

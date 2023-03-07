@@ -1,7 +1,10 @@
 [package]
 name = "http-server"
 version = "0.1.0"
-authors = ["Anatol Ulrich <anatol.ulrich@ferrous-systems.com>"]
+authors = [
+    "Anatol Ulrich <anatol.ulrich@ferrous-systems.com>",
+    "Sergio Gasquez <sergio.gasquez@gmail.com>",
+]
 edition = "2021"
 resolver = "2"
 
