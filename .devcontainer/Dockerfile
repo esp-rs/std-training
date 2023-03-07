@@ -10,8 +10,8 @@ ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
-    && apt-get install -y git curl ninja-build clang libudev-dev unzip \
-    python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 \
+    && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
+    clang unzip python3 python3-pip pkg-config \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
