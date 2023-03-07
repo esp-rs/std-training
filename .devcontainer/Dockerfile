@@ -19,8 +19,7 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
-    && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
-    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
+    --component rust-src --target riscv32imc-unknown-none-elf
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
