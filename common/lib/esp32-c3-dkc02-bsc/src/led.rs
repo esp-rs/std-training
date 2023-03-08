@@ -1,3 +1,4 @@
+use anyhow::Result;
 use core::time::Duration;
 use esp_idf_hal::{
     gpio,
@@ -11,14 +12,14 @@ pub struct WS2812RMT<'a> {
 }
 
 impl WS2812RMT<'_> {
-    pub fn new(led: gpio::Gpio2, channel: CHANNEL0) -> anyhow::Result<Self> {
+    pub fn new(led: gpio::Gpio2, channel: CHANNEL0) -> Result<Self> {
         // ESP32-C3-DevKitC-02 gpio8, ESP32-C3-DevKit-RUST-1 gpio2
         let config = TransmitConfig::new().clock_divider(2);
         let tx = TxRmtDriver::new(channel, led, &config)?;
         Ok(Self { tx_rtm_driver: tx })
     }
 
-    pub fn set_pixel(&mut self, rgb: RGB8) -> anyhow::Result<()> {
+    pub fn set_pixel(&mut self, rgb: RGB8) -> Result<()> {
         let color: u32 = ((rgb.g as u32) << 16) | ((rgb.r as u32) << 8) | rgb.b as u32;
         let ticks_hz = self.tx_rtm_driver.counter_clock()?;
         let t0h = Pulse::new_with_duration(ticks_hz, PinState::High, &ns(350))?;

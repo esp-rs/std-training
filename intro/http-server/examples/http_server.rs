@@ -1,3 +1,4 @@
+use anyhow::Result;
 use core::str;
 use embedded_svc::{http::Method, io::Write};
 use esp32_c3_dkc02_bsc::wifi::wifi;
@@ -25,7 +26,7 @@ pub struct Config {
     #[default("")]
     wifi_psk: &'static str,
 }
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 

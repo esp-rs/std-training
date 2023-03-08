@@ -1,4 +1,4 @@
-use anyhow;
+use anyhow::Result;
 use embedded_hal::blocking::delay::DelayMs;
 use esp_idf_hal::{
     delay::FreeRtos,
@@ -6,17 +6,19 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
-use esp_idf_sys::*;
-
+use icm42670p::{DeviceAddr, ICM42670P};
+use shared_bus::BusManagerSimple;
 use shtcx::{self, PowerMode};
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_sys as _;
 
 // goals of this exercise:
 // instantiate i2c peripheral
 // implement one sensor, print sensor values
 // implement second sensor on same bus to solve an ownership problem
 
-fn main() -> anyhow::Result<()> {
-    link_patches();
+fn main() -> Result<()> {
+    esp_idf_sys::link_patches();
 
     let peripherals = Peripherals::take().unwrap();
 

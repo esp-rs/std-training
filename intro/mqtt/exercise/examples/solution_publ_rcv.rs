@@ -1,4 +1,5 @@
 //This solution is the same as main.rs
+use anyhow::Result;
 use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
 use esp32_c3_dkc02_bsc::{
     led::{RGB8, WS2812RMT},
@@ -34,7 +35,7 @@ pub struct Config {
     wifi_psk: &'static str,
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 

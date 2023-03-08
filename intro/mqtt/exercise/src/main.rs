@@ -1,3 +1,4 @@
+use anyhow::Result;
 use embedded_svc::mqtt::client::{
     Client,
     Details::{Complete, InitialChunk, SubsequentChunk},
@@ -15,11 +16,11 @@ use esp_idf_hal::{
 };
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use esp_idf_svc::mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration};
+use log::{error, info};
 use shtcx::{self, shtc3, PowerMode};
 use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
-use log::{error, info};
 
 // imported message topics
 use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
@@ -40,7 +41,7 @@ pub struct Config {
     wifi_psk: &'static str,
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     esp_idf_sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
