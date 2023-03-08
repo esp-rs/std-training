@@ -1,7 +1,7 @@
 // reference:
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
+use anyhow::Result;
 use std::ptr;
-
 // use esp_idf_sys::{
 //     c_types::c_void, esp, gpio_config, gpio_config_t, gpio_install_isr_service,
 //     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
@@ -20,7 +20,7 @@ unsafe extern "C" fn button_interrupt(_: *mut c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     const GPIO_NUM: i32 = 9;
 
     // 1. Add GPIO configuration c struct
