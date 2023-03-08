@@ -11,7 +11,7 @@ pub struct WS2812RMT<'a> {
 }
 
 impl WS2812RMT<'_> {
-    pub fn new(led: gpio::Gpio8, channel: CHANNEL0) -> anyhow::Result<Self> {
+    pub fn new(led: gpio::Gpio2, channel: CHANNEL0) -> anyhow::Result<Self> {
         // ESP32-C3-DevKitC-02 gpio8, ESP32-C3-DevKit-RUST-1 gpio2
         let config = TransmitConfig::new().clock_divider(2);
         let tx = TxRmtDriver::new(channel, led, &config)?;
