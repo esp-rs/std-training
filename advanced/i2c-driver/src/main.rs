@@ -1,4 +1,5 @@
 use anyhow;
+use anyhow::Result;
 use embedded_hal::blocking::delay::DelayMs;
 use esp_idf_hal::{
     delay::FreeRtos,
@@ -6,7 +7,8 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
-use esp_idf_sys::*;
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_sys as _;
 
 // uncomment the following line to run the solution, check lib.rs for further instructions
 // use i2c_driver_exercise::icm42670p_solution::{DeviceAddr, ICM42670P};
@@ -14,11 +16,10 @@ use esp_idf_sys::*;
 // comment out the following line to run the exercise, check lib.rs for further instructions
 use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
 
-
 // Dont change this file. Work in the icm42670p.rs and modify it so main.rs runs.
 
-fn main() -> anyhow::Result<()> {
-    link_patches();
+fn main() -> Result<()> {
+    esp_idf_sys::link_patches();
 
     let peripherals = Peripherals::take().unwrap();
 

@@ -1,4 +1,4 @@
-use anyhow;
+use anyhow::Result;
 use embedded_hal::blocking::delay::DelayMs;
 use esp_idf_hal::{
     delay::FreeRtos,
@@ -6,20 +6,19 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
-use esp_idf_sys::*;
 use icm42670p::{DeviceAddr, ICM42670P};
-
+use shared_bus::BusManagerSimple;
 use shtcx::{self, PowerMode};
-
-use shared_bus;
+// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
+use esp_idf_sys as _;
 
 // goals of this exercise:
 // instantiate i2c peripheral
 // implement one sensor, print sensor values
 // implement second sensor on same bus to solve an ownership problem
 
-fn main() -> anyhow::Result<()> {
-    link_patches();
+fn main() -> Result<()> {
+    esp_idf_sys::::link_patches();
 
     let peripherals = Peripherals::take().unwrap();
     let sda = peripherals.pins.gpio10;
@@ -28,7 +27,7 @@ fn main() -> anyhow::Result<()> {
     let i2c = I2cDriver::new(peripherals.i2c0, sda, scl, &config)?;
 
     // Instantiate the bus manager, pass the i2c bus.
-    let bus = shared_bus::BusManagerSimple::new(i2c);
+    let bus = BusManagerSimple::new(i2c);
 
     // Create two proxies. Now, each sensor can have their own instance of a proxy i2c, which resolves the ownership problem.
     let proxy_1 = bus.acquire_i2c();
