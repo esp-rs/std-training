@@ -18,7 +18,7 @@ use esp_idf_sys as _;
 // implement second sensor on same bus to solve an ownership problem
 
 fn main() -> Result<()> {
-    esp_idf_sys::::link_patches();
+    esp_idf_sys::link_patches();
 
     let peripherals = Peripherals::take().unwrap();
     let sda = peripherals.pins.gpio10;
