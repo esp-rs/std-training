@@ -1,13 +1,13 @@
 // reference:
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 
-use std::ptr;
-
+use anyhow::Result;
 use esp_idf_sys::{
     c_types::c_void, esp, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
-    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t,ESP_INTR_FLAG_IRAM,
+    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
 };
+use std::ptr;
 
 // This `static mut` holds the queue handle we are going to get from `xQueueGenericCreate`.
 // This is unsafe, but we are careful not to enable our GPIO interrupt handler until after this value has been initialised, and then never modify it again
@@ -18,9 +18,9 @@ unsafe extern "C" fn button_interrupt(_: *mut c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
 }
 
-fn main() -> anyhow::Result<()> {
+fn main() -> Result<()> {
     const GPIO_NUM: i32 = 9;
-    
+
     // Configures the button
     let io_conf = gpio_config_t {
         pin_bit_mask: 1 << GPIO_NUM,
@@ -39,7 +39,6 @@ fn main() -> anyhow::Result<()> {
         // Writes the button configuration to the registers
         esp!(gpio_config(&io_conf))?;
 
-        
         // Installs the generic GPIO interrupt handler
         esp!(gpio_install_isr_service(ESP_INTR_FLAG_IRAM as i32))?;
 
@@ -62,11 +61,11 @@ fn main() -> anyhow::Result<()> {
 
             // Reads the event item out of the queue
             let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
-            
-            // If the event has the value 0, nothing happens. if it has a different value, the button was pressed. 
+
+            // If the event has the value 0, nothing happens. if it has a different value, the button was pressed.
             match res {
                 1 => println!("button pressed!"),
-                _ => {},
+                _ => {}
             };
         }
     }
