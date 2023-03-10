@@ -23,6 +23,7 @@ Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products
 
 ## Rust knowledge
 
-Basic Rust like [The Rust Book](https://doc.rust-lang.org/book/) Chapters 1 - 6, Chapter 4 Ownership does not need to be fully understood.
+- Basic Rust like [The Rust Book](https://doc.rust-lang.org/book/) Chapters 1 - 6, Chapter 4 Ownership does not need to be fully understood.
+- [The Rust on ESP Book](https://esp-rs.github.io/book/) is not required but it is highly recomended as it can help you understand the Rust on ESP ecosystem and many of the concepts that will be discussed during the training.
 
 [^note]: It is possible to follow the intro part with [ESP32-C3-DevKitC-02](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html) but we do not recommend it. It is inherently easier to follow the training when using the same hardware.
