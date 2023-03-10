@@ -8,6 +8,7 @@ We use Icons to mark different kinds of information in the book:
 * ✅ Call for action.
 * ❗️ Warnings, Details that require special attention.
 * 🔎 Knowledge that dives deeper into a subject, but which you are not required to understand to proceed.
+* 💡 Hints that might help you during the exercises
 
 > Example note: Notes like this one contain helpful information
 
