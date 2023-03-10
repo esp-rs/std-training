@@ -12,7 +12,7 @@ To test Wi-Fi connectivity, you will have to provide your network name (SSID) an
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
-> ❗️The [5GHz band is not supported in ESP32-C3](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
+> ⚠️The [5GHz band is not supported in ESP32-C3](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
 
 ```console
 $ cp cfg.toml.example cfg.toml
@@ -61,7 +61,7 @@ The board LED should turn yellow on startup, and then, depending on whether a Wi
 ```console
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
-> ❗️ You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.
+> ⚠️ You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.
 
 ## Extra information about building, flashing and monitoring
 

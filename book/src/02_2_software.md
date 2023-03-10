@@ -32,7 +32,7 @@ Several tools are required:
 cargo install cargo-espflash espflash ldproxy
 ```
 
-❗️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
+⚠️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
 
 ## Toolchain dependencies
 
@@ -70,7 +70,7 @@ brew install llvm
 
 ## Docker
 
-> ❗️ Please **note** the Docker container provides an alternative option to **compile** the Rust exercises in.
+> ⚠️ Please **note** the Docker container provides an alternative option to **compile** the Rust exercises in.
 > It is meant for users that have experience with virtualized environments.
 > Be aware that we cannot provide help for Docker specific issues during the training.
 <!-- TODO: mention esp-web-flash -->
