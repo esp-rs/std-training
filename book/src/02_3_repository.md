@@ -5,8 +5,8 @@ The entire material can be found at <https://github.com/esp-rs/espressif-trainin
 ✅ Clone and change into the workshop repository:
 
 ```console
-$ git clone "https://github.com/esp-rs/espressif-trainings.git"
-$ cd espressif-trainings
+git clone "https://github.com/esp-rs/espressif-trainings.git"
+cd espressif-trainings
 ```
 
 ❗ Windows users may have problems with long path names. Follow these steps to substitute the path:

@@ -106,7 +106,7 @@ CMake Error at .../Modules/CMakeDetermineSystem.cmake:129 (message):
 Your Espressif toolchain installation might be damaged. Delete it and rerun the build to trigger a fresh download:
 
 ```console
-$ rm -rf ~/.espressif
+rm -rf ~/.espressif
 ```
 On Windows, delete `%USERPROFILE%\.espressif` folder.
 

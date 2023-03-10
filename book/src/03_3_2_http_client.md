@@ -13,7 +13,7 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 ✅ Open the docs for this project with the following command:
 
 ```console
-$ cargo doc --open
+cargo doc --open
 ```
 <!-- TODO: See if this comment is prensent in all the execises with solutions -->
 `intro/http-client/examples/http_client.rs` contains the solution. you can run it with the following command:

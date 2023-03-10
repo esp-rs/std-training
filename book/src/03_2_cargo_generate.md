@@ -7,14 +7,14 @@ We're now going to use [`cargo-generate`](https://github.com/cargo-generate/carg
 ✅ Install `cargo-generate`:
 
 ```shell
-$ cargo install cargo-generate
+cargo install cargo-generate
 ```
 
 ✅ Change to the `intro` directory and run `cargo generate` with the [`esp-idf` template](https://github.com/esp-rs/esp-idf-template):
 
 ```shell
-$ cd intro
-$ cargo generate https://github.com/esp-rs/esp-idf-template cargo
+cd intro
+cargo generate https://github.com/esp-rs/esp-idf-template cargo
 ```
 
 [You'll be prompted for details regarding your new project](https://github.com/esp-rs/esp-idf-template#generate-the-project). When given a choice between several options, navigate using cursor up/down and select with the Return key.
@@ -63,8 +63,8 @@ channel = "nightly-2023-02-28" # change this line
 ✅ Run your project by using the following command out of the `hello-world` directory.
 
 ```shell
-$ cd hello-world
-$ cargo run
+cd hello-world
+cargo run
 ```
 
 ✅ The last lines of your output should look like this:

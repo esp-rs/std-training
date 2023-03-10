@@ -4,7 +4,6 @@ You will now make changes to your http client files so that it also works for en
 
 `intro/http-client/examples/http_client.rs` contains the solution. You can run it with the following command:
 
-<!-- TODO: Some shell snipets have $ others dont -->
 ```shell
 cargo run --example https_client
 ```

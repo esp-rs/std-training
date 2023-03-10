@@ -10,10 +10,10 @@ Follow the steps below for a default installation of the ESP32-C3 platform tooli
 
 Furthermore, for ESP32-C3, a [*nightly* version](https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust) of the Rust toolchain is currently required, for this training we will use `nightly-2023-02-28` version.
 
-✅ Install *nightly* Rust and add support for the target architecture using the following console command:
+✅ Install *nightly* Rust and add support for the target architecture using the following command:
 
 ```console
-$ rustup toolchain install nightly-2023-02-28 --component rust-src
+rustup toolchain install nightly-2023-02-28 --component rust-src
 ```
 
 🔎 Rust is capable of cross-compiling to any supported target (see `rustup target list`). By default, only the native architecture of your system is installed.
@@ -29,7 +29,7 @@ Several tools are required:
 ✅ Install them with the following command:
 
 ```console
-$ cargo install cargo-espflash espflash ldproxy
+cargo install cargo-espflash espflash ldproxy
 ```
 
 ❗️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
@@ -39,13 +39,13 @@ $ cargo install cargo-espflash espflash ldproxy
 ### Debian/Ubuntu
 
 ```console
-$ sudo apt install llvm-dev libclang-dev clang
+sudo apt install llvm-dev libclang-dev clang
 ```
 ### macOS
 
 When using the Homebrew package manager, which we recommend:
 ```console
-$ brew install llvm
+brew install llvm
 ```
 
 ### Troubleshooting
@@ -84,7 +84,7 @@ be executed on the host system.
 To build the Docker image run the following command from the root folder:
 
 ```console
-$ docker image build --tag esp --file .devcontainer/Dockerfile .
+docker image build --tag esp --file .devcontainer/Dockerfile .
 ```
 
 Building the image takes a while depending on the OS & hardware (20-30 minutes).
@@ -92,7 +92,7 @@ Building the image takes a while depending on the OS & hardware (20-30 minutes).
 To start the new Docker container run:
 
 ```console
-$ docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
+docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
 ```
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
