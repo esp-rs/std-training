@@ -1,18 +1,18 @@
 # Hello, board!
 
-You're now ready to do a consistency check.
+You're now ready to do a consistency check!
 
-✅ Connect the USB-C port of the board to your computer and enter the hardware check directory in the workshop repository:
+✅ Connect the USB-C port of the board to your computer and enter the `hardware-check` directory in the workshop repository:
 
 ```console
-espressif-trainings$ cd intro/hardware-check
+$ cd intro/hardware-check
 ```
 
 To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided.
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
-❗️The 5GHz band is not supported according to [ESP32-C3 documentation](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
+> ❗️The [5GHz band is not supported in ESP32-C3](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
 
 ```console
 $ cp cfg.toml.example cfg.toml
@@ -49,26 +49,31 @@ rst:0x1 (POWERON),boot:0xc (SPI_FAST_FLASH_BOOT)
 I (4427) bsc::wifi: Wifi connected!
 ```
 
-The board LED should turn yellow on startup, and then, depending on whether a Wifi connection could be established, either turn red (error) or blink, alternating green and blue. In case of a Wifi error, a diagnostic message will also show up at the bottom, e.g.:
+>🔎 If `cargo run` has been successful, you can exit with `ctrl+C`.
+
+> 🔎 `cargo run` is [configured to use `espflash`](https://github.com/esp-rs/espressif-trainings/blob/main/intro/hardware-check/.cargo/config.toml#L6) as [custom runner](https://doc.rust-lang.org/cargo/reference/config.html#target). The same output can be achived via:
+> - Using `cargo-espflash`: `cargo espflash flash --release --monitor`
+> - Building your project and flashing it with `espflash`: `cargo build --release && espflash target/riscv32imc-esp-espidf/release/hardware-check`
+> This modification is applied to all the projects in the trainnig for convinience.
+
+The board LED should turn yellow on startup, and then, depending on whether a Wifi connection could be established, either turn red (error) or blink, alternating green and blue, in case of succeding. In case of a Wifi error, a diagnostic message will also show up at the bottom, e.g.:
 
 ```console
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
+> ❗️ You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.
 
 ## Extra information about building, flashing and monitoring
 
 If you want to try to build without flashing, you can run:
 
  ```console
- cargo build --target riscv32imc-esp-espidf
+ cargo build
  ```
-This can save a lot of time as you do not need to re-flash the program in its entirety and flashing can take up quit some time.
-
-
-If `cargo run` has been successful, you can exit with `ctrl+C`, and run the monitor the device without flashing anew with the following command:
+You can also monito the device without flashing it with the following command:
 
 ```console
-cargo espflash monitor
+espflash monitor
 ```
 
 
@@ -103,6 +108,8 @@ Your Espressif toolchain installation might be damaged. Delete it and rerun the 
 ```console
 $ rm -rf ~/.espressif
 ```
+On Windows, delete `%USERPROFILE%\.espressif` folder.
+
 ---
 
  ```console
@@ -127,6 +134,3 @@ Workarounds:
 2. use a hub.
 
 [Source](https://georgik.rocks/unable-to-flash-esp32-with-these-usb-c-cables/).
-## Connecting to Wifi
-
-- You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.
