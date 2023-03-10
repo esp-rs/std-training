@@ -57,7 +57,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
     // Successful http status codes are in the 200..=299 range.
     let response = request.submit()?;
     let status = response.status();
-    println!("response code: {}\n", status);
+    println!("Response code: {}\n", status);
     match status {
         200..=299 => {
             // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.

@@ -61,7 +61,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
     let response = request.submit()?;
     let status = response.status();
 
-    println!("response code: {}\n", status);
+    println!("Response code: {}\n", status);
 
     match status {
         200..=299 => {
