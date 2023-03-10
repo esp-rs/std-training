@@ -60,16 +60,15 @@ fn main() -> Result<()> {
         .start_measurement(PowerMode::NormalMode)
         .unwrap();
 
-    // TODO your code here:
-    // let server_config = ...;
+    // 1.Create a `EspHttpServer` instance using a default configuration
     // let mut server = EspHttpServer::new(...)?;
 
+    // 2. Write a handler that returns the index page
     // server.fn_handler("/", Method::Get, |request| {
-    // TODO your code here:
     // ...
     //})?;
 
-    // TODO this is not true until you actually create one
+    // This is not true until you actually create one
     println!("Server awaiting connection");
 
     // Prevent program from exiting

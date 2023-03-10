@@ -59,15 +59,17 @@ fn main() -> Result<()> {
         .start_measurement(PowerMode::NormalMode)
         .unwrap();
 
-    // Set HTTP server
-    let server_config = Configuration::default();
-    let mut server = EspHttpServer::new(&server_config)?;
+    // Set the HTTP server
+    let mut server = EspHttpServer::new(&Configuration::default())?;
+    // http://<sta ip>/ handler
     server.fn_handler("/", Method::Get, |request| {
         let html = index_html();
-        request.into_ok_response()?.write_all(html.as_bytes())?;
+        let mut response = request.into_ok_response()?;
+        response.write_all(html.as_bytes())?;
         Ok(())
     })?;
 
+    // http://<sta ip>/temperature handler
     server.fn_handler("/temperature", Method::Get, move |request| {
         let temp_val = temp_sensor
             .lock()
@@ -77,7 +79,8 @@ fn main() -> Result<()> {
             .temperature
             .as_degrees_celsius();
         let html = temperature(temp_val);
-        request.into_ok_response()?.write_all(html.as_bytes())?;
+        let mut response = request.into_ok_response()?;
+        response.write_all(html.as_bytes())?;
         Ok(())
     })?;
 

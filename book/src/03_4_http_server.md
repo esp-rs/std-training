@@ -20,32 +20,29 @@ To connect to your board with your browser, you need to know the board's IP addr
 ✅ Run the skeleton code in `intro/http-server`. The output should yield the board's IP address like this:
 
 ```console
-I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ..
-server awaiting connection
+I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ...
+...
+Server awaiting connection
 ```
 
-The `sta ip` is the "station", the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
+The `sta ip` is the _"station"_, the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other http client like `curl`).
 
-> esp-idf tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
+> 🔎 esp-idf tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
 >
 > You can change the hostname by setting `CONFIG_LWIP_LOCAL_HOSTNAME` in `sdkconfig.defaults`, e.g.: `CONFIG_LWIP_LOCAL_HOSTNAME="esp32c3"`
 
 Sending HTTP data to a client involves:
-- creating an an instance of `EspHttpServer`
-- looping in the main function so it doesn't terminate - termination would result in the server going out of scope and subsequently shutting down
-- setting a separate request `handler` function for each requested path you want to serve content. Any unconfigured path will result in a `404` error. These handler functions are realized inline as Rust closures via:
+- Creating an an instance of `EspHttpServer`
+- Looping in the main function so it doesn't terminate - termination would result in the server going out of scope and subsequently shutting down
+- Setting a separate request `handler` function for each requested path you want to serve content. Any unconfigured path will result in a `404` error. These handler functions are realized inline as Rust closures via:
 
 ```rust
-server.handle_get(path, |request, response| {
-    // the `response` needs to write data to the client
-    let mut writer = response.into_writer(request);
-
+server.fn_handler(path, Method::Get, |request| {
+    // ...
     // construct a response
-    let some_buf = ...;
-
+    let mut response = request.into_ok_response()?;
     // now you can write your desired data
-    writer.write_all(&some_buf);
-
+    response.write_all(&some_buf)?;
     // once you're done the handler expects a `Completion` as result,
     // this is achieved via:
     Ok(())
@@ -72,4 +69,4 @@ We can also report dynamic information to a client. The skeleton includes a conf
 ## Troubleshooting
 
 - `httpd_txrx: httpd_resp_send_err` can be solved by restarting, or `cargo clean` if nothing happens.
-- Make sure computer and rust board are using the same wifi network.
+- Make sure your computer and the Rust ESP Board are using the same wifi network.
