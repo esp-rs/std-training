@@ -39,7 +39,7 @@ fn main() -> Result<()> {
         sysloop,
     )?;
 
-    get("http://neverssl.com/")?;
+    get("https://espressif.com/")?;
 
     Ok(())
 }

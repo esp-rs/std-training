@@ -1,21 +1,21 @@
-# HTTPS CLIENT
+# HTTPS client
 
 You will now make changes to your http client files so that it also works for encrypted connections.
 
 `intro/http-client/examples/http_client.rs` contains the solution. You can run it with the following command:
-(It won't build unless you have completed the first step of the exercise.)
 
-```
+<!-- TODO: Some shell snipets have $ others dont -->
+<!-- TODO some snipets have no language -->
+```shell
 cargo run --example https_client
 ```
 
-Create a custom client configuration to use an `http::client::EspHttpClientConfiguration` which enables the use of these certificates and uses default values for everything else:
+Create a custom client configuration to use an `esp_idf_svc::http::client::EspHttpConnection` which enables the use of these certificates and uses default values for everything else:
 
 ```rust
 let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
         use_global_ca_store: true,
         crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
-
         ..Default::default()
     }
 ```
