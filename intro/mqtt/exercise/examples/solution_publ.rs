@@ -52,7 +52,7 @@ fn main() -> Result<()> {
         sysloop,
     )?;
 
-    info!("our UUID is:");
+    info!("Our UUID is:");
     info!("{}", UUID);
 
     let pins = peripherals.pins;

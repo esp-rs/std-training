@@ -64,7 +64,7 @@ fn main() -> Result<()> {
 
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed.
             match res {
-                1 => println!("button pressed!"),
+                1 => println!("Button pressed!"),
                 _ => {}
             };
         }

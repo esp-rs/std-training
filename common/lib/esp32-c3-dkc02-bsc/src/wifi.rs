@@ -20,7 +20,7 @@ pub fn wifi(
 ) -> Result<Box<EspWifi<'static>>> {
     let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
     if ssid.is_empty() {
-        anyhow::bail!("missing WiFi name")
+        bail!("Missing WiFi name")
     }
     if pass.is_empty() {
         auth_method = AuthMethod::None;

@@ -57,7 +57,7 @@ fn main() -> Result<()> {
         Err(err) => {
             // Red!
             led.set_pixel(RGB8::new(50, 0, 0))?;
-            bail!("could not connect to Wi-Fi network: {:?}", err)
+            bail!("Could not connect to Wi-Fi network: {:?}", err)
         }
     };
 

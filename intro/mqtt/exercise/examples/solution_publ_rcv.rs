@@ -52,7 +52,7 @@ fn main() -> Result<()> {
         sysloop,
     )?;
 
-    info!("our UUID is:");
+    info!("Our UUID is:");
     info!("{}", UUID);
 
     let pins = peripherals.pins;
@@ -119,10 +119,10 @@ fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 info!("{}", color);
                 if let Err(e) = led.set_pixel(color) {
-                    error!("could not set board LED: {:?}", e)
+                    error!("Could not set board LED: {:?}", e)
                 };
             }
         }
-        _ => error!("could not set board LED"),
+        _ => error!("Could not set board LED"),
     }
 }
