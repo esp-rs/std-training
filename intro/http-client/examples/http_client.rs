@@ -74,7 +74,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
                 }
             }
         }
-        _ => bail!("unexpected response code: {}", status),
+        _ => bail!("Unexpected response code: {}", status),
     }
 
     Ok(())
