@@ -8,7 +8,7 @@ You can find a prepared project skeleton in `intro/http-server/`. It includes es
 
 `intro/http-server/examples/https-server.rs` contains a solution. You can run it with the following command:
 
-```
+```console
 cargo run --example http_server
 ```
 

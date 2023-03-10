@@ -5,7 +5,7 @@ You're now ready to do a consistency check!
 ✅ Connect the USB-C port of the board to your computer and enter the `hardware-check` directory in the workshop repository:
 
 ```console
-$ cd intro/hardware-check
+cd intro/hardware-check
 ```
 
 To test Wi-Fi connectivity, you will have to provide your network name (SSID) and password (PSK). These credentials are stored in a dedicated `cfg.toml` file (which is `.gitignore`d) to prevent accidental disclosure by sharing source code or doing pull requests. An example is provided.

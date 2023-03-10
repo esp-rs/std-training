@@ -12,13 +12,13 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 
 ✅ Open the docs for this project with the following command:
 
-```
+```console
 $ cargo doc --open
 ```
 <!-- TODO: See if this comment is prensent in all the execises with solutions -->
 `intro/http-client/examples/http_client.rs` contains the solution. you can run it with the following command:
 
-```
+```console
 cargo run --example http_client
 ```
 ## Making a connection
@@ -36,7 +36,7 @@ Calling HTTP functions (e.g. `get(url)`) on this client returns an `embedded_svc
 The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
 
-```Rust
+```rust
 let request = client.get(url.as_ref())?;
 let response = request.submit()?;
 ```
