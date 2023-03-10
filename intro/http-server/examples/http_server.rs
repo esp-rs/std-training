@@ -52,7 +52,7 @@ fn main() -> Result<()> {
     let config = I2cConfig::new().baudrate(100.kHz().into());
     let i2c = I2cDriver::new(i2c, sda, scl, &config)?;
     let temp_sensor_main = Arc::new(Mutex::new(shtc3(i2c)));
-    let mut temp_sensor = temp_sensor_main.clone();
+    let temp_sensor = temp_sensor_main.clone();
     temp_sensor
         .lock()
         .unwrap()
@@ -69,7 +69,7 @@ fn main() -> Result<()> {
     })?;
 
     server.fn_handler("/temperature", Method::Get, move |request| {
-        let mut temp_val = temp_sensor
+        let temp_val = temp_sensor
             .lock()
             .unwrap()
             .get_measurement_result()
