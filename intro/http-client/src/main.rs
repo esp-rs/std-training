@@ -40,25 +40,29 @@ fn main() -> Result<()> {
         sysloop,
     )?;
 
-    // TODO your code here
-    //get(...)?;
+    get("http://neverssl.com/")?;
 
     Ok(())
 }
 
 fn get(url: impl AsRef<str>) -> Result<()> {
-    // 1. Create a new EspHttpClient. (Check documentation)
+    // 1. Create a new EspHttpConnection with default Configuration. (Check documentation)
 
-    // 2. Open a GET request to `url`
+    // 2. Get a client using the Client::wrap method. (Check documentation)
 
-    // 3. Submit write request and check the status code of the response. Successful http status codes are in the 200..=299 range.
+    // 3. Open a GET request to `url`
 
-    // let response = writer...;
+    // 4. Submit the request and check the status code of the response.
+    // let response = request...;
     // let status = ...;
     // println!("response code: {}\n", status);
+    // match status {
+    // Successful http status codes are in the 200..=299 range.
 
-    // 4. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
-    // 5. Try converting the bytes into a Rust (UTF-8) string and print it.
+    // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
+
+    // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
+    // }
 
     Ok(())
 }

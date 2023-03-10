@@ -45,25 +45,22 @@ fn main() -> Result<()> {
 }
 
 fn get(url: impl AsRef<str>) -> Result<()> {
-    // 1. Create a new EspHttpClient. (Check documentation)
-    let connection = EspHttpConnection::new(&Configuration {
-        ..Default::default()
-    })?;
+    // 1. Create a new EspHttpConnection with default Configuration. (Check documentation)
+    let connection = EspHttpConnection::new(&Configuration::default())?;
+    // 2. Get a client using the Client::wrap method. (Check documentation)
     let mut client = Client::wrap(connection);
 
-    // // 2. Open a GET request to `url`
+    // 3. Open a GET request to `url`
     let request = client.get(url.as_ref())?;
 
-    // // 3. Submit write request and check the status code of the response.
-    // // Successful http status codes are in the 200..=299 range.
+    // 4. Submit the request and check the status code of the response.
+    // Successful http status codes are in the 200..=299 range.
     let response = request.submit()?;
     let status = response.status();
-
     println!("response code: {}\n", status);
-
     match status {
         200..=299 => {
-            // 4. if the status is OK, read response data chunk by chunk into a buffer and print it until done
+            // 5. If the status is OK, read response data chunk by chunk into a buffer and print it until done.
             let mut buf = [0_u8; 256];
             let mut reader = response;
             loop {
@@ -71,7 +68,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
                     if size == 0 {
                         break;
                     }
-                    // 5. try converting the bytes into a Rust (UTF-8) string and print it
+                    // 6. Try converting the bytes into a Rust (UTF-8) string and print it.
                     let response_text = str::from_utf8(&buf[..size])?;
                     println!("{}", response_text);
                 }
