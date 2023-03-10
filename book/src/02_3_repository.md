@@ -1,18 +1,18 @@
 # Workshop repository
 
-The entire material can be found at <https://github.com/ferrous-systems/espressif-trainings>.
+The entire material can be found at <https://github.com/esp-rs/espressif-trainings>.
 
 ✅ Clone and change into the workshop repository:
 
 ```console
-$ git clone "https://github.com/ferrous-systems/espressif-trainings.git"
+$ git clone "https://github.com/esp-rs/espressif-trainings.git"
 $ cd espressif-trainings
 ```
 
 ❗ Windows users may have problems with long path names. Follow these steps to substitute the path:
 
 ```console
-git clone https://github.com/ferrous-systems/espressif-trainings.git
+git clone https://github.com/esp-rs/espressif-trainings.git
 subst r:\ espressif-trainings
 cd r:\
 ```
@@ -23,8 +23,8 @@ cd r:\
 - `book/` - markdown sources of this book
 - `common/` - code shared between both courses
 - `common/lib/` - support crates
+<!-- TODO: Rename bsc and update this line -->
 - `common/lib/esp32-c3-dkc02-bsc` - board support crate (bsc) for the `ESP32-C3-DevKitC-02` board
-- `common/vendor/` - third party crates that have been forked to add required support, pending upstream merges 
 - `extra/` - tools not required for this training which might still be useful
 - `intro/` - code examples and exercises for the introduction course
 
@@ -41,4 +41,4 @@ user = "example"
 password = "h4ckm3"
 ```
 
-If you copy a `cfg.toml` to a new project, remember to change the header to `[name-of-new-package]`.
+❗ If you copy a `cfg.toml` to a new project, remember to change the header to `[name-of-new-package]`.
