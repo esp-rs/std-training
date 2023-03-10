@@ -23,7 +23,7 @@ cargo run --example http_client
 ```
 ## Making a connection
 
-By default only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
+By default, only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
 In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `esp_idf_svc::http::client::EspHttpConnection` and `embedded_svc::http::client::Client`. See instantiation methods at your disposal.
 
@@ -33,7 +33,7 @@ In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClien
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `embedded_svc::http::client::Request`, which must be submitted to reflect the client's option to send some data alongside its request.
 
-The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce an `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce a `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
 
 ```rust
@@ -57,7 +57,7 @@ match status {
 The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest/anyhow/index.html), crate which contains various functionality to simplify application-level error handling. It supplies a universal `anyhow::Result<T>`, wrapping the success (`Ok`) case in T and removing the need to specify the Err type, as long as every error you return implements `std::error::Error`.
 
 
-✅ Read the received data chunk by chunk into a `u8` buffer using `Read::read(&mut reader,&mut buf)`. `Read::read` returns the number of bytes read - you're done when this value is `0`.
+✅ Read the received data chunk by chunk into an `u8` buffer using `Read::read(&mut reader,&mut buf)`. `Read::read` returns the number of bytes read - you're done when this value is `0`.
 
 ✅ Report the total number of bytes read.
 
@@ -89,4 +89,4 @@ wifi_psk = "..."
 ```
 
 - `Guru Meditation Error: Core 0 panic'ed (Load access fault). Exception was unhandled.`
-    This may caused by an `.unwrap()` in your code. Try replacing those by question marks.
+    This may be caused by an `.unwrap()` in your code. Try replacing those by question marks.

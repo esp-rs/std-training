@@ -51,12 +51,12 @@ I (4427) bsc::wifi: Wifi connected!
 
 >🔎 If `cargo run` has been successful, you can exit with `ctrl+C`.
 
-> 🔎 `cargo run` is [configured to use `espflash`](https://github.com/esp-rs/espressif-trainings/blob/main/intro/hardware-check/.cargo/config.toml#L6) as [custom runner](https://doc.rust-lang.org/cargo/reference/config.html#target). The same output can be achived via:
+> 🔎 `cargo run` is [configured to use `espflash`](https://github.com/esp-rs/espressif-trainings/blob/main/intro/hardware-check/.cargo/config.toml#L6) as [custom runner](https://doc.rust-lang.org/cargo/reference/config.html#target). The same output can be achieved via:
 > - Using `cargo-espflash`: `cargo espflash flash --release --monitor`
 > - Building your project and flashing it with `espflash`: `cargo build --release && espflash target/riscv32imc-esp-espidf/release/hardware-check`
-> This modification is applied to all the projects in the trainnig for convinience.
+> This modification is applied to all the projects in the training for convenience.
 
-The board LED should turn yellow on startup, and then, depending on whether a Wifi connection could be established, either turn red (error) or blink, alternating green and blue, in case of succeding. In case of a Wifi error, a diagnostic message will also show up at the bottom, e.g.:
+The board LED should turn yellow on startup, and then, depending on whether a Wifi connection could be established, either turn red (error) or blink, alternating green and blue, in case of succeeding. In case of a Wifi error, a diagnostic message will also show up at the bottom, e.g.:
 
 ```console
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
@@ -70,7 +70,7 @@ If you want to try to build without flashing, you can run:
  ```console
  cargo build
  ```
-You can also monito the device without flashing it with the following command:
+You can also monitor the device without flashing it with the following command:
 
 ```console
 espflash monitor

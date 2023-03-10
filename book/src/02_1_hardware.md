@@ -1,6 +1,6 @@
 # Checking the hardware
 
-Connect the Espressif Rust Board to your computer. Verify a tiny red control LED lights up.
+Connect the Espressif Rust Board to your computer. Verify, a tiny red control LED lights up.
 
 The device should also expose its UART serial port over USB:
 

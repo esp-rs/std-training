@@ -1,7 +1,7 @@
 # Intro Workshop
 
 This workshop guides you through the basics of embedded development, at the end of
-the workshop we will be able to intereact with the outside world, including sending and receiving commands to/from the board sensors. The content includes:
+the workshop we will be able to interact with the outside world, including sending and receiving commands to/from the board sensors. The content includes:
 - Overview of a project
 - Setting up a project with cargo generate.
 - Writing an HTTP client.
@@ -16,4 +16,4 @@ the workshop we will be able to intereact with the outside world, including send
 
  ## Reference
 
- If you're new to embedded programming read our [reference](./04_7_reference.md) where we explain some terms in a basic manner.
+ If you're new to embedded programming, read our [reference](./04_7_reference.md), where we explain some terms in a basic manner.

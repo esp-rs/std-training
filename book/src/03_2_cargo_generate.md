@@ -35,7 +35,7 @@ The first message you see will be:
 * MCU: `esp32c3`
 * ESP-IDF native build version: `4.4`
 * STD support: `true`
-* Dev Containers support: `flase`
+* Dev Containers support: `false`
 
 🔎 `.cargo/config.toml` contains local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package.
 `Cargo.toml` contains dependencies [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
