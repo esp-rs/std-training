@@ -3,8 +3,9 @@
 
 use anyhow::Result;
 use esp32_c3_dkc02_bsc::led::{RGB8, WS2812RMT};
+use esp_idf_hal::prelude::Peripherals;
 use esp_idf_sys::{
-    c_types::c_void, esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
+    esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
     xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
 };
@@ -15,12 +16,14 @@ use std::ptr;
 static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
 
 #[link_section = ".iram0.text"]
-unsafe extern "C" fn button_interrupt(_: *mut c_void) {
+unsafe extern "C" fn button_interrupt(_: *mut core::ffi::c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
 }
 
 fn main() -> Result<()> {
-    let mut led = WS2812RMT::new()?;
+    let peripherals = Peripherals::take().unwrap();
+
+    let mut led = WS2812RMT::new(peripherals.pins.gpio2, peripherals.rmt.channel0)?;
     const GPIO_NUM: i32 = 9;
 
     // Configures the button
