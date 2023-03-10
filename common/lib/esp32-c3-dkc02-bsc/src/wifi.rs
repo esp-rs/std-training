@@ -1,3 +1,4 @@
+// TODO: Remove the bsc in favour of two crates: wifi and WS2812RMT
 use anyhow::{bail, Result};
 use embedded_svc::wifi::{
     AccessPointConfiguration, AuthMethod, ClientConfiguration, Configuration, Wifi,
