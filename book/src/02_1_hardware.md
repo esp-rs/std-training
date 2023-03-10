@@ -4,9 +4,9 @@ Connect the Espressif Rust Board to your computer. Verify a tiny red control LED
 
 The device should also expose its UART serial port over USB:
 
-**Windows**: a USB Serial Device (COM port) in the Device Manager under the Ports section
+**Windows**: a USB Serial Device (COM port) in the Device Manager under the Ports section.
 
-**Linux**: a USB device under `lsusb`. 
+**Linux**: a USB device under `lsusb`.
 The device will have a VID (vendor ID) of `303a` and a PID (product ID) of `1001` -- the `0x` prefix will be omitted in the output of `lsusb`:
 
 ``` console
@@ -14,13 +14,13 @@ $ lsusb | grep USB
 Bus 006 Device 035: ID 303a:1001 Espressif USB JTAG/serial debug unit
 ```
 
-Another way to see the device is to see which permissions and port is associated to the device is to check the `/by-id` folder: 
+Another way to see the device is to see which permissions and port is associated to the device is to check the `/by-id` folder:
 ``` console
 $ ls -l /dev/serial/by-id
 lrwxrwxrwx 1 root root .... usb-Espressif_USB_JTAG_serial_debug_unit_60:55:F9:C0:27:18-if00 -> ../../ttyACM0
 
-(If you are using a ESP32-C3-DevKitC-02 the command is `$ ls /dev/ttyUSB*` )
 ```
+> If you are using a ESP32-C3-DevKitC-02 the command is `$ ls /dev/ttyUSB*`
 
 **macOS**: The device will show up as part of the USB tree in `system_profiler`:
 
