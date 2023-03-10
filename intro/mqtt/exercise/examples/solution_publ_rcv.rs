@@ -1,4 +1,3 @@
-//This solution is the same as main.rs
 use anyhow::Result;
 use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
 use esp32_c3_dkc02_bsc::{
@@ -79,7 +78,7 @@ fn main() -> Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
-    // mqtt client with
+    // 1. Create a client with default configuration and empty handler
     let mut client =
         EspMqttClient::new(
             broker_url,
@@ -90,6 +89,7 @@ fn main() -> Result<()> {
             },
         )?;
 
+    // 2. publish an empty hello message
     let payload: &[u8] = &[];
     client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
