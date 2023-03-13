@@ -11,7 +11,7 @@ pub struct ICM42670P<I2C> {
     //  TODO! field 1
     // Device address
     //  TODO! field 2
-    // remove the following line as soon as the I2C parameter is used.
+    // Remove the following line as soon as the I2C parameter is used.
     rec_type: PhantomData<I2C>,
 }
 
@@ -19,20 +19,20 @@ pub struct ICM42670P<I2C> {
 /// Contains the possible variants of the devices addesses as binary numbers.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum DeviceAddr {
-    AD0, // add address
-    AD1, // add address
+    AD0, // Add address
+    AD1, // Add address
 }
 
 // impl block with methods
 impl<I2C, E> ICM42670P<I2C>
 where
-    // this defines which error messages will be used
+    // This defines which error messages will be used
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
     /// Creates a new instance of the sensor, taking ownership of the i2c peripheral.
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
-        // instantiates the ICM42670P struct
-        // returns the struct as Ok value
+        // Instantiates the ICM42670P struct
+        // Returns the struct as Ok value
         todo!();
     }
 
@@ -40,7 +40,7 @@ where
     //(if it doesn't, something is amiss)
     // Public method that can be accessed from outside this file.
     pub fn read_device_id_register(&mut self) -> Result<u8, E> {
-        // reads the Device ID register
+        // Reads the Device ID register
         todo!();
     }
 
@@ -48,7 +48,7 @@ where
     // This method is not public as it is only needed inside this file.
     #[allow(unused)]
     fn write_register(&mut self, register: Register, value: u8) -> Result<(), E> {
-        // value that will be written as u8
+        // Value that will be written as u8
         // i2c write
         todo!();
     }
@@ -56,9 +56,9 @@ where
     /// Reads a register using a `write_read` method.
     // This method is not public as it is only needed inside this file.
     fn read_register(&mut self, register: Register) -> Result<u8, E> {
-        // buffer for values
+        // Buffer for values
         // i2c write_read
-        // return u8 from le bytes
+        // Return u8 from le bytes
         todo!();
     }
 }
