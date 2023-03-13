@@ -23,7 +23,7 @@ native = ["esp-idf-sys/native"]
 [dependencies]
 esp-idf-sys = { version = "=0.32.1", features = ["binstart"] }
 anyhow = "=1.0.69"
-esp32-c3-dkc02-bsc = { path = "../../common/lib/esp32-c3-dkc02-bsc" }
+rgb-led = { path = "../../common/lib/rgb-led" }
 esp-idf-hal = "=0.40.1"
 
 [build-dependencies]

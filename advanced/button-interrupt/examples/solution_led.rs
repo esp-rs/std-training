@@ -2,13 +2,13 @@
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 
 use anyhow::Result;
-use esp32_c3_dkc02_bsc::led::{RGB8, WS2812RMT};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_sys::{
     esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
     xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
 };
+use rgb_led::{RGB8, WS2812RMT};
 use std::ptr;
 
 // This `static mut` holds the queue handle we are going to get from `xQueueGenericCreate`.
