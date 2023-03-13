@@ -1,6 +1,4 @@
 //! # Hardware Check
-//!
-//! This `libstd` program is for the ESP32-C3-DevKitC-02 board.
 
 use anyhow::{bail, Result};
 use esp_idf_hal::prelude::Peripherals;
