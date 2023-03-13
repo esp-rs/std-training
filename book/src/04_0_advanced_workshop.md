@@ -10,4 +10,4 @@ In the first one you'll learn how to handle a button interrupt, in the second yo
 Please go through the [preparations](./02_0_preparations.md) chapter to prepare for this workshop.
 
 ## Reference
-If you're new to embedded programming, read our [reference](./04_7_reference.md) where we explain some terms in a basic manner.
+If you're new to embedded programming, read our [reference](./05_reference.md) where we explain some terms in a basic manner.

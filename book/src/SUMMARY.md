@@ -27,4 +27,4 @@
       - [Basic Interrupt handler](./04_4_1_interrupts.md)
       - [Random LED color](./04_4_2_interrupts.md)
       - [Solution](./04_4_3_interrupts.md)
-    - [Reference](./04_7_reference.md)
+- [Reference](./05_reference.md)

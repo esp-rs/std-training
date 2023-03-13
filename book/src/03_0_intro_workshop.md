@@ -16,4 +16,4 @@ the workshop we will be able to interact with the outside world, including sendi
 
  ## Reference
 
- If you're new to embedded programming, read our [reference](./04_7_reference.md), where we explain some terms in a basic manner.
+ If you're new to embedded programming, read our [reference](./05_reference.md), where we explain some terms in a basic manner.
