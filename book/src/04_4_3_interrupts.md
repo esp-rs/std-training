@@ -33,7 +33,7 @@
     _ => {},
    ```
 
-4. **Optional**: If you intend to reuse this code in another place, it makes sense to put it into its own function. This lets us explore in detail, which parts of the code need to be in `unsafe` blocks.
+4. **Optional**: If you intend to reuse this code in another place, it makes sense to put it into its own function. This lets us explore, in detail, which parts of the code need to be in `unsafe` blocks.
 
     ```rust
     // ...
