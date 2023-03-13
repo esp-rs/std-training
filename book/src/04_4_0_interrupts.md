@@ -1,23 +1,23 @@
 # Interrupts
 
-An interrupt is a request for the processor to interrupt currently executing code, so that the event can be processed in a timely manner. If the request is accepted, the processor will suspend its current activities, save its state, and execute a function called an interrupt handler to deal with the event. Interrupts are commonly used by hardware devices to indicate electronic or physical state changes that require time-sensitive attention, for example pushing a button. 
+An interrupt is a request for the processor to interrupt currently executing code, so that the event can be processed in a timely manner. If the request is accepted, the processor will suspend its current activities, save its state, and execute a function called an interrupt handler to deal with the event. Interrupts are commonly used by hardware devices to indicate electronic or physical state changes that require time-sensitive attention, for example, pushing a button.
 
-The fact that interrupt handlers can be called at any time provides a challenge in embedded Rust: It requires the existence of statically allocated mutable memory that both the interrupt handler and the main code can refer to and it also requires that this memory is always accessible. 
+The fact that interrupt handlers can be called at any time provides a challenge in embedded Rust: It requires the existence of statically allocated mutable memory that both the interrupt handler and the main code can refer to, and it also requires that this memory is always accessible.
 
 ## Challenges
 
 ### Flash Memory
 
-Flash memory does not fulfill this requirement as it is out of action for example during write operations. Interrupts that occur during this time will go unnoticed. In our example this would result in no reaction when the button is pushed. We solve this by moving the the interrupt handler into RAM.
-### Statically Mutable Memory 
+Flash memory does not fulfill this requirement as it is out of action for example during write operations. Interrupts that occur during this time will go unnoticed. In our example, this would result in no reaction when the button is pushed. We solve this by moving the interrupt handler into RAM.
+### Statically Mutable Memory
 
-In Rust such memory can be declared by defining a `static mut`. But reading and writing to such variables is always unsafe, as without precautions race conditions can be triggered. 
+In Rust, such memory can be declared by defining a `static mut`. But reading and writing to such variables is always unsafe, as without precautions race conditions can be triggered.
 
 How do we handle this problem?
 
 In our example, the ESP-IDF framework provides a `Queue` type which handles the shared-mutable state for us. We simply get a `QueueHandle` which unique identifies the particular `Queue` being used. However, the main thread is given this `QueueHandle_t` at run-time, and so we still need a small amount of shared-mutable state in order to share the `QueueHandle_t` with the interrupt routine. We use an `Option<QueueHandle_t>`, which we statically initialize to `None`, and later replace with `Some(queue_handle)` when the queue has been created by ESP-IDF.
 
-In the interrupt routine Rust forces us to handle the case where the `static mut` is still `None`. If this happens we can either return early, or we can `unwrap()` the value, which will exit the program with an error if the value was not previously set to `Some(queue_handle)`.
+In the interrupt routine, Rust forces us to handle the case where the `static mut` is still `None`. If this happens, we can either return early, or we can `unwrap()` the value, which will exit the program with an error if the value was not previously set to `Some(queue_handle)`.
 
 There is still a risk that `main()` might be in the processing of changing the value of the variable (i.e. changing the `QueueHandle_t` value) just as the interrupt routine fires, leaving it in an inconsistent or invalid state. We mitigate this by making sure we only set the value once, and we do so before the interrupt is enabled. The compiler cannot check that this is safe, and so we must use the `unsafe` keyword when we read or write the value.
 
@@ -28,7 +28,7 @@ Read more about this in the [Embedded Rust Book](https://docs.rust-embedded.org/
 
 ## `unsafe {}` blocks:
 
-This code contains a lot of `unsafe {}` blocks. As a general rule, `unsafe` does not mean that the contained code is not memory safe, it means, that Rust can't make safety guarantees in this place and that it is in the responsibility of the programmer to ensure memory safety. For example Calling C Bindings is per se unsafe, as Rust can't make any safety guarantees for the underlaying C Code. 
+This code contains a lot of `unsafe {}` blocks. As a general rule, `unsafe` does not mean that the contained code is not memory safe, it means, that Rust can't make safety guarantees in this place and that it is in the responsibility of the programmer to ensure memory safety. For example, Calling C Bindings is per se unsafe, as Rust can't make any safety guarantees for the underlying C Code.
 
 
 
