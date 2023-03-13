@@ -22,7 +22,6 @@ We use Icons to mark different kinds of information in the book:
 
 ## Ensuring a working setup
 <!-- TODO: Update this comments -->
-⚠️ As of March 2022 we are not providing complete setup instructions for MS Windows.
 
 ⚠️ If you are participating in a training led by Ferrous Systems, we urge you to do prepare for the workshop by following the instructions in this chapter, at least, one business day in advance to verify you're ready to go by the time it starts. Please [contact us](https://ferrous-systems.com/contact/) should you encounter any issues or require any kind of support.
 
