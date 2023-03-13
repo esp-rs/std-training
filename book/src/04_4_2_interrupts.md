@@ -1,9 +1,14 @@
 # Random LED color on pushing a button
 
-✅ Modify the code so the RGB LED light changes to different random color upon each button press. The LED should not go out or change color if the button is not pressed for some time.
+✅ Modify the code so the RGB LED light changes to a different random color upon each button press. The LED should not go out or change color if the button is not pressed for some time.
 
-Continue by adding to your previous solution or the code from `advanced/button-interrupt/src/main.rs`
-You can find the solution for this exercise in `advanced/button-interrupt/examples/solution_led.rs`
+Continue by adding to your previous solution or the code from `advanced/button-interrupt/src/main.rs`.
+
+You can find the solution for this exercise in `advanced/button-interrupt/examples/solution.rs`. You can run it with the following command:
+
+```console
+cargo run --example solution_led
+```
 
 ## 💡 Solving Help
 
