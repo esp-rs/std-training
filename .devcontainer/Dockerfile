@@ -10,8 +10,8 @@ ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
-    && apt-get install -y git curl ninja-build clang libudev-dev unzip \
-    python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 \
+    && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
+    clang unzip python3 python3-pip pkg-config \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
@@ -19,8 +19,7 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
-    && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
-    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf
+    --component rust-src --target riscv32imc-unknown-none-elf
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \

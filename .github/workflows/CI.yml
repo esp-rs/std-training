@@ -15,9 +15,7 @@ on:
     - cron: "50 7 * * *"
 
 jobs:
-  # To avoid uploading the Docker image to a registry yet
-  # the image is built here & immediately used to test all exercises in.
-  build_image_and_test:
+  build-examples:
     name: Build ${{ matrix.project.name }}
     runs-on: ubuntu-latest
     strategy:
@@ -45,9 +43,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build Docker image
-        run: docker image build --tag esp --file .devcontainer/Dockerfile .
+        if: github.event_name != 'schedule'
+        run: docker image build --tag espressif/rust-std-training --file .devcontainer/Dockerfile .
+
+      - name: Pull Docker image
+        if: github.event_name == 'schedule'
+        run: docker image pull espressif/rust-std-training
 
       - name: Test code example in Docker image
         run: |
           docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached \
-                 --rm esp:latest /bin/bash /workspace/.devcontainer/test.sh ${{ matrix.project.path }}
+                 --rm espressif/rust-std-training:latest /bin/bash /workspace/.devcontainer/test.sh ${{ matrix.project.path }}

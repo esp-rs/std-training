@@ -7,9 +7,22 @@ WORK_DIR=/workspace/$1
 echo "Compiling $1"
 
 cd /workspace/$1
+
+if [ -f cfg.toml.example ]; then
+    # Rename file to cfg.toml
+    mv cfg.toml.example cfg.toml
+    # Replace defaults
+    sed -i 's/wifi_ssid = "FBI Surveillance Van"/wifi_ssid = "ssid"/g' cfg.toml
+    sed -i 's/wifi_psk = "hunter2"/wifi_psk = "pass"/g' cfg.toml
+    sed -i 's/mqtt_user = "horse"/mqtt_user = "user"/g' cfg.toml
+    sed -i 's/mqtt_pass = "CorrectHorseBatteryStaple"/mqtt_pass = "pass"/g' cfg.toml
+    sed -i 's/mqtt_host = "yourpc.local"/mqtt_host = "host"/g' cfg.toml
+fi
+
 $HOME/.cargo/bin/cargo clean
 $HOME/.cargo/bin/cargo build
 
+# Check examples
 if [[ "$1" == advanced/button-interrupt ]]; then
     $HOME/.cargo/bin/cargo build --example solution
     $HOME/.cargo/bin/cargo build --example solution_led
