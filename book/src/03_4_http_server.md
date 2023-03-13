@@ -27,7 +27,7 @@ Server awaiting connection
 
 The `sta ip` is the _"station"_, the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other HTTP client like `curl`).
 
-> 🔎 esp-idf tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
+> 🔎 ESP-IDF tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
 >
 > You can change the hostname by setting `CONFIG_LWIP_LOCAL_HOSTNAME` in `sdkconfig.defaults`, e.g.: `CONFIG_LWIP_LOCAL_HOSTNAME="esp32c3"`
 

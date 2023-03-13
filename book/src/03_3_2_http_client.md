@@ -25,7 +25,7 @@ cargo run --example http_client
 
 By default, only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
-In `esp-idf`, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `esp_idf_svc::http::client::EspHttpConnection` and `embedded_svc::http::client::Client`. See instantiation methods at your disposal.
+In ESP-IDF, HTTP client connections are managed by `http::client::EspHttpClient` in the `esp-idf-svc` crate. It implements the `http::client::Client` trait from `embedded-svc`, which defines functions for [HTTP request methods](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) like `GET` or `POST`. This is a good time to have a look at the documentation you opened with `cargo doc --open` for `esp_idf_svc::http::client::EspHttpConnection` and `embedded_svc::http::client::Client`. See instantiation methods at your disposal.
 
 ✅ Create a new `EspHttpConnection` with default configuration. Look for a suitable constructor in the documentation.
 
