@@ -1,7 +1,6 @@
 use anyhow::Result;
 use core::str;
 use embedded_svc::{http::Method, io::Write};
-use esp32_c3_dkc02_bsc::wifi::wifi;
 use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     prelude::*,
@@ -16,6 +15,7 @@ use std::{
     thread::sleep,
     time::Duration,
 };
+use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 

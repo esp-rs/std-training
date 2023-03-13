@@ -1,9 +1,5 @@
 use anyhow::Result;
 use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
-use esp32_c3_dkc02_bsc::{
-    led::{RGB8, WS2812RMT},
-    wifi::wifi,
-};
 use esp_idf_hal::{
     delay,
     i2c::{I2cConfig, I2cDriver},
@@ -13,8 +9,10 @@ use esp_idf_svc::eventloop::EspSystemEventLoop;
 use esp_idf_svc::mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration};
 use log::{error, info, warn};
 use mqtt_messages::{hello_topic, ColorData};
+use rgb_led::{RGB8, WS2812RMT};
 use shtcx::{self, shtc3, PowerMode};
 use std::{convert::TryFrom, thread::sleep, time::Duration};
+use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 

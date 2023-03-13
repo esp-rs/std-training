@@ -3,13 +3,11 @@
 //! This `libstd` program is for the ESP32-C3-DevKitC-02 board.
 
 use anyhow::{bail, Result};
-use esp32_c3_dkc02_bsc::{
-    led::{RGB8, WS2812RMT},
-    wifi::wifi,
-};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use log::info;
+use rgb_led::{RGB8, WS2812RMT};
+use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 

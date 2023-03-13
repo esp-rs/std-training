@@ -23,8 +23,6 @@ cd r:\
 - `book/` - markdown sources of this book
 - `common/` - code shared between both courses
 - `common/lib/` - support crates
-<!-- TODO: Rename bsc and update this line -->
-- `common/lib/esp32-c3-dkc02-bsc` - board support crate (bsc) for the `ESP32-C3-DevKitC-02` board
 - `extra/` - tools not required for this training which might still be useful
 - `intro/` - code examples and exercises for the introduction course
 

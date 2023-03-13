@@ -46,7 +46,7 @@ rst:0x1 (POWERON),boot:0xc (SPI_FAST_FLASH_BOOT)
 (...)
 (...)
 (...)
-I (4427) bsc::wifi: Wifi connected!
+I (4427) wifi::wifi: Wifi connected!
 ```
 
 >🔎 If `cargo run` has been successful, you can exit with `ctrl+C`.
