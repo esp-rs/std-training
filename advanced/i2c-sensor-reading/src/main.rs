@@ -22,14 +22,16 @@ fn main() -> Result<()> {
 
     let peripherals = Peripherals::take().unwrap();
 
-    // Instanciate the i2c peripheral, correct pins are in the training material.
+    // 1. Instantiate the SDA and SCL pins, correct pins are in the training material.
 
-    // Create an instance of the SHTC3 sensor, find help in the documentation.
+    // 2. Instantiate the i2c peripheral,I2cDriver, using a I2cConfig of 400kHz
 
-    // Read and print the sensor's device ID, find the methods in the documentation.
+    // 3. Create an instance of the SHTC3 sensor.
+
+    // 4. Read and print the sensor's device ID.
 
     loop {
-        // This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
+        // 5. This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
         FreeRtos.delay_ms(500u32);
     }
 }
