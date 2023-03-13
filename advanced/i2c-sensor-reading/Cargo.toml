@@ -27,7 +27,7 @@ embedded-hal = "=0.2.7"
 shtcx = "=0.11.0"
 lis3dh = "=0.4.2"
 shared-bus = "=0.2.5"
-icm42670p = { path = "../../common/lib/icm42670p" }
+icm42670 = "=0.1.1"
 
 [build-dependencies]
 embuild = "=0.31.0"

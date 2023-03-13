@@ -6,9 +6,9 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
-use icm42670p::{DeviceAddr, ICM42670P};
+use icm42670::{Address, Icm42670, PowerMode as imuPowerMode};
 use shared_bus::BusManagerSimple;
-use shtcx::{self, PowerMode};
+use shtcx::{self, PowerMode as shtPowerMode};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 
@@ -44,19 +44,19 @@ fn main() -> Result<()> {
     println!("Device ID SHTC3: {}", device_id);
 
     // 7. Create an instance of ICM42670p sensor. Pass the second proxy and the sensor's address.
-    let mut imu = ICM42670P::new(proxy_2, DeviceAddr::B110_1000)?;
+    let mut imu = Icm42670::new(proxy_2, Address::Primary).unwrap();
 
     // 8. Read the device's ID register and print the value.
-    let device_id = imu.read_device_id_register()?;
+    let device_id = imu.device_id().unwrap();
     println!("Device ID ICM42670p: {}", device_id);
 
     // 9. Start the ICM42670p in low noise mode.
-    imu.gyro_ln()?;
+    imu.set_power_mode(imuPowerMode::GyroLowNoise).unwrap();
 
     loop {
         // 10. Read gyro data
-        let gyro_data = imu.read_gyro()?;
-        sht.start_measurement(PowerMode::NormalMode).unwrap();
+        let gyro_data = imu.gyro_norm().unwrap();
+        sht.start_measurement(shtPowerMode::NormalMode).unwrap();
         FreeRtos.delay_ms(100u32);
         let measurement = sht.get_measurement_result().unwrap();
 
