@@ -1,5 +1,5 @@
 [package]
-name = "i2c-sensor-exercise"
+name = "i2c-sensor-reading"
 version = "0.1.0"
 authors = [
     "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",

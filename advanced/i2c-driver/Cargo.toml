@@ -1,5 +1,5 @@
 [package]
-name = "i2c-driver-exercise"
+name = "i2c-driver"
 version = "0.1.0"
 authors = [
     "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",

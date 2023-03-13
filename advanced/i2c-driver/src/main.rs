@@ -10,10 +10,10 @@ use esp_idf_hal::{
 use esp_idf_sys as _;
 
 // Uncomment the following line to run the solution, check lib.rs for further instructions
-// use i2c_driver_exercise::icm42670p_solution::{DeviceAddr, ICM42670P};
+// use i2c_driver::icm42670p_solution::{DeviceAddr, ICM42670P};
 
 // Comment out the following line to run the solution, check lib.rs for further instructions
-use i2c_driver_exercise::icm42670p::{DeviceAddr, ICM42670P};
+use i2c_driver::icm42670p::{DeviceAddr, ICM42670P};
 
 // Dont change this file. Work in the icm42670p.rs and modify it so main.rs runs.
 
