@@ -15,7 +15,7 @@ The goal of this exercise is to write a small HTTP client that connects to a web
 ```console
 cargo doc --open
 ```
-<!-- TODO: See if this comment is prensent in all the execises with solutions -->
+
 `intro/http-client/examples/http_client.rs` contains the solution. You can run it with the following command:
 
 ```console

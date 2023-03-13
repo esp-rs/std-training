@@ -17,7 +17,7 @@ pub fn wifi(
     modem: impl peripheral::Peripheral<P = esp_idf_hal::modem::Modem> + 'static,
     sysloop: EspSystemEventLoop,
 ) -> Result<Box<EspWifi<'static>>> {
-    let mut auth_method = AuthMethod::WPA2Personal; // Todo: add this setting - router dependent
+    let mut auth_method = AuthMethod::WPA2Personal;
     if ssid.is_empty() {
         bail!("Missing WiFi name")
     }
