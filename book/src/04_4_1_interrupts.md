@@ -1,23 +1,23 @@
 # Building the Interrupt Handler
 
-The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed. 
-This exercise involves working with C bindings to the ESP-IDF and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler. 
+The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed.
+This exercise involves working with C bindings to the ESP-IDF and other unsafe operations, as well as non-typical rust documentation. In a first step we will go line by line to build this interrupt handler.
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/src/main.rs.`
 You can find the solution for this exercise in `advanced/button-interrupt/examples/solution.rs`
 
-## Tasks
+## ✅ Tasks
 
 1. Configure the button (GPIO 9) with a c struct [`gpio_config_t`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/struct.gpio_config_t.html)the following settings:
     - input mode
     - pull up
     - interrupt on positive edge
-  
+
 The struct has the following fields:
 
- * `pin_bit_mask`: represents the Pin number, the value 1  shifted by the number of the pin. 
+ * `pin_bit_mask`: represents the Pin number, the value 1  shifted by the number of the pin.
  * `mode`: sets the mode of the pin, it can have the following settings:
-   * `gpio_mode_t_GPIO_MODE_INPUT` 
+   * `gpio_mode_t_GPIO_MODE_INPUT`
    * `gpio_mode_t_GPIO_MODE_OUTPUT`
    * `gpio_mode_t_GPIO_MODE_DISABLE` // disable gpio
    * `gpio_mode_t_GPIO_MODE_OUTPUT_OD` // open drain output
@@ -32,7 +32,7 @@ The struct has the following fields:
    * `gpio_int_type_t_GPIO_INTR_NEGEDGE` // interrupt at negative edge
    * `gpio_int_type_t_GPIO_INTR_POSEDGE` // interrupt at positive edge
 
-They are constants with numbers representing the bit that must be set in the corresponding register. 
+They are constants with numbers representing the bit that must be set in the corresponding register.
 
 
 2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls we can use the macro `esp!($Cfunktion)`.
@@ -61,7 +61,7 @@ unsafe extern "C" fn button_interrupt(_: *mut c_void) {
     xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
 }
 ```
-If the interrupt fires, an event is added to the queue. 
+If the interrupt fires, an event is added to the queue.
 
 7. Pass the function we just wrote to the generic GPIO interrupt handler we registered earlier, along with the number of the GPIO pin that should cause this function to be executed.
 
@@ -79,6 +79,6 @@ esp!(gpio_isr_handler_add(
 let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
 ```
 
-9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed. 
-    
+9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed.
+
 10. Run the program and push the `BOOT` button, so see how it works!
