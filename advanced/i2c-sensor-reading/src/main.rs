@@ -6,16 +6,14 @@ use esp_idf_hal::{
     peripherals::Peripherals,
     prelude::*,
 };
-use icm42670p::{DeviceAddr, ICM42670P};
-use shared_bus::BusManagerSimple;
 use shtcx::{self, PowerMode};
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
 
-// goals of this exercise:
-// instantiate i2c peripheral
-// implement one sensor, print sensor values
-// implement second sensor on same bus to solve an ownership problem
+// Goals of this exercise:
+// - Part1: Instantiate i2c peripheral
+// - Part1: Implement one sensor, print sensor values
+// - Part2: Implement second sensor on same bus to solve an ownership problem
 
 fn main() -> Result<()> {
     esp_idf_sys::link_patches();
