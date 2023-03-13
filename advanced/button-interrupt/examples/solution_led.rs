@@ -32,12 +32,12 @@ fn main() -> Result<()> {
         mode: gpio_mode_t_GPIO_MODE_INPUT,
         pull_up_en: true.into(),
         pull_down_en: false.into(),
-        intr_type: gpio_int_type_t_GPIO_INTR_POSEDGE, // positive edge trigger = button down
+        intr_type: gpio_int_type_t_GPIO_INTR_POSEDGE, // Positive edge trigger = button down
     };
 
     // Queue configurations
     const QUEUE_TYPE_BASE: u8 = 0;
-    const ITEM_SIZE: u32 = 0; // we're not posting any actual data, just notifying
+    const ITEM_SIZE: u32 = 0; // We're not posting any actual data, just notifying
     const QUEUE_SIZE: u32 = 1;
 
     unsafe {
@@ -61,7 +61,7 @@ fn main() -> Result<()> {
     // Reads the queue in a loop.
     loop {
         unsafe {
-            // maximum delay
+            // Maximum delay
             const QUEUE_WAIT_TICKS: u32 = 1000;
 
             // Reads the event item out of the queue

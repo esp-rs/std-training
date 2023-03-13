@@ -1,4 +1,4 @@
-// reference:
+// Reference:
 // https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 use anyhow::Result;
 use esp_idf_sys::{
@@ -23,13 +23,13 @@ unsafe extern "C" fn button_interrupt(_: *mut core::ffi::c_void) {
 fn main() -> Result<()> {
     const GPIO_NUM: i32 = 9;
 
-    // 1. Add GPIO configuration c struct
+    // 1. Add GPIO configuration C struct
     // let io_conf = gpio_config_t {
     //     ...
     // };
 
     unsafe {
-        // 2. write the GPIO configuration into the register
+        // 2. Write the GPIO configuration into the register
         // esp!(...)?;
 
         // 3. Install the global GPIO interrupt handler
@@ -50,7 +50,7 @@ fn main() -> Result<()> {
     // The loop in main waits until it gets a message through the rx ("receiver") part of the channel
     loop {
         unsafe {
-            // maximum delay
+            // Maximum delay
             const QUEUE_WAIT_TICKS: u32 = 1000;;
 
             // 8. Receive the event from the queue.
