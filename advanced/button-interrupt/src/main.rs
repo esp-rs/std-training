@@ -1,5 +1,4 @@
-// Reference:
-// https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
+// Reference: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 use anyhow::Result;
 use esp_idf_sys::{
     esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,

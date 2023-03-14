@@ -53,11 +53,11 @@ fn get(url: impl AsRef<str>) -> Result<()> {
     })?;
     let mut client = Client::wrap(connection);
 
-    // // 2. Open a GET request to `url`
+    // 2. Open a GET request to `url`
     let request = client.get(url.as_ref())?;
 
-    // // 3. Submit write request and check the status code of the response.
-    // // Successful http status codes are in the 200..=299 range.
+    // 3. Submit write request and check the status code of the response.
+    // Successful http status codes are in the 200..=299 range.
     let response = request.submit()?;
     let status = response.status();
 
