@@ -2,6 +2,7 @@
 name = "rgb-led"
 version = "0.1.0"
 edition = "2021"
+authors = ["Sergio Gasquez <sergio.gasquez@gmail.com>"]
 
 [dependencies]
 esp-idf-sys = { version = "=0.32.1" }
