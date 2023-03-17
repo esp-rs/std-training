@@ -30,6 +30,10 @@ RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //'
     unzip "${HOME}/.cargo/bin/espflash.zip" -d "${HOME}/.cargo/bin/" && \
     rm "${HOME}/.cargo/bin/espflash.zip" && \
     chmod u+x "${HOME}/.cargo/bin/espflash" && \
+    curl -L "https://github.com/esp-rs/esp-web-flash-server/releases/latest/download/web-flash-${ARCH}.zip" -o "${HOME}/.cargo/bin/web-flash.zip" && \
+    unzip "${HOME}/.cargo/bin/web-flash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/web-flash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/web-flash" && \
     curl -L "https://github.com/esp-rs/embuild/releases/latest/download/ldproxy-${ARCH}.zip" -o "${HOME}/.cargo/bin/ldproxy.zip" &&  \
     unzip "${HOME}/.cargo/bin/ldproxy.zip" -d "${HOME}/.cargo/bin/" && \
     rm "${HOME}/.cargo/bin/ldproxy.zip" && \

@@ -73,11 +73,14 @@ brew install llvm
 > ⚠️ Please **note**, the Docker container provides an alternative option to **compile** the Rust exercises in.
 > It is meant for users that have experience with virtualized environments.
 > Be aware that we cannot provide help for Docker specific issues during the training.
-<!-- TODO: mention esp-web-flash -->
-An alternative environment to **compile** the Rust exercises in is to use Docker. In this repository there is a `Dockerfile`
-with instructions to install the Rust toolchain & all required packages. This virtualized environment is designed
-to only compile the binaries for the Espressif target. Other commands, e.g., using `cargo-espflash`, still need to
-be executed on the host system.
+An alternative environment, is to use Docker. The repository contains a `Dockerfile`
+with instructions to install the Rust toolchain, and all required packages. This virtualized environment is designed
+to compile the binaries for the Espressif target. Flashing binaries from containers is not possible, hence there are two options:
+- Execute flashing commands, e.g., `cargo-espflash`, on the host system.
+- Use [`web-flash`](https://github.com/esp-rs/esp-web-flash-server) crate to flash the resulting binaries from the container. The container already includes `web-flash`. Here is how you would flash the build output of [`hardware-check` project](./02_4_hello_board.md):
+   ```console
+   web-flash --chip esp32c3 target/riscv32imc-esp-espidf/debug/hardware-check
+   ```
 
 ✅ Install [`Docker`](https://docs.docker.com/get-docker/) for your operating system.
 
