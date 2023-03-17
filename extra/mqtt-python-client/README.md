@@ -4,7 +4,7 @@
 - logs temperature values sent by MCU
 
 ## Setup
-- Configure MQTT credentials in `../../intro/mqtt/exercise` according to instructions provided in the workshop 
+- Configure MQTT credentials in `../../intro/mqtt/exercise` according to instructions provided in the workshop
 - set up a Python environment:
 
 ```shell

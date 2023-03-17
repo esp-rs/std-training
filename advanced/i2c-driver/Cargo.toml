@@ -1,7 +1,10 @@
 [package]
-name = "i2c-driver-exercise"
+name = "i2c-driver"
 version = "0.1.0"
-authors = ["Tanks Transfeld <tanks.transfeld@ferrous-systems.com>"]
+authors = [
+    "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",
+    "Sergio Gasquez <sergio.gasquez@gmail.com>",
+]
 edition = "2021"
 resolver = "2"
 
@@ -9,7 +12,7 @@ resolver = "2"
 opt-level = "s"
 
 [profile.dev]
-debug = true # Symbols are nice and they don't increase the size on Flash
+debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
@@ -17,12 +20,11 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
-esp-idf-hal = "=0.38"
-anyhow = "1"
-embedded-hal = "0.2.7"
-ignore = "=0.4.11"
+esp-idf-sys = { version = "=0.32.1", features = ["binstart"] }
+esp-idf-hal = "=0.40.1"
+anyhow = "=1.0.69"
+embedded-hal = "=0.2.7"
 
 [build-dependencies]
-embuild = "0.28"
-anyhow = "1"
+embuild = "=0.31.0"
+anyhow = "=1.0.69"

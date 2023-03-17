@@ -2,19 +2,18 @@
 
 Follow the steps below for a default installation of the ESP32-C3 platform tooling.
 
-🔎 Should you desire a customized installation (e.g. building parts from source, or add support for Xtensa/ESP32-S3), instructions for doing so can be found in the [Rust on ESP targets](https://esp-rs.github.io/book/installation/index.html) chapter of the *Rust on ESP* Book.
+🔎 Should you desire a customized installation (e.g. building parts from source, or adding support for Xtensa targets), instructions for doing so can be found in the [Rust on ESP targets](https://esp-rs.github.io/book/installation/index.html) chapter of the *Rust on ESP* Book.
 
 ## Rust toolchain
 
 ✅ If you haven't got Rust on your computer, obtain it via <https://rustup.rs/>
 
-Furthermore, for ESP32-C3, a specific *nightly* version of the Rust toolchain is currently required.
+Furthermore, for ESP32-C3, a [*nightly* version](https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust) of the Rust toolchain is currently required, for this training we will use `nightly-2023-02-28` version.
 
-✅ Install nightly Rust and add support for the target architecture using the following console commands:
+✅ Install *nightly* Rust and add support for the target architecture using the following command:
 
 ```console
-$ rustup install nightly-2022-03-10
-$ rustup component add rust-src --toolchain nightly-2022-03-10
+rustup toolchain install nightly-2023-02-28 --component rust-src
 ```
 
 🔎 Rust is capable of cross-compiling to any supported target (see `rustup target list`). By default, only the native architecture of your system is installed.
@@ -23,14 +22,14 @@ To build for the Xtensa architecture (*not* part of this material), a fork of th
 ## Espressif toolchain
 
 Several tools are required:
-- `cargo-espflash` - upload firmware to the microcontroller and open serial monitor with cargo integration
-- `espflash` - upload firmware to the microcontroller and open serial monitor
-- `ldproxy` - Espressif build toolchain dependency
+- [`cargo-espflash`](https://github.com/esp-rs/espflash/tree/main/cargo-espflash) - upload firmware to the microcontroller and open serial monitor with cargo integration
+- [`espflash`](https://github.com/esp-rs/espflash/tree/main/espflash) - upload firmware to the microcontroller and open serial monitor
+- [`ldproxy`](https://github.com/esp-rs/embuild/tree/master/ldproxy) - Espressif build toolchain dependency
 
 ✅ Install them with the following command:
 
 ```console
-$ cargo install cargo-espflash espflash ldproxy
+cargo install cargo-espflash espflash ldproxy
 ```
 
 ⚠️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
@@ -40,70 +39,52 @@ $ cargo install cargo-espflash espflash ldproxy
 ### Debian/Ubuntu
 
 ```console
-$ sudo apt install llvm-dev libclang-dev clang
+sudo apt install llvm-dev libclang-dev clang
 ```
 ### macOS
 
-(when using the Homebrew package manager, which we recommend)
+When using the Homebrew package manager, which we recommend:
 ```console
-$ brew install llvm
+brew install llvm
 ```
 
 ### Troubleshooting
 
 - Python 3 is a required dependency. It comes preinstalled on stock macOS and typically on desktop Linux distributions. An existing **Python 2** installation with the `virtualenv` add-on pointing to it is known to potentially cause build problems.
 
-- Error `failed to run custom build command for libudev-sys v0.1.4` or `esp-idf-sys v0.30.X`:
+- Error `failed to run custom build command for libudev-sys vX.X.X` or `esp-idf-sys vX.X.X`:
 
-    At time of writing, this can be solved by
-    1. running [this line](https://github.com/esp-rs/rust-build/blob/f773036483333f3b4618d988f9a1eda051573cb2/support/esp-rs-rust/Containerfile#L13) from the `esp-rs` container:
+    At time of writing, this can be solved by:
+    1. Running this line:
 
     `apt-get update \
     && apt-get install -y vim nano git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev \
     pkg-config libtinfo5`
 
-    2. restarting the terminal
+    2. Restarting the terminal.
 
-    3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder and reinstall [according to esp instructions](
-https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html).
-
-    ⚠️ In [step 2](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-macos-setup.html#step-2-get-esp-idf), do not clone the `https://github.com/espressif/esp-idf.git` repository. For this training, we are using a git tag.
-
-    Instead, do the following:
-
-    ```console
-    git clone --recursive --depth 1 --shallow-submodules git@github.com:espressif/esp-idf.git --branch "v4.4.1" esp-idf-v4.4
-    cd esp-idf-v4.4
-    ./install.sh esp32c3
-    . ./export.sh
-    ```
-
-    If you change terminal, you will need to source the `export.sh` file:
-
-    ```console
-    source ~/esp/esp-idf-v4.4/export.sh
-    ```
+    3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder (`%USERPROFILE%\.espressif` in Windows) and rebuild your project.
 
     4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
 
 
 ## Docker
 
-> ❗️ Please **note** the Docker container provides an alternative option to **compile** the Rust exercises in.
+> ⚠️ Please **note**, the Docker container provides an alternative option to **compile** the Rust exercises in.
 > It is meant for users that have experience with virtualized environments.
 > Be aware that we cannot provide help for Docker specific issues during the training.
-
+<!-- TODO: mention esp-web-flash -->
 An alternative environment to **compile** the Rust exercises in is to use Docker. In this repository there is a `Dockerfile`
 with instructions to install the Rust toolchain & all required packages. This virtualized environment is designed
-to only compile the binaries for the espressif target. Other commands, e.g. using `cargo-espflash`, still need to
+to only compile the binaries for the Espressif target. Other commands, e.g., using `cargo-espflash`, still need to
 be executed on the host system.
 
 ✅ Install [`Docker`](https://docs.docker.com/get-docker/) for your operating system.
 
-To build the Docker image run the following command from the root folder:
+To build the Docker image, run the following command from the root folder:
 
 ```console
-$ docker image build --tag esp --file .devcontainer/Dockerfile .
+docker image build --tag esp --file .devcontainer/Dockerfile .
 ```
 
 Building the image takes a while depending on the OS & hardware (20-30 minutes).
@@ -111,13 +92,13 @@ Building the image takes a while depending on the OS & hardware (20-30 minutes).
 To start the new Docker container run:
 
 ```console
-$ docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
+docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
 ```
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
 named `/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
 
-Using this Docker setup requires certain commands to run inside the container, while other have to be executed on the host system.
+Using this Docker setup requires certain commands to run inside the container, while others have to be executed on the host system.
 It's recommended to keep two terminals open, one connected to the Docker container, one on the host system.
 
 * in the container: compile the project
@@ -128,11 +109,11 @@ It's recommended to keep two terminals open, one connected to the Docker contain
 
 ### VS Code
 
-One editor with good Rust support is [VS Code](https://code.visualstudio.com/) which is available for most platforms.
-When using VS Code we recommend the following extensions to help during the development.
+One editor with good Rust support is [VS Code](https://code.visualstudio.com/), which is available for most platforms.
+When using VS Code, we recommend the following extensions to help during the development.
 
-* `Even Better TOML` for editing TOML based configuration files
 * [`Rust Analyzer`](https://rust-analyzer.github.io/) to provide code completion & navigation
+* `Even Better TOML` for editing TOML based configuration files
 
 There are a few more useful extensions for advanced usage
 
@@ -143,4 +124,4 @@ There are a few more useful extensions for advanced usage
 
 One extension for VS Code that might be helpful to develop inside a Docker container is [`Remote Containers`](https://github.com/Microsoft/vscode-remote-release).
 It uses the same `Dockerfile` as the Docker setup, but builds the image and connects to it from within VS Code.
-Once the extension is installed VS Code recognizes the configuration in the `.devcontainer` folder. Use the `Remote Containers - Reopen in Container` command to connect VS Code to the container.
+Once the extension is installed, VS Code recognizes the configuration in the `.devcontainer` folder. Use the `Remote Containers - Reopen in Container` command to connect VS Code to the container.

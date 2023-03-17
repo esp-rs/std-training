@@ -3,7 +3,7 @@
 use embedded_hal::blocking::i2c;
 
 /// ICM42670P device driver.
-/// Datasheet: https://3cfeqx1hf82y3xcoull08ihx-wpengine.netdna-ssl.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
+/// Datasheet: https://invensense.tdk.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
 #[derive(Debug)]
 pub struct ICM42670P<I2C> {
     // The concrete I²C device implementation.
@@ -23,7 +23,7 @@ pub enum DeviceAddr {
     AD1 = 0b110_1001,
 }
 
-impl<I2C, E>ICM42670P<I2C>
+impl<I2C, E> ICM42670P<I2C>
 where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
 {
@@ -43,7 +43,7 @@ where
     // This method is not public as it is only needed inside this file.
     #[allow(unused)]
     fn write_register(&mut self, register: Register, value: u8) -> Result<(), E> {
-        let byte = value as u8;
+        let byte = value;
         self.i2c
             .write(self.address as u8, &[register.address(), byte])
     }

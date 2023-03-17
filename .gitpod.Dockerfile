@@ -4,7 +4,7 @@ ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 ARG CONTAINER_USER=gitpod
 ARG CONTAINER_GROUP=gitpod
-ARG NIGHTLY_VERSION=nightly-2022-03-10
+ARG NIGHTLY_VERSION=nightly-2023-02-28
 ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
 RUN sudo install-packages git curl gcc clang ninja-build libudev-dev \
