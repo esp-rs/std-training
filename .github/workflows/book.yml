@@ -15,6 +15,12 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
+      - name: Install Python dependencies
+        run: |
+          pip3 install --user python-dateutil linkchecker
+      - name: Put pip binary directory into path
+        run: echo "~/.local/bin" >> $GITHUB_PATH
+
       - name: Download mdBook ${{ env.MDBOOK_VERSION }}
         run: |
           mkdir -p /tmp/mdbook
@@ -22,6 +28,9 @@ jobs:
 
       - name: Build the contents of the book
         run: /tmp/mdbook/mdbook build book/ -d /tmp/book
+
+      - name: Check links
+        run: linkchecker book
 
       - name: Upload GitHub Pages content
         uses: actions/upload-pages-artifact@v1
