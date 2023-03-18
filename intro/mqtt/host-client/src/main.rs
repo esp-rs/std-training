@@ -1,9 +1,7 @@
 use mqtt_messages::{hello_topic, temperature_data_topic, ColorData, RGB8};
 use rand::Rng;
 use rumqttc::{Client, MqttOptions, Packet, QoS};
-use std::error::Error;
-use std::thread;
-use std::time::Duration;
+use std::{error::Error, thread, time::Duration};
 
 const UUID: &'static str = get_uuid::uuid();
 

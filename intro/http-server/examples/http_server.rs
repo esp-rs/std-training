@@ -45,9 +45,8 @@ fn main() -> Result<()> {
     )?;
 
     // Initialize temperature sensor
-    let pins = peripherals.pins;
-    let sda = pins.gpio10;
-    let scl = pins.gpio8;
+    let sda = peripherals.pins.gpio10;
+    let scl = peripherals.pins.gpio8;
     let i2c = peripherals.i2c0;
     let config = I2cConfig::new().baudrate(100.kHz().into());
     let i2c = I2cDriver::new(i2c, sda, scl, &config)?;

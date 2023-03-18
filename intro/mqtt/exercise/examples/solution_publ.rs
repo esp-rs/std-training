@@ -5,8 +5,10 @@ use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     prelude::*,
 };
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-use esp_idf_svc::mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration};
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+};
 use log::{error, info, warn};
 use mqtt_messages::{hello_topic, ColorData};
 use rgb_led::{RGB8, WS2812RMT};

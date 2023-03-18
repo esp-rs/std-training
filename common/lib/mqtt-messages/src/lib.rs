@@ -1,12 +1,14 @@
 use rgb::ComponentSlice;
+use std::{
+    borrow::{Borrow, Cow},
+    str,
+};
+
 pub use rgb::RGB8;
-use std::borrow::{Borrow, Cow};
-use std::str;
 
 /// Handles `EspMqttMessage` with MQTT hierarchy
 ///
 /// Can be used to send ColorData(rgb) with `Command` in a hierarchical context
-
 pub fn cmd_topic_fragment(uuid: &str) -> String {
     format!("{}/command/", uuid)
 }
@@ -49,7 +51,6 @@ impl Command {
 }
 
 /// `ColorData` is a simplified `Command`
-
 pub enum ColorData {
     BoardLed(RGB8),
 }
