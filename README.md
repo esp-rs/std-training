@@ -33,8 +33,6 @@ There is:
 * Some extra bits:
    * [`mqtt-python-client`](./extra/mqtt-python-client) A Python MQTT client, for testing
 
-Please note, much of this material remains a work in progress!
-
 ## Development
 
 Each Rust example crate provided here can be built in the usual fashion. See
