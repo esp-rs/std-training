@@ -6,8 +6,6 @@ This repository contains Training Material for learning to use Embedded Rust wit
 
 We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
-
 ## Contents
 
 There is:
