@@ -1,5 +1,3 @@
-//! # Hardware Check
-
 use anyhow::{bail, Result};
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::eventloop::EspSystemEventLoop;

@@ -10,18 +10,18 @@ use esp_idf_hal::{
     i2c::{I2cConfig, I2cDriver},
     prelude::*,
 };
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-use esp_idf_svc::mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration};
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+};
 use log::{error, info};
+use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 use rgb_led::{RGB8, WS2812RMT};
 use shtcx::{self, shtc3, PowerMode};
 use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
 use wifi::wifi;
 // If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_sys as _;
-
-// imported message topics
-use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
 
 const UUID: &'static str = get_uuid::uuid();
 

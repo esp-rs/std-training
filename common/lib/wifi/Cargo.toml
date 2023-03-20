@@ -5,16 +5,16 @@ edition = "2021"
 authors = ["Sergio Gasquez <sergio.gasquez@gmail.com>"]
 
 [dependencies]
-esp-idf-sys = { version = "=0.32.1" }
-esp-idf-svc = { version = "=0.45.0", features = ["experimental", "alloc"] }
-esp-idf-hal = "=0.40.1"
-embedded-svc = "=0.24.0"
-log = "=0.4.17"
 anyhow = "=1.0.69"
+embedded-svc = "=0.24.0"
+esp-idf-hal = "=0.40.1"
+esp-idf-svc = { version = "=0.45.0", features = ["experimental", "alloc"] }
+esp-idf-sys = "=0.32.1"
+log = "=0.4.17"
 
 [build-dependencies]
-embuild = "0.31.0"
 anyhow = "1"
+embuild = "0.31.0"
 
 [dev-dependencies]
 anyhow = "1"
