@@ -30,8 +30,6 @@ There is:
    * [`mqtt-messages`](./common/lib/mqtt-messages) - MQTT helper functions
    * [`rgb-led`](./common/lib/rgb-led) - Provides support for the RGB LED (WS2812)
    * [`wifi`](./common/lib/wifi) - Wifi helper functions
-* Some extra bits:
-   * [`mqtt-python-client`](./extra/mqtt-python-client) A Python MQTT client, for testing
 
 ## Development
 
