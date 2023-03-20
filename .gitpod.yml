@@ -3,10 +3,10 @@ image:
 tasks:
   - name: Setup environment variables for ESP-IDF
     command: |
-      source /home/gitpod/.espressif/frameworks/esp-idf-v4.4/export.sh > /dev/null 2>&1
+      source /home/gitpod/.espressif/frameworks/esp-idf/export.sh > /dev/null 2>&1
 vscode:
   extensions:
-    - matklad.rust-analyzer
+    - rust-lang.rust-analyzer
     - tamasfe.even-better-toml
     - anwar.resourcemonitor
     - yzhang.markdown-all-in-one
@@ -14,5 +14,5 @@ vscode:
     - actboy168.tasks
     - serayuzgur.crates
 ports:
-  - port: 9012
+  - port: 8000
     visibility: public
