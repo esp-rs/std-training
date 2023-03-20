@@ -14,5 +14,5 @@ vscode:
     - actboy168.tasks
     - serayuzgur.crates
 ports:
-  - port: 9012
+  - port: 8000
     visibility: public
