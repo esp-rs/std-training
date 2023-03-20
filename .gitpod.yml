@@ -6,7 +6,7 @@ tasks:
       source /home/gitpod/.espressif/frameworks/esp-idf/export.sh > /dev/null 2>&1
 vscode:
   extensions:
-    - matklad.rust-analyzer
+    - rust-lang.rust-analyzer
     - tamasfe.even-better-toml
     - anwar.resourcemonitor
     - yzhang.markdown-all-in-one
