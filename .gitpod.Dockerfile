@@ -13,10 +13,27 @@ USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
 ENV PATH=${PATH}:/home/${CONTAINER_USER}/.cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
-    --default-toolchain ${NIGHTLY_VERSION} -y \
-    && $HOME/.cargo/bin/rustup component add rust-src --toolchain ${NIGHTLY_VERSION} \
-    && $HOME/.cargo/bin/rustup target add riscv32imc-unknown-none-elf \
-    && $HOME/.cargo/bin/cargo install cargo-espflash espflash ldproxy
+    --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
+    --component rust-src
+
+RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
+    curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
+    unzip "${HOME}/.cargo/bin/cargo-espflash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/cargo-espflash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/cargo-espflash" && \
+    curl -L "https://github.com/esp-rs/espflash/releases/latest/download/espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/espflash.zip" && \
+    unzip "${HOME}/.cargo/bin/espflash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/espflash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/espflash" && \
+    curl -L "https://github.com/esp-rs/esp-web-flash-server/releases/latest/download/web-flash-${ARCH}.zip" -o "${HOME}/.cargo/bin/web-flash.zip" && \
+    unzip "${HOME}/.cargo/bin/web-flash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/web-flash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/web-flash" && \
+    curl -L "https://github.com/esp-rs/embuild/releases/latest/download/ldproxy-${ARCH}.zip" -o "${HOME}/.cargo/bin/ldproxy.zip" &&  \
+    unzip "${HOME}/.cargo/bin/ldproxy.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/ldproxy.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/ldproxy"
+
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
