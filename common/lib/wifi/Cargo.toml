@@ -9,7 +9,7 @@ anyhow = "=1.0.69"
 embedded-svc = "=0.24.0"
 esp-idf-hal = "=0.40.1"
 esp-idf-svc = { version = "=0.45.0", features = ["experimental", "alloc"] }
-esp-idf-sys = { version = "=0.32.1" }
+esp-idf-sys = "=0.32.1"
 log = "=0.4.17"
 
 [build-dependencies]
