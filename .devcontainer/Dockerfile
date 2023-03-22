@@ -12,6 +12,7 @@ ARG ESP_BOARD=esp32c3
 RUN apt-get update \
     && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
     clang unzip python3 python3-pip pkg-config \
+    libssl-dev \ 
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
@@ -20,6 +21,9 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
     --component rust-src
+
+RUN $HOME/.cargo/bin/cargo install cargo-generate
+RUN $HOME/.cargo/bin/rustup component add clippy
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
