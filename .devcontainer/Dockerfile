@@ -20,10 +20,9 @@ ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
-    --component rust-src
+    --component rust-src,clippy
 
 RUN $HOME/.cargo/bin/cargo install cargo-generate
-RUN $HOME/.cargo/bin/rustup component add clippy
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
