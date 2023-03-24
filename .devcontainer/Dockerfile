@@ -21,8 +21,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
     --component rust-src,clippy
 
-RUN $HOME/.cargo/bin/cargo install cargo-generate
-
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
     unzip "${HOME}/.cargo/bin/cargo-espflash.zip" -d "${HOME}/.cargo/bin/" && \
@@ -39,9 +37,13 @@ RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //'
     curl -L "https://github.com/esp-rs/embuild/releases/latest/download/ldproxy-${ARCH}.zip" -o "${HOME}/.cargo/bin/ldproxy.zip" &&  \
     unzip "${HOME}/.cargo/bin/ldproxy.zip" -d "${HOME}/.cargo/bin/" && \
     rm "${HOME}/.cargo/bin/ldproxy.zip" && \
-    chmod u+x "${HOME}/.cargo/bin/ldproxy"
-
-
+    chmod u+x "${HOME}/.cargo/bin/ldproxy" && \
+    GENERATE_VERSION=$(git ls-remote --refs --sort="version:refname" --tags "https://github.com/cargo-generate/cargo-generate" | cut -d/ -f3- | tail -n1) &&  \
+    GENERATE_URL="https://github.com/cargo-generate/cargo-generate/releases/latest/download/cargo-generate-${GENERATE_VERSION}-${ARCH}.tar.gz" &&  \
+    curl -L "${GENERATE_URL}" -o "${HOME}/.cargo/bin/cargo-generate.tar.gz" &&  \
+    tar xf "${HOME}/.cargo/bin/cargo-generate.tar.gz" -C "${HOME}/.cargo/bin/" &&  \
+    rm "${HOME}/.cargo/bin/cargo-generate.tar.gz" && \
+    chmod u+x "${HOME}/.cargo/bin/cargo-generate"
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
