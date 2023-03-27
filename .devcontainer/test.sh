@@ -10,7 +10,7 @@ cd /home/esp/workspace/$1
 
 if [ -f cfg.toml.example ]; then
     # Rename file to cfg.toml
-    mv cfg.toml.example cfg.toml
+    cp cfg.toml.example cfg.toml
     # Replace defaults
     sed -i 's/wifi_ssid = "FBI Surveillance Van"/wifi_ssid = "ssid"/g' cfg.toml
     sed -i 's/wifi_psk = "hunter2"/wifi_psk = "pass"/g' cfg.toml
