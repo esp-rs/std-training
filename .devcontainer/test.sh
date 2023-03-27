@@ -2,11 +2,11 @@
 
 set -ef
 
-WORK_DIR=/workspace/$1
+WORK_DIR=/home/esp/workspace/$1
 
 echo "Compiling $1"
 
-cd /workspace/$1
+cd /home/esp/workspace/$1
 
 if [ -f cfg.toml.example ]; then
     # Rename file to cfg.toml
