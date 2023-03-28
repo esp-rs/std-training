@@ -28,7 +28,7 @@
     "mutantdino.resourcemonitor",
     "yzhang.markdown-all-in-one"
   ],
-  "remoteUser": "root",
+  "remoteUser": "esp",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace"
 }
