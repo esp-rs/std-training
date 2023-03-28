@@ -42,6 +42,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
+      - name: Update ownership
+        run: |
+          sudo chown 1000:1000 -R ${{ github.workspace }}
+
       - name: Build Docker image
         if: github.event_name != 'schedule'
         run: docker image build --tag espressif/rust-std-training --file .devcontainer/Dockerfile .
@@ -50,7 +54,13 @@ jobs:
         if: github.event_name == 'schedule'
         run: docker image pull espressif/rust-std-training
 
-      - name: Test code example in Docker image
-        run: |
-          docker run -u esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
-                 --rm espressif/rust-std-training:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: espressif/rust-std-training:latest
+          options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
+          run: /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
+      # - name: Test code example in Docker image
+      #   run: |
+      #     docker run -u esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
+      #            --rm espressif/rust-std-training:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
