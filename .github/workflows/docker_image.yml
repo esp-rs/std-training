@@ -37,13 +37,25 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
+      - name: Update ownership
+        run: |
+          sudo chown 1000:1000 -R ${{ github.workspace }}
+
       - name: Build Docker image
-        run: docker image build --tag espressif/rust-std-training --file .devcontainer/Dockerfile .
+        if: github.event_name != 'schedule'
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: espressif/rust-std-training
+          file: .devcontainer/Dockerfile
+          push: false
 
       - name: Test code example in Docker image
-        run: |
-          docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached \
-                 --rm espressif/rust-std-training:latest /bin/bash /workspace/.devcontainer/test.sh ${{ matrix.project.path }}
+        uses: addnab/docker-run-action@v3
+        with:
+          image: espressif/rust-std-training:latest
+          options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
+          run: /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
 
   publish-container:
     name: Update container image on DockerHub

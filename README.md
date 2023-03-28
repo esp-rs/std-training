@@ -6,8 +6,6 @@ This repository contains Training Material for learning to use Embedded Rust wit
 
 We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
-
 ## Contents
 
 There is:
@@ -30,8 +28,6 @@ There is:
    * [`mqtt-messages`](./common/lib/mqtt-messages) - MQTT helper functions
    * [`rgb-led`](./common/lib/rgb-led) - Provides support for the RGB LED (WS2812)
    * [`wifi`](./common/lib/wifi) - Wifi helper functions
-* Some extra bits:
-   * [`mqtt-python-client`](./extra/mqtt-python-client) A Python MQTT client, for testing
 
 ## Development
 

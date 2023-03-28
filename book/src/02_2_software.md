@@ -70,14 +70,14 @@ brew install llvm
 
 ## Docker
 
-> ⚠️ Please **note**, the Docker container provides an alternative option to **compile** the Rust exercises in.
-> It is meant for users that have experience with virtualized environments.
-> Be aware that we cannot provide help for Docker specific issues during the training.
-<!-- TODO: mention esp-web-flash -->
-An alternative environment to **compile** the Rust exercises in is to use Docker. In this repository there is a `Dockerfile`
-with instructions to install the Rust toolchain & all required packages. This virtualized environment is designed
-to only compile the binaries for the Espressif target. Other commands, e.g., using `cargo-espflash`, still need to
-be executed on the host system.
+An alternative environment, is to use Docker. The repository contains a `Dockerfile`
+with instructions to install the Rust toolchain, and all required packages. **This virtualized environment is designed
+to compile the binaries for the Espressif target. Flashing binaries from containers is not possible**, hence there are two options:
+- Execute flashing commands, e.g., `cargo-espflash`, on the host system.
+- Use [`web-flash`](https://github.com/esp-rs/esp-web-flash-server) crate to flash the resulting binaries from the container. The container already includes `web-flash`. Here is how you would flash the build output of [`hardware-check` project](./02_4_hello_board.md):
+   ```console
+   web-flash --chip esp32c3 target/riscv32imc-esp-espidf/debug/hardware-check
+   ```
 
 ✅ Install [`Docker`](https://docs.docker.com/get-docker/) for your operating system.
 
@@ -104,7 +104,6 @@ It's recommended to keep two terminals open, one connected to the Docker contain
 * in the container: compile the project
 * on the host: use the `cargo-espflash` sub-command to flash the program onto the embedded hardware
 
-
 ## Additional Software
 
 ### VS Code
@@ -123,5 +122,20 @@ There are a few more useful extensions for advanced usage
 ### VS Code & Devcontainer
 
 One extension for VS Code that might be helpful to develop inside a Docker container is [`Remote Containers`](https://github.com/Microsoft/vscode-remote-release).
-It uses the same `Dockerfile` as the Docker setup, but builds the image and connects to it from within VS Code.
+It uses the same `Dockerfile` as the [Docker setup](#docker), but builds the image and connects to it from within VS Code.
 Once the extension is installed, VS Code recognizes the configuration in the `.devcontainer` folder. Use the `Remote Containers - Reopen in Container` command to connect VS Code to the container.
+
+## Gitpod
+
+[Gitpod](https://www.gitpod.io) can provide fully initialized, perfectly set-up developer environments for this training with no installation required
+on the host system, other than a [Gitpod-compatible browser](https://www.gitpod.io/docs/configure/user-settings/browser-settings).
+
+✅ Open a Gitpod Workspace:
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
+
+> It may take a few minutes to build the container and setup the environment.
+
+> Note that flashing from the Gitpod workspace is only available using [`web-flash`](https://github.com/esp-rs/esp-web-flash-server). The Gitpod workspace already includes `web-flash`. Here is how you would flash the build output of [`hardware-check` project](./02_4_hello_board.md):
+>   ```console
+>   web-flash --chip esp32c3 target/riscv32imc-esp-espidf/debug/hardware-check
+>   ```

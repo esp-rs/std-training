@@ -5,21 +5,27 @@ FROM debian:bullseye-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+ARG CONTAINER_USER=esp
+ARG CONTAINER_GROUP=esp
 ARG NIGHTLY_VERSION=nightly-2023-02-28
 ARG ESP_IDF_VERSION=v4.4.1
 ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
     && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
-    clang unzip python3 python3-pip pkg-config \
+    clang unzip python3 python3-pip pkg-config libssl-dev \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
-ENV PATH=${PATH}:$HOME/.cargo/bin
+RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
+USER ${CONTAINER_USER}
+WORKDIR /home/${CONTAINER_USER}
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
-    --component rust-src --target riscv32imc-unknown-none-elf
+    --component rust-src,clippy
+
+ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
@@ -30,12 +36,20 @@ RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //'
     unzip "${HOME}/.cargo/bin/espflash.zip" -d "${HOME}/.cargo/bin/" && \
     rm "${HOME}/.cargo/bin/espflash.zip" && \
     chmod u+x "${HOME}/.cargo/bin/espflash" && \
+    curl -L "https://github.com/esp-rs/esp-web-flash-server/releases/latest/download/web-flash-${ARCH}.zip" -o "${HOME}/.cargo/bin/web-flash.zip" && \
+    unzip "${HOME}/.cargo/bin/web-flash.zip" -d "${HOME}/.cargo/bin/" && \
+    rm "${HOME}/.cargo/bin/web-flash.zip" && \
+    chmod u+x "${HOME}/.cargo/bin/web-flash" && \
     curl -L "https://github.com/esp-rs/embuild/releases/latest/download/ldproxy-${ARCH}.zip" -o "${HOME}/.cargo/bin/ldproxy.zip" &&  \
     unzip "${HOME}/.cargo/bin/ldproxy.zip" -d "${HOME}/.cargo/bin/" && \
     rm "${HOME}/.cargo/bin/ldproxy.zip" && \
-    chmod u+x "${HOME}/.cargo/bin/ldproxy"
-
-
+    chmod u+x "${HOME}/.cargo/bin/ldproxy" && \
+    GENERATE_VERSION=$(git ls-remote --refs --sort="version:refname" --tags "https://github.com/cargo-generate/cargo-generate" | cut -d/ -f3- | tail -n1) &&  \
+    GENERATE_URL="https://github.com/cargo-generate/cargo-generate/releases/latest/download/cargo-generate-${GENERATE_VERSION}-${ARCH}.tar.gz" &&  \
+    curl -L "${GENERATE_URL}" -o "${HOME}/.cargo/bin/cargo-generate.tar.gz" &&  \
+    tar xf "${HOME}/.cargo/bin/cargo-generate.tar.gz" -C "${HOME}/.cargo/bin/" &&  \
+    rm "${HOME}/.cargo/bin/cargo-generate.tar.gz" && \
+    chmod u+x "${HOME}/.cargo/bin/cargo-generate"
 
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
@@ -48,6 +62,8 @@ RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && rm -rf .espressif/frameworks/esp-idf/examples \
     && rm -rf .espressif/frameworks/esp-idf/tools/esp_app_trace \
     && rm -rf .espressif/frameworks/esp-idf/tools/test_idf_size
+
 ENV IDF_TOOLS_PATH=${HOME}/.espressif
 RUN echo "source ${HOME}/.espressif/frameworks/esp-idf/export.sh > /dev/null 2>&1" >> ~/.bashrc
+
 CMD "/bin/bash"
