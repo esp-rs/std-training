@@ -31,4 +31,4 @@ shtcx = "=0.11.0"
 
 [build-dependencies]
 anyhow = "=1.0.69"
-embuild = "=0.31.0"
+embuild = "=0.31.1"
