@@ -39,7 +39,7 @@ Some [build dependencies](https://doc.rust-lang.org/cargo/reference/specifying-d
 
 ```toml
 [build-dependencies]
-embuild = "=0.31.0"
+embuild = "=0.31.1"
 anyhow = "=1.0.69"
 ```
 

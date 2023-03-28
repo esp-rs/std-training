@@ -28,4 +28,4 @@ rgb-led = { path = "../../common/lib/rgb-led" }
 
 [build-dependencies]
 anyhow = "=1.0.69"
-embuild = "=0.31.0"
+embuild = "=0.31.1"
