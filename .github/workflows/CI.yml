@@ -52,5 +52,5 @@ jobs:
 
       - name: Test code example in Docker image
         run: |
-          docker run --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
+          docker run -u esp --mount type=bind,source="$(pwd)",target=/home/esp/workspace,consistency=cached \
                  --rm espressif/rust-std-training:latest /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
