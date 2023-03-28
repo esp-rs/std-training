@@ -21,10 +21,10 @@ RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
 USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
 
-
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
     --component rust-src,clippy
+
 ENV PATH=${PATH}:$HOME/.cargo/bin
 
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
@@ -62,6 +62,8 @@ RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && rm -rf .espressif/frameworks/esp-idf/examples \
     && rm -rf .espressif/frameworks/esp-idf/tools/esp_app_trace \
     && rm -rf .espressif/frameworks/esp-idf/tools/test_idf_size
+
 ENV IDF_TOOLS_PATH=${HOME}/.espressif
 RUN echo "source ${HOME}/.espressif/frameworks/esp-idf/export.sh > /dev/null 2>&1" >> ~/.bashrc
+
 CMD "/bin/bash"
