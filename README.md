@@ -1,6 +1,6 @@
 # Embedded Rust Trainings for Espressif
 
-[![CI](https://github.com/esp-rs/espressif-trainings/actions/workflows/CI.yml/badge.svg)](https://github.com/esp-rs/espressif-trainings/actions/workflows/CI.yml)
+[![CI](https://github.com/esp-rs/espressif-trainings/actions/workflows/ci.yml/badge.svg)](https://github.com/esp-rs/espressif-trainings/actions/workflows/ci.yml)
 
 This repository contains Training Material for learning to use Embedded Rust with the Espressif ESP32-C3.
 
