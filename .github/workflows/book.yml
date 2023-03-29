@@ -1,6 +1,18 @@
 ---
 name: Book CI
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - "book/"
+      - "book/**"
+      - ".github/workflows/book.yml"
+      - "**book**"
+  pull_request:
+    paths:
+      - "book/"
+      - "book/**"
+      - ".github/workflows/book.yml"
+      - "**book**"
 
 env:
   MDBOOK_VERSION: "0.4.28"
