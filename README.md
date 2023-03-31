@@ -80,6 +80,10 @@ submitted for inclusion in the work by you, as defined in the Apache-2.0
 license, shall be licensed as above, without any additional terms or
 conditions.
 
+## Authors
+
+The content of this training was created by Ferrous Systems GmbH and Espressif Systems.
+
 ## Code of Conduct
 
 Contribution to this crate is organized under the terms of the [Rust Code of
