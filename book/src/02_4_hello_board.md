@@ -51,7 +51,7 @@ I (4427) wifi::wifi: Wifi connected!
 
 >🔎 If `cargo run` has been successful, you can exit with `ctrl+C`.
 
-> 🔎 `cargo run` is [configured to use `espflash`](https://github.com/esp-rs/espressif-trainings/blob/main/intro/hardware-check/.cargo/config.toml#L6) as [custom runner](https://doc.rust-lang.org/cargo/reference/config.html#target). The same output can be achieved via:
+> 🔎 `cargo run` is [configured to use `espflash`](https://github.com/esp-rs/std-training/blob/main/intro/hardware-check/.cargo/config.toml#L6) as [custom runner](https://doc.rust-lang.org/cargo/reference/config.html#target). The same output can be achieved via:
 > - Using `cargo-espflash`: `cargo espflash flash --release --monitor`
 > - Building your project and flashing it with `espflash`: `cargo build --release && espflash target/riscv32imc-esp-espidf/release/hardware-check`
 > This modification is applied to all the projects in the training for convenience.

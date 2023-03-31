@@ -131,7 +131,7 @@ Once the extension is installed, VS Code recognizes the configuration in the `.d
 on the host system, other than a [Gitpod-compatible browser](https://www.gitpod.io/docs/configure/user-settings/browser-settings).
 
 ✅ Open a Gitpod Workspace:
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/std-training)
 
 > It may take a few minutes to build the container and setup the environment.
 
