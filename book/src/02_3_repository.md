@@ -13,7 +13,7 @@ cd espressif-trainings
 
 ```console
 git clone https://github.com/esp-rs/espressif-trainings.git
-subst r:\ espressif-trainings
+subst r: espressif-trainings
 cd r:\
 ```
 
