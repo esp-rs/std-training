@@ -33,8 +33,7 @@ fn main() -> Result<()> {
     println!("Sensor init");
     let device_id = sensor.read_device_id_register()?;
 
-    assert_eq!(device_id, 96_u8);
-    println!("Hello, world, I am sensor {}", device_id);
+    println!("Hello, world, I am sensor {:#02x}", device_id);
 
     loop {
         FreeRtos.delay_ms(500u32);

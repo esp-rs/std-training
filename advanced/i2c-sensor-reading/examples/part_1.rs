@@ -32,7 +32,7 @@ fn main() -> Result<()> {
     let device_id = sht.device_identifier().unwrap();
 
     // 4. Read and print the sensor's device ID.
-    println!("Device ID SHTC3: {}", device_id);
+    println!("Device ID SHTC3: {:#02x}", device_id);
 
     loop {
         // 5. This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
@@ -41,10 +41,7 @@ fn main() -> Result<()> {
         let measurement = sht.get_measurement_result().unwrap();
 
         println!(
-            "TEMP: {} °C\n
-            HUM: {:?} %\n
-            \n
-            ",
+            "TEMP: {:.2} °C | HUM: {:.2} %",
             measurement.temperature.as_degrees_celsius(),
             measurement.humidity.as_percent(),
         );
