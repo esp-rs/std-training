@@ -73,7 +73,9 @@ brew install llvm
 An alternative environment, is to use Docker. The repository contains a `Dockerfile`
 with instructions to install the Rust toolchain, and all required packages. **This virtualized environment is designed
 to compile the binaries for the Espressif target. Flashing binaries from containers is not possible**, hence there are two options:
-- Execute flashing commands, e.g., `cargo-espflash`, on the host system.
+- Execute flashing commands, e.g., `cargo-espflash`, on the host system. If proceeding with this option, it's recommended to keep two terminals open:
+    - In the container: compile the project
+    - On the host: use the `cargo-espflash` sub-command to flash the program onto the embedded hardware
 - Use [`web-flash`](https://github.com/esp-rs/esp-web-flash-server) crate to flash the resulting binaries from the container. The container already includes `web-flash`. Here is how you would flash the build output of [`hardware-check` project](./02_4_hello_board.md):
    ```console
    web-flash --chip esp32c3 target/riscv32imc-esp-espidf/debug/hardware-check
@@ -81,28 +83,23 @@ to compile the binaries for the Espressif target. Flashing binaries from contain
 
 ✅ Install [`Docker`](https://docs.docker.com/get-docker/) for your operating system.
 
-To build the Docker image, run the following command from the root folder:
-
+✅ Get the docker image: There are 2 ways of getting the Docker image:
+- Build the Docker image from the `Dockerfile`:
+    ```console
+    docker image build --tag rust-std-training --file .devcontainer/Dockerfile .
+    ```
+    Building the image takes a while depending on the OS & hardware (20-30 minutes).
+- Donwload it from [Dockerhub](https://hub.docker.com/r/espressif/rust-std-training):
+    ```console
+    docker pull espressif/rust-std-training
+    ```
+✅ Start the new Docker container:
 ```console
-docker image build --tag esp --file .devcontainer/Dockerfile .
-```
-
-Building the image takes a while depending on the OS & hardware (20-30 minutes).
-
-To start the new Docker container run:
-
-```console
-docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it esp /bin/bash
+docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it rust-std-training /bin/bash
 ```
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
 named `/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
-
-Using this Docker setup requires certain commands to run inside the container, while others have to be executed on the host system.
-It's recommended to keep two terminals open, one connected to the Docker container, one on the host system.
-
-* in the container: compile the project
-* on the host: use the `cargo-espflash` sub-command to flash the program onto the embedded hardware
 
 ## Additional Software
 
