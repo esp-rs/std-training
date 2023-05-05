@@ -62,13 +62,12 @@ fn main() -> Result<()> {
 
         // 11. Print all values
         println!(
-            "TEMP: {:.2} °C | HUM: {:.2} %",
+            "TEMP: {:.2} °C | HUM: {:.2} % | GYRO: X= {:.2}  Y= {:.2}  Z= {:.2}",
             measurement.temperature.as_degrees_celsius(),
             measurement.humidity.as_percent(),
-        );
-        println!(
-            "GYRO: X: {:.2}  Y: {:.2}  Z: {:.2}",
-            gyro_data.x, gyro_data.y, gyro_data.z,
+            gyro_data.x,
+            gyro_data.y,
+            gyro_data.z,
         );
 
         FreeRtos.delay_ms(500u32);
