@@ -5,7 +5,7 @@ ENV LANG=C.UTF-8
 ARG CONTAINER_USER=gitpod
 ARG CONTAINER_GROUP=gitpod
 ARG NIGHTLY_VERSION=nightly-2023-02-28
-ARG ESP_IDF_VERSION=v4.4.1
+ARG ESP_IDF_VERSION=v4.4.4
 ARG ESP_BOARD=esp32c3
 RUN sudo install-packages git curl gcc clang ninja-build libudev-dev \
     python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5 libpython2.7
