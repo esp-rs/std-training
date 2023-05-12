@@ -121,18 +121,3 @@ There are a few more useful extensions for advanced usage
 One extension for VS Code that might be helpful to develop inside a Docker container is [`Remote Containers`](https://github.com/Microsoft/vscode-remote-release).
 It uses the same `Dockerfile` as the [Docker setup](#docker), but builds the image and connects to it from within VS Code.
 Once the extension is installed, VS Code recognizes the configuration in the `.devcontainer` folder. Use the `Remote Containers - Reopen in Container` command to connect VS Code to the container.
-
-## Gitpod
-
-[Gitpod](https://www.gitpod.io) can provide fully initialized, perfectly set-up developer environments for this training with no installation required
-on the host system, other than a [Gitpod-compatible browser](https://www.gitpod.io/docs/configure/user-settings/browser-settings).
-
-✅ Open a Gitpod Workspace:
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/esp-rs/espressif-trainings)
-
-> It may take a few minutes to build the container and setup the environment.
-
-> Note that flashing from the Gitpod workspace is only available using [`web-flash`](https://github.com/esp-rs/esp-web-flash-server). The Gitpod workspace already includes `web-flash`. Here is how you would flash the build output of [`hardware-check` project](./02_4_hello_board.md):
->   ```console
->   web-flash --chip esp32c3 target/riscv32imc-esp-espidf/debug/hardware-check
->   ```
