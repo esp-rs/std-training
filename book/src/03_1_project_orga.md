@@ -39,8 +39,8 @@ Some [build dependencies](https://doc.rust-lang.org/cargo/reference/specifying-d
 
 ```toml
 [build-dependencies]
-embuild = "=0.31.1"
-anyhow = "=1.0.69"
+embuild = "=0.31.2"
+anyhow = "=1.0.71"
 ```
 
 ### Additional configuration files

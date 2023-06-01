@@ -1,15 +1,10 @@
 use anyhow::{bail, Result};
 use embedded_svc::wifi::{
-    AccessPointConfiguration, AuthMethod, ClientConfiguration, Configuration, Wifi,
+    AccessPointConfiguration, AuthMethod, ClientConfiguration, Configuration,
 };
 use esp_idf_hal::peripheral;
-use esp_idf_svc::{
-    eventloop::EspSystemEventLoop,
-    netif::{EspNetif, EspNetifWait},
-    wifi::{EspWifi, WifiWait},
-};
+use esp_idf_svc::{eventloop::EspSystemEventLoop, wifi::BlockingWifi, wifi::EspWifi};
 use log::info;
-use std::{net::Ipv4Addr, time::Duration};
 
 pub fn wifi(
     ssid: &str,
@@ -25,9 +20,17 @@ pub fn wifi(
         auth_method = AuthMethod::None;
         info!("Wifi password is empty");
     }
-    let mut wifi = Box::new(EspWifi::new(modem, sysloop.clone(), None)?);
+    let mut esp_wifi = EspWifi::new(modem, sysloop.clone(), None)?;
 
-    info!("Wifi created, about to scan");
+    let mut wifi = BlockingWifi::wrap(&mut esp_wifi, sysloop)?;
+
+    wifi.set_configuration(&Configuration::Client(ClientConfiguration::default()))?;
+
+    info!("Starting wifi...");
+
+    wifi.start()?;
+
+    info!("Scanning...");
 
     let ap_infos = wifi.scan()?;
 
@@ -62,33 +65,17 @@ pub fn wifi(
         },
     ))?;
 
-    wifi.start()?;
-
-    info!("Starting wifi...");
-
-    if !WifiWait::new(&sysloop)?
-        .wait_with_timeout(Duration::from_secs(20), || wifi.is_started().unwrap())
-    {
-        bail!("Wifi did not start");
-    }
-
     info!("Connecting wifi...");
 
     wifi.connect()?;
 
-    if !EspNetifWait::new::<EspNetif>(wifi.sta_netif(), &sysloop)?.wait_with_timeout(
-        Duration::from_secs(20),
-        || {
-            wifi.is_connected().unwrap()
-                && wifi.sta_netif().get_ip_info().unwrap().ip != Ipv4Addr::new(0, 0, 0, 0)
-        },
-    ) {
-        bail!("Wifi did not connect or did not receive a DHCP lease");
-    }
+    info!("Waiting for DHCP lease...");
 
-    let ip_info = wifi.sta_netif().get_ip_info()?;
+    wifi.wait_netif_up()?;
+
+    let ip_info = wifi.wifi().sta_netif().get_ip_info()?;
 
     info!("Wifi DHCP info: {:?}", ip_info);
 
-    Ok(wifi)
+    Ok(Box::new(esp_wifi))
 }
