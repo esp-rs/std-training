@@ -13,7 +13,7 @@ cd std-training
 
 ```console
 git clone https://github.com/esp-rs/std-training.git
-subst r:\ std-training
+subst r: std-trainings
 cd r:\
 ```
 

@@ -41,14 +41,14 @@ fn main() -> Result<()> {
 
     // 6. Read and print the device ID.
     let device_id = sht.device_identifier().unwrap();
-    println!("Device ID SHTC3: {}", device_id);
+    println!("Device ID SHTC3: {:#02x}", device_id);
 
     // 7. Create an instance of ICM42670p sensor. Pass the second proxy and the sensor's address.
     let mut imu = Icm42670::new(proxy_2, Address::Primary).unwrap();
 
     // 8. Read the device's ID register and print the value.
     let device_id = imu.device_id().unwrap();
-    println!("Device ID ICM42670p: {}", device_id);
+    println!("Device ID ICM42670p: {:#02x}", device_id);
 
     // 9. Start the ICM42670p in low noise mode.
     imu.set_power_mode(imuPowerMode::GyroLowNoise).unwrap();
@@ -62,16 +62,12 @@ fn main() -> Result<()> {
 
         // 11. Print all values
         println!(
-            " GYRO: X: {:.2}  Y: {:.2}  Z: {:.2}\n
-            TEMP: {} °C\n
-            HUM: {:?} %\n
-            \n
-            ",
+            "TEMP: {:.2} °C | HUM: {:.2} % | GYRO: X= {:.2}  Y= {:.2}  Z= {:.2}",
+            measurement.temperature.as_degrees_celsius(),
+            measurement.humidity.as_percent(),
             gyro_data.x,
             gyro_data.y,
             gyro_data.z,
-            measurement.temperature.as_degrees_celsius(),
-            measurement.humidity.as_percent(),
         );
 
         FreeRtos.delay_ms(500u32);

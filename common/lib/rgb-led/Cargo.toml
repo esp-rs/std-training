@@ -13,7 +13,7 @@ rgb = "=0.8.36"
 
 [build-dependencies]
 anyhow = "=1.0.69"
-embuild = "0.31.0"
+embuild = "=0.31.1"
 
 [dev-dependencies]
 anyhow = "=1.0.69"

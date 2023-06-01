@@ -1,33 +1,40 @@
 {
   "name": "espressif-training",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "NIGHTLY_VERSION": "nightly-2023-02-28"
+  // Comment the image and use the build property to build the image from the
+  // Dockerfile instead of downloading it from https://hub.docker.com/r/espressif/rust-std-training
+  "image": "docker.io/espressif/rust-std-training",
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   "args": {
+  //     "NIGHTLY_VERSION": "nightly-2023-02-28"
+  //   }
+  // },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "modifications",
+        "editor.formatOnType": true,
+        "lldb.executable": "/usr/bin/lldb",
+        "files.watcherExclude": {
+          "**/target/**": true
+        },
+        "rust-analyzer.checkOnSave.command": "clippy",
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        }
+      },
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb",
+        "serayuzgur.crates",
+        "mutantdino.resourcemonitor",
+        "yzhang.markdown-all-in-one"
+      ]
     }
   },
-  "settings": {
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modifications",
-    "editor.formatOnType": true,
-    "lldb.executable": "/usr/bin/lldb",
-    "files.watcherExclude": {
-      "**/target/**": true
-    },
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "[rust]": {
-      "editor.defaultFormatter": "rust-lang.rust-analyzer"
-    }
-  },
-  "extensions": [
-    "rust-lang.rust-analyzer",
-    "tamasfe.even-better-toml",
-    "vadimcn.vscode-lldb",
-    "serayuzgur.crates",
-    "mutantdino.resourcemonitor",
-    "yzhang.markdown-all-in-one"
-  ],
   "remoteUser": "esp",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace"
