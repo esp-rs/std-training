@@ -1,19 +1,19 @@
 # Workshop repository
 
-The entire material can be found at <https://github.com/esp-rs/espressif-trainings>.
+The entire material can be found at <https://github.com/esp-rs/std-training>.
 
 ✅ Clone and change into the workshop repository:
 
 ```console
-git clone "https://github.com/esp-rs/espressif-trainings.git"
-cd espressif-trainings
+git clone "https://github.com/esp-rs/std-training.git"
+cd std-training
 ```
 
 ❗ Windows users may have problems with long path names. Follow these steps to substitute the path:
 
 ```console
-git clone https://github.com/esp-rs/espressif-trainings.git
-subst r: espressif-trainings
+git clone https://github.com/esp-rs/std-training.git
+subst r: std-trainings
 cd r:\
 ```
 

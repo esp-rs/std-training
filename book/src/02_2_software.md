@@ -121,3 +121,4 @@ There are a few more useful extensions for advanced usage
 One extension for VS Code that might be helpful to develop inside a Docker container is [`Remote Containers`](https://github.com/Microsoft/vscode-remote-release).
 It uses the same `Dockerfile` as the [Docker setup](#docker), but builds the image and connects to it from within VS Code.
 Once the extension is installed, VS Code recognizes the configuration in the `.devcontainer` folder. Use the `Remote Containers - Reopen in Container` command to connect VS Code to the container.
+

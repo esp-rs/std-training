@@ -2,7 +2,7 @@
 
 This folder contains the intro-level examples for Rust on the ESP32-C3.
 
-You probably want to look at [the book](http://espressif-trainings.ferrous-systems.com) for the teaching material to go with them.
+You probably want to look at [the book](https://github.com/esp-rs/std-training/) for the teaching material to go with them.
 
 ## List of examples
 

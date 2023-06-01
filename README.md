@@ -1,16 +1,16 @@
 # Embedded Rust Trainings for Espressif
 
-[![CI](https://github.com/esp-rs/espressif-trainings/actions/workflows/ci.yml/badge.svg)](https://github.com/esp-rs/espressif-trainings/actions/workflows/ci.yml)
+[![CI](https://github.com/esp-rs/std-training/actions/workflows/ci.yml/badge.svg)](https://github.com/esp-rs/std-training/actions/workflows/ci.yml)
 
 This repository contains Training Material for learning to use Embedded Rust with the Espressif ESP32-C3.
 
-We suggest you start by [reading the book](https://esp-rs.github.io/espressif-trainings).
+We suggest you start by [reading the book](https://esp-rs.github.io/std-training).
 
 ## Contents
 
 There is:
 
-* A book you can work through - ([Source](./book)) ([Published](https://esp-rs.github.io/espressif-trainings))
+* A book you can work through - ([Source](./book)) ([Published](https://esp-rs.github.io/std-training))
 * Some introductory level examples:
    * A basic hardware-check ([Source](./intro/hardware-check))
    * An HTTP Client ([Source](./intro/http-client))
@@ -41,9 +41,9 @@ running:
 
 ```console
 ~ $ cargo install mdbook
-~ $ git clone https://github.com/esp-rs/espressif-trainings.git
-~ $ cd espressif-trainings/book
-~/espressif-trainings/book $ mdbook serve
+~ $ git clone https://github.com/esp-rs/std-training.git
+~ $ cd std-training/book
+~/std-training/book $ mdbook serve
 ```
 
 A local web-server will be started on <http://127.0.0.1:3000> where you can
@@ -57,7 +57,7 @@ changes to our `main` branch.
 
 This work is continually updated and as such there are no 'releases'. Every
 commit to `main` gets published to
-<https://esp-rs.github.io/espressif-trainings> automatically.
+<https://esp-rs.github.io/std-training> automatically.
 
 ## Licence
 
@@ -79,6 +79,10 @@ Unless you explicitly state otherwise, any contribution intentionally
 submitted for inclusion in the work by you, as defined in the Apache-2.0
 license, shall be licensed as above, without any additional terms or
 conditions.
+
+## Authors
+
+The content of this training was created by Ferrous Systems GmbH and Espressif Systems.
 
 ## Code of Conduct
 
