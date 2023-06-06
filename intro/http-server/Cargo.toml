@@ -20,16 +20,16 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-anyhow = "=1.0.69"
-embedded-svc = "=0.24.0"
-esp-idf-hal = "=0.40.1"
-esp-idf-svc = { version = "0.45.0", features = ["experimental", "alloc"] }
-esp-idf-sys = { version = "=0.32.1", features = ["binstart"] }
+anyhow = "=1.0.71"
+embedded-svc = "=0.25.0"
+esp-idf-hal = "=0.41.1"
+esp-idf-svc = { version = "0.46.0", features = ["experimental", "alloc"] }
+esp-idf-sys = { version = "=0.33.0", features = ["binstart"] }
 shtcx = "=0.11.0"
 toml-cfg = "=0.1.3"
 wifi = { path = "../../common/lib/wifi" }
 
 [build-dependencies]
-anyhow = "=1.0.69"
-embuild = "=0.31.1"
+anyhow = "=1.0.71"
+embuild = "=0.31.2"
 toml-cfg = "=0.1.3"

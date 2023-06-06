@@ -21,11 +21,11 @@ default = ["native"]
 native = ["esp-idf-sys/native"]
 
 [dependencies]
-anyhow = "=1.0.69"
-esp-idf-hal = "=0.40.1"
-esp-idf-sys = { version = "=0.32.1", features = ["binstart"] }
+anyhow = "=1.0.71"
+esp-idf-hal = "=0.41.1"
+esp-idf-sys = { version = "=0.33.0", features = ["binstart"] }
 rgb-led = { path = "../../common/lib/rgb-led" }
 
 [build-dependencies]
-anyhow = "=1.0.69"
-embuild = "=0.31.1"
+anyhow = "=1.0.71"
+embuild = "=0.31.2"
