@@ -11,7 +11,7 @@ cargo run --example https_client
 Create a custom client configuration to use an `esp_idf_svc::http::client::EspHttpConnection` which enables the use of these certificates and uses default values for everything else:
 
 ```rust
-let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
+let connection = EspHttpConnection::new(&Configuration {
         use_global_ca_store: true,
         crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
         ..Default::default()
