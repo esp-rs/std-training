@@ -10,6 +10,12 @@ The advanced course takes it from there to dive deeper into topics like interrup
 
 You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
 
+## Translations
+
+This book has been translated by generous volunteers. If you would like your translation listed here, please open a PR to add it.
+
+- [简体中文](https://narukara.github.io/std-training-zh-cn/) ([repository](https://github.com/Narukara/std-training-zh-cn))
+
 ## The board
 
 A [Rust ESP Board](https://github.com/esp-rs/esp-rust-board) is mandatory[^note] for working with this book - emulators like QEMU are not supported.
