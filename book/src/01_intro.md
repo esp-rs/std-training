@@ -10,7 +10,7 @@ The advanced course takes it from there to dive deeper into topics like interrup
 
 You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
 
-## Translations
+## Translations
 
 This book has been translated by generous volunteers. If you would like your translation listed here, please open a PR to add it.
 
