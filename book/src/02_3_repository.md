@@ -23,7 +23,6 @@ cd r:\
 - `book/` - markdown sources of this book
 - `common/` - code shared between both courses
 - `common/lib/` - support crates
-- `extra/` - tools not required for this training which might still be useful
 - `intro/` - code examples and exercises for the introduction course
 
 
