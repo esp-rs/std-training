@@ -1,4 +1,4 @@
-# Hello, board!
+# Hello, Board!
 
 You're now ready to do a consistency check!
 
@@ -12,7 +12,7 @@ To test Wi-Fi connectivity, you will have to provide your network name (SSID) an
 
 ✅ Copy `cfg.toml.example` to `cfg.toml` (in the same directory) and edit it to reflect your actual credentials:
 
-> ⚠️The [5GHz band is not supported in ESP32-C3](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a WiFi with active 2.4GHz band.
+> ⚠️The [5 GHz band isn't supported in ESP32-C3](https://www.espressif.com/en/news/ESP32-C3_Wi-Fi_Certified#:~:text=ESP32%2DC3%20is%20a%20safe,wide%20range%20of%20IoT%20applications), you need to ensure you are using a Wi-Fi with active 2.4 GHz band.
 
 ```console
 $ cp cfg.toml.example cfg.toml
@@ -56,14 +56,14 @@ I (4427) wifi::wifi: Wifi connected!
 > - Building your project and flashing it with `espflash`: `cargo build --release && espflash target/riscv32imc-esp-espidf/release/hardware-check`
 > This modification is applied to all the projects in the training for convenience.
 
-The board LED should turn yellow on startup, and then, depending on whether a Wifi connection could be established, either turn red (error) or blink, alternating green and blue, in case of succeeding. In case of a Wifi error, a diagnostic message will also show up at the bottom, e.g.:
+The board LED should turn yellow on startup, and then, depending on whether a Wi-Fi connection could be established, either turn red (error) or blink, alternating green and blue, in case of succeeding. In case of a Wi-Fi error, a diagnostic message will also show up at the bottom, e.g.:
 
 ```console
 Error: could not connect to Wi-Fi network: ESP_ERR_TIMEOUT
 ```
 > ⚠️ You will get an `ESP_ERR_TIMEOUT` error also in case your network name or password are incorrect, so double-check those.
 
-## Extra information about building, flashing and monitoring
+## Extra Information About Building, Flashing and Monitoring
 
 If you want to try to build without flashing, you can run:
 
@@ -79,7 +79,7 @@ espflash monitor
 
 # Troubleshooting
 
-## Build errors
+## Build Errors
 
 ```console
 error[E0463]: can't find crate for `core`
@@ -126,7 +126,7 @@ Error: espflash::connection_failed
 help: Ensure that the device is connected and the reset and boot pins are not being held down
 ```
 
-The board is not accessible with USB-C cable. A typical connection error looks like this:
+The board isn't accessible with USB-C cable. A typical connection error looks like this:
 
 
 Workarounds:

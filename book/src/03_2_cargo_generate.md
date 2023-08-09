@@ -1,4 +1,4 @@
-# Generating new projects
+# Generating New Projects
 
 We're now going to use [`cargo-generate`](https://github.com/cargo-generate/cargo-generate) (a generic project wizard) to set up our first application.
 
@@ -20,7 +20,7 @@ cargo generate https://github.com/esp-rs/esp-idf-template cargo
 [You'll be prompted for details regarding your new project](https://github.com/esp-rs/esp-idf-template#generate-the-project). When given a choice between several options, navigate using cursor up/down and select with the Return key.
 
 The first message you see will be:
-`⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you do not have a favorite config file, but you don't need one and you can ignore this warning.
+`⚠️Unable to load config file: /home/$USER/.cargo/cargo-generate.toml`. You see this error because you don't have a favorite config file, but you don't need one and you can ignore this warning.
 
 🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) that will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`.
 
@@ -41,7 +41,7 @@ The first message you see will be:
 `Cargo.toml` contains dependencies [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
 
 
-Optional, but recommended: To save disk space and download time, set the [toolchain directory to global](https://github.com/esp-rs/esp-idf-sys#esp_idf_tools_install_dir-esp_idf_tools_install_dir) - otherwise each new project/workspace will have its own instance of the toolchain installed on your computer:
+Optional, but recommended: To save disk space and download time, set the [toolchain directory to global](https://github.com/esp-rs/esp-idf-sys#esp_idf_tools_install_dir-esp_idf_tools_install_dir). Otherwise, each new project/workspace will have its own instance of the toolchain installed on your computer:
 
 
 ✅ Open `hello-world/.cargo/config.toml` and add the following line to the bottom of the `[env]` section. Leave everything else unchanged.
@@ -75,7 +75,7 @@ I (268) cpu_start: Starting scheduler.
 Hello, world!
 ```
 
-## Extra tasks
+## Extra Tasks
 - If your main function exits, you have to reset the microcontroller to start it again. What happens when you put an infinite loop at the end instead? Test your theory by flashing a looping program.
 - Can you think of a way to prevent what you're now seeing? (click for hint:[^hint])
 

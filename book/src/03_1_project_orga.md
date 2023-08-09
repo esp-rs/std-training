@@ -1,11 +1,11 @@
-# Project organization
+# Project Organization
 
-## The esp-rs crates
+## The `esp-rs` Crates
 
 Unlike most other embedded platforms, Espressif supports the Rust standard library. Most notably, this means you'll have arbitrary-sized collections like `Vec` or `HashMap` at your disposal, as well as generic heap storage using `Box`. You're also free to spawn new threads, and use synchronization primitives like `Arc` and `Mutex` to safely share data between them.
 Still, memory is a scarce resource on embedded systems, and so you need to take care not to run out of it - threads in particular can become rather expensive.
 
-Services like WiFi, HTTP client/server, MQTT, OTA updates, logging etc. are exposed via Espressif's open source IoT Development Framework, [ESP-IDF](https://github.com/espressif/esp-idf). It is mostly written in C and as such is exposed to Rust in the canonical split crate style:
+Services like Wi-Fi, HTTP client/server, MQTT, OTA updates, logging etc. are exposed via Espressif's open source IoT Development Framework, [ESP-IDF](https://github.com/espressif/esp-idf). It is mostly written in C and as such is exposed to Rust in the canonical split crate style:
 - a `sys` crate to provide the actual `unsafe` bindings ([esp-idf-sys](https://github.com/esp-rs/esp-idf-sys))
 - a higher level crate offering safe and comfortable Rust abstractions ([esp-idf-svc](https://github.com/esp-rs/esp-idf-svc/))
 
@@ -15,13 +15,13 @@ The final piece of the puzzle is low-level hardware access, which is again provi
 
 More information is available in the [ecosystem chapter](https://esp-rs.github.io/book/overview/using-the-standard-library.html) of The Rust on ESP Book.
 
-### Build toolchain
+### Build Toolchain
 
-🔎 As part of a project build, `esp-idf-sys` will download [ESP-IDF](https://github.com/espressif/esp-idf), the C-based Espressif toolchain. The download destination is configurable; to save disk space and download time, all examples/exercises in the workshop repository are set to use one single `global` toolchain, installed in `~/.espressif` (`%USERPROFILE%\.espressif` in Windows). See the `ESP_IDF_TOOLS_INSTALL_DIR` parameter in `esp-idf-sys`'s [README](https://github.com/esp-rs/esp-idf-sys#configuration) for other options.
+🔎 As part of a project build, `esp-idf-sys` will download [ESP-IDF](https://github.com/espressif/esp-idf), the C-based Espressif toolchain. The download destination is configurable. To save disk space and download time, all examples/exercises in the workshop repository are set to use one single `global` toolchain, installed in `~/.espressif` (`%USERPROFILE%\.espressif` in Windows). See the `ESP_IDF_TOOLS_INSTALL_DIR` parameter in `esp-idf-sys`'s [README](https://github.com/esp-rs/esp-idf-sys#configuration) for other options.
 
-## Package layout
+## Package Layout
 
-On top of the usual contents of a Rust project created with `cargo new`, a few additional files and parameters are required. The examples/exercises in this workshop are already fully configured, and for creating new projects it is recommended to use the [cargo-generate](./03_2_cargo_generate.md) wizard based approach.
+On top of the usual contents of a Rust project created with `cargo new`, a few additional files and parameters are required. The examples/exercises in this workshop are already fully configured, and for creating new projects it is recommended to use the [`cargo-generate`](./03_2_cargo_generate.md) wizard based approach.
 
 🔎 The rest of this page is optional knowledge that can come in handy should you wish to change some aspects of a project.
 
@@ -43,8 +43,8 @@ embuild = "=0.31.2"
 anyhow = "=1.0.71"
 ```
 
-### Additional configuration files
+### Additional Configuration Files
 
 - `build.rs` - [Cargo build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html). Here: sets environment variables required for building.
 - `.cargo/config.toml` - sets the target architecture, a custom runner to flash and monitor the device, and controls build details. This is the place to override `ESP_IDF_TOOLS_INSTALL_DIR` if you wish to do so.
-- `sdkconfig.defaults` - overrides ESP-IDF specific parameters such as stack size, log level...
+- `sdkconfig.defaults` - overrides ESP-IDF specific parameters such as stack size, log level, etc.

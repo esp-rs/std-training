@@ -1,4 +1,4 @@
-# Checking the hardware
+# Checking the Hardware
 
 Connect the Espressif Rust Board to your computer. Verify, a tiny red control LED lights up.
 

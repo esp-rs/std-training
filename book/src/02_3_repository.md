@@ -1,4 +1,4 @@
-# Workshop repository
+# Workshop Repository
 
 The entire material can be found at <https://github.com/esp-rs/std-training>.
 
@@ -17,7 +17,7 @@ subst r: std-trainings
 cd r:\
 ```
 
-## Repository contents
+## Repository Contents
 
 - `advanced/` - code examples and exercises for the advanced course
 - `book/` - markdown sources of this book
@@ -26,9 +26,9 @@ cd r:\
 - `intro/` - code examples and exercises for the introduction course
 
 
-## A word on configuration
+## A Word on Configuration
 
-We use [toml-cfg](https://github.com/jamesmunns/toml-cfg) throughout this workshop as a more convenient and secure alternative to putting credentials or other sensitive information directly in source code: the settings are stored in a file called `cfg.toml` in the respective package root instead
+We use [toml-cfg](https://github.com/jamesmunns/toml-cfg) throughout this workshop as a more convenient and secure alternative to putting credentials or other sensitive information directly in source code. The settings are stored in a file called `cfg.toml` in the respective package root instead.
 
 This configuration contains exactly one section header which has the same name as your package (`name = "your-package"` in `Cargo.toml`), and the concrete settings will differ between projects:
 
