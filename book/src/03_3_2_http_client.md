@@ -1,4 +1,4 @@
-# HTTP client
+# HTTP Client
 
 The goal of this exercise is to write a small HTTP client that connects to a website.
 
@@ -21,7 +21,7 @@ cargo doc --open
 ```console
 cargo run --example http_client
 ```
-## Making a connection
+## Making a Connection
 
 By default, only unencrypted HTTP is available, which rather limits our options of hosts to connect to. We're going to use `http://neverssl.com/`.
 
@@ -33,7 +33,7 @@ In ESP-IDF, HTTP client connections are managed by `http::client::EspHttpClient`
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `embedded_svc::http::client::Request`, which must be submitted to reflect the client's option to send some data alongside its request.
 
-The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait - that is, any type where a call to `.as_ref()` will produce a `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait. That is, any type where a call to `.as_ref()` will produce a `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
 
 ```rust
@@ -45,7 +45,7 @@ A successful response has [a status code in the 2xx range](https://en.wikipedia.
 
 ✅ Verify the connection was successful.
 
-✅ Return an Error if the status is not in the 2xx range.
+✅ Return an Error if the status isn't in the 2xx range.
 
 ```rust
 match status {

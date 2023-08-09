@@ -1,10 +1,10 @@
-# A simple HTTP server
+# A Simple HTTP Server
 
 We're now turning our board into a tiny web server that upon receiving a `GET` request serves data from the internal temperature sensor.
 
 ## Setup
 
-You can find a prepared project skeleton in `intro/http-server/`. It includes establishing a WiFi connection, but you must configure it to use your network's credentials in `cfg.toml`.
+You can find a prepared project skeleton in `intro/http-server/`. It includes establishing a Wi-Fi connection, but you must configure it to use your network's credentials in `cfg.toml`.
 
 `intro/http-server/examples/https-server.rs` contains a solution. You can run it with the following command:
 
@@ -12,7 +12,7 @@ You can find a prepared project skeleton in `intro/http-server/`. It includes es
 cargo run --example http_server
 ```
 
-## Serving requests
+## Serving Requests
 
 To connect to your board with your browser, you need to know the board's IP address.
 
@@ -25,7 +25,7 @@ I (3862) esp_netif_handlers: sta ip: 192.168.178.54, mask: ...
 Server awaiting connection
 ```
 
-The `sta ip` is the _"station"_, the WiFi term for an interface connected to an access point. This is the address you'll put in your browser (or other HTTP client like `curl`).
+The `sta ip` is the _"station"_, the Wi-Fi term for an interface connected to an access point. This is the address you'll put in your browser (or other HTTP client like `curl`).
 
 > 🔎 ESP-IDF tries to register the hostname `espressif` in your local network, so often `http://espressif/` instead of `http://<sta ip>/` will also work.
 >
@@ -57,7 +57,7 @@ server.fn_handler(path, Method::Get, |request| {
 
 ✅ Write a request handler for requests to the root path (`"/"`). The request handler sends a greeting message at `http://<sta ip>/`, using the provided `index_html()` function to generate the HTML String.
 
-## Dynamic data
+## Dynamic Data
 
 We can also report dynamic information to a client. The skeleton includes a configured `temp_sensor` that measures the board's internal temperature.
 
@@ -68,4 +68,4 @@ We can also report dynamic information to a client. The skeleton includes a conf
 ## Troubleshooting
 
 - `httpd_txrx: httpd_resp_send_err` can be solved by restarting, or `cargo clean` if nothing happens.
-- Make sure your computer and the Rust ESP Board are using the same Wifi network.
+- Make sure your computer and the Rust ESP Board are using the same Wi-Fi network.

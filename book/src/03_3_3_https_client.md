@@ -1,4 +1,4 @@
-# HTTPS client
+# HTTPS Client
 
 You will now make changes to your HTTP client files so that it also works for encrypted connections.
 
@@ -20,7 +20,7 @@ let connection = EspHttpConnection::new(&Configuration {
 
 ✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from a `https` resource, e.g. `https://espressif.com/`. the download will show as raw HTML in the terminal output.
 
-## Troubleshooting (repeated from previous section)
+## Troubleshooting (Repeated from Previous Section)
 
 - `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
 

@@ -2,9 +2,9 @@
 
 Follow the steps below for a default installation of the ESP32-C3 platform tooling.
 
-🔎 Should you desire a customized installation (e.g. building parts from source, or adding support for Xtensa targets), instructions for doing so can be found in the [Rust on ESP targets](https://esp-rs.github.io/book/installation/index.html) chapter of the *Rust on ESP* Book.
+🔎 Should you desire a customized installation (e.g. building parts from source, or adding support for `Xtensa` targets), instructions for doing so can be found in the [Rust on ESP targets](https://esp-rs.github.io/book/installation/index.html) chapter of the *Rust on ESP* Book.
 
-## Rust toolchain
+## Rust Toolchain
 
 ✅ If you haven't got Rust on your computer, obtain it via <https://rustup.rs/>
 
@@ -17,12 +17,12 @@ rustup toolchain install nightly-2023-02-28 --component rust-src
 ```
 
 🔎 Rust is capable of cross-compiling to any supported target (see `rustup target list`). By default, only the native architecture of your system is installed.
-To build for the Xtensa architecture (*not* part of this material), a fork of the Rust compiler is required as of January 2022.
+To build for the `Xtensa` architecture (*not* part of this material), a fork of the Rust compiler is required as of January 2022.
 
-## Espressif toolchain
+## Espressif Toolchain
 
 Several tools are required:
-- [`cargo-espflash`](https://github.com/esp-rs/espflash/tree/main/cargo-espflash) - upload firmware to the microcontroller and open serial monitor with cargo integration
+- [`cargo-espflash`](https://github.com/esp-rs/espflash/tree/main/cargo-espflash) - upload firmware to the microcontroller and open serial monitor with Cargo integration
 - [`espflash`](https://github.com/esp-rs/espflash/tree/main/espflash) - upload firmware to the microcontroller and open serial monitor
 - [`ldproxy`](https://github.com/esp-rs/embuild/tree/master/ldproxy) - Espressif build toolchain dependency
 
@@ -34,14 +34,14 @@ cargo install cargo-espflash espflash ldproxy
 
 ⚠️ The `espflash` and `cargo-espflash` commands listed in the book assume version is >= 2
 
-## Toolchain dependencies
+## Toolchain Dependencies
 
 ### Debian/Ubuntu
 
 ```console
 sudo apt install llvm-dev libclang-dev clang
 ```
-### macOS
+### `macOS`
 
 When using the Homebrew package manager, which we recommend:
 ```console
@@ -63,7 +63,7 @@ brew install llvm
 
     2. Restarting the terminal.
 
-    3. If this is not working, try `cargo clean`, remove the `~/.espressif` folder (`%USERPROFILE%\.espressif` in Windows) and rebuild your project.
+    3. If this isn't working, try `cargo clean`, remove the `~/.espressif` folder (`%USERPROFILE%\.espressif` in Windows) and rebuild your project.
 
     4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
 
@@ -72,7 +72,7 @@ brew install llvm
 
 An alternative environment, is to use Docker. The repository contains a `Dockerfile`
 with instructions to install the Rust toolchain, and all required packages. **This virtualized environment is designed
-to compile the binaries for the Espressif target. Flashing binaries from containers is not possible**, hence there are two options:
+to compile the binaries for the Espressif target. Flashing binaries from containers isn't possible**, hence there are two options:
 - Execute flashing commands, e.g., `cargo-espflash`, on the host system. If proceeding with this option, it's recommended to keep two terminals open:
     - In the container: compile the project
     - On the host: use the `cargo-espflash` sub-command to flash the program onto the embedded hardware
@@ -116,7 +116,7 @@ There are a few more useful extensions for advanced usage
 * [`lldb`](https://github.com/vadimcn/vscode-lldb) a native debugger extension based on LLDB
 * [`crates`](https://github.com/serayuzgur/crates) to help manage Rust dependencies
 
-### VS Code & Devcontainer
+### VS Code & Dev Containers
 
 One extension for VS Code that might be helpful to develop inside a Docker container is [`Remote Containers`](https://github.com/Microsoft/vscode-remote-release).
 It uses the same `Dockerfile` as the [Docker setup](#docker), but builds the image and connects to it from within VS Code.

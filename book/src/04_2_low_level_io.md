@@ -1,12 +1,12 @@
-# Lower level I/O: How to manipulate Registers
+# Lower Level I/O: How to Manipulate Registers
 
 There are [two ways to write firmware for the ESP32-C3](https://esp-rs.github.io/book/overview/index.html):
  - One is the bare-metal using only `[no_std]` Rust.
  - The other using `[std]` Rust and C-Bindings to ESP-IDF.
 
-> [`[no_std]` Rust](https://docs.rust-embedded.org/book/intro/no-std.html) refers to Rust not using the standard library, only the [core library](https://doc.rust-lang.org/core/), which is a subset of the [standard library](https://doc.rust-lang.org/std/) that does not depend on the existence of an operating system.
+> [`[no_std]` Rust](https://docs.rust-embedded.org/book/intro/no-std.html) refers to Rust not using the standard library, only the [core library](https://doc.rust-lang.org/core/), which is a subset of the [standard library](https://doc.rust-lang.org/std/) that doesn't depend on the existence of an operating system.
 
-## What do the ecosystems look like?
+## What do the Ecosystems Look Like?
 
 ### `[std]` Rust and the ESP-IDF
 
@@ -17,7 +17,7 @@ This way relies on using C bindings to ESP-IDF. We can use Rust's standard libra
 - A higher level crate offering safe and comfortable Rust abstractions ([esp-idf-svc](https://github.com/esp-rs/esp-idf-svc/))
 
 The final piece of the puzzle is low-level hardware access, which is again provided in a split fashion:
-- [esp-idf-hal](https://github.com/esp-rs/esp-idf-hal) implements the hardware-independent [embedded-hal](https://github.com/rust-embedded/embedded-hal) traits like analog/digital conversion, digital I/O pins, or SPI communication - as the name suggests, it also uses ESP-IDF as a foundation
+- [`esp-idf-hal`](https://github.com/esp-rs/esp-idf-hal) implements the hardware-independent [`embedded-hal`](https://github.com/rust-embedded/embedded-hal) traits like analog/digital conversion, digital I/O pins, or SPI communication - as the name suggests, it also uses ESP-IDF as a foundation
 
 More information is available in the [ecosystem chapter](https://esp-rs.github.io/book/overview/using-the-standard-library.html) of _The Rust on ESP Book_.
 
@@ -25,9 +25,9 @@ This is the way that currently allows the most possibilities on Espressif chips 
 
 We're going to look at how to write values into Registers in this ecosystem in the context of the Interrupts exercise.
 
-### Bare metal Rust with `[no_std]`
+### Bare Metal Rust with `[no_std]`
 
-As the name bare metal implies, we don't use an operating system. Because of this, we can't use language features that rely on one. The core library is a subset of the standard library that excludes features like heap allocated types and threads. Code that uses only the core library is labelled with `#[no_std]`. `#[no_std]` code can always run in a `std` environment, but the reverse is not true.
+As the name bare metal implies, we don't use an operating system. Because of this, we can't use language features that rely on one. The core library is a subset of the standard library that excludes features like heap allocated types and threads. Code that uses only the core library is labelled with `#[no_std]`. `#[no_std]` code can always run in a `std` environment, but the reverse isn't true.
 In Rust, the mapping from Registers to Code works like this:
 
 Registers and their fields on a device are described in [_System View Description_ (SVD) files](http://www.disca.upv.es/aperles/arm_cortex_m3/curset/CMSIS/Documentation/SVD/html/index.html). [`svd2rust`](https://docs.rs/svd2rust/latest/svd2rust/) is used to generate _Peripheral Access Crates_ (PACs) from these SVD files. The PACs provide a thin wrapper over the various memory-mapped registers defined for the particular model of microcontroller you are using.
