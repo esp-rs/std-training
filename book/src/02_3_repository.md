@@ -28,7 +28,7 @@ cd r:\
 
 ## A Word on Configuration
 
-We use [toml-cfg](https://github.com/jamesmunns/toml-cfg) throughout this workshop as a more convenient and secure alternative to putting credentials or other sensitive information directly in source code. The settings are stored in a file called `cfg.toml` in the respective package root instead.
+We use [`toml-cfg`](https://github.com/jamesmunns/toml-cfg) throughout this workshop as a more convenient and secure alternative to putting credentials or other sensitive information directly in source code. The settings are stored in a file called `cfg.toml` in the respective package root instead.
 
 This configuration contains exactly one section header which has the same name as your package (`name = "your-package"` in `Cargo.toml`), and the concrete settings will differ between projects:
 

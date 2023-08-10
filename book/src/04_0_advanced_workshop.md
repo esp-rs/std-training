@@ -4,7 +4,7 @@ In this course, we're going to dive deeper into topics that are embedded-only an
 
 This part consists of three exercises:
 
-In the first one you'll learn how to handle a button interrupt, in the second you'll read sensor values from sensors via the I²C bus. Once you have used the drivers we have prepared, you'll learn how to get started writing your own. This is a necessary skill as Rust drivers are usually not provided by manufacturers.
+In the first one, you'll learn how to handle a button interrupt, in the second you'll read sensor values from sensors via the I²C bus. Once you have used the drivers we have prepared, you'll learn how to get started writing your own. This is a necessary skill as Rust drivers are usually not provided by manufacturers.
 
 ## Preparations
 Please go through the [preparations](./02_0_preparations.md) chapter to prepare for this workshop.

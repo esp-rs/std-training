@@ -126,11 +126,11 @@ Error: espflash::connection_failed
 help: Ensure that the device is connected and the reset and boot pins are not being held down
 ```
 
-The board isn't accessible with USB-C cable. A typical connection error looks like this:
+The board isn't accessible with a USB-C cable. A typical connection error looks like this:
 
 
 Workarounds:
-1. press and hold boot button on the board, start flash command, release boot button after flashing process starts
-2. use a hub.
+1. Press and hold boot button on the board, start flash command, release boot button after flashing process starts
+2. Use a hub.
 
 [Source](https://georgik.rocks/unable-to-flash-esp32-with-these-usb-c-cables/).

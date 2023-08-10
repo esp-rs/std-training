@@ -80,7 +80,7 @@ Hello, world!
 - Can you think of a way to prevent what you're now seeing? (click for hint:[^hint])
 
 ## Troubleshooting
-- if `cargo run` is stuck on `Connecting...`, you might have another monitor process still running (e.g. from the initial `hardware-check` test). Try finding and terminating it. If this doesn't help, disconnect and reconnect the board's USB cable.
-- `⛔ Git Error: authentication required`: your git configuration is probably set to override `https` github URLs to `ssh`. Check your global `~/.git/config` for `insteadOf` sections and disable them.
+- If `cargo run` is stuck on `Connecting...`, you might have another monitor process still running (e.g. from the initial `hardware-check` test). Try finding and terminating it. If this doesn't help, disconnect and reconnect the board's USB cable.
+- `⛔ Git Error: authentication required`: your git configuration is probably set to override `https` GitHub URLs to `ssh`. Check your global `~/.git/config` for `insteadOf` sections and disable them.
 
 [^hint]: yield control back to the underlying operating system by `sleep`ing in a loop instead of busy waiting. (use `use std::thread::sleep`)

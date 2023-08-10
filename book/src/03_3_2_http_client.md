@@ -33,7 +33,7 @@ In ESP-IDF, HTTP client connections are managed by `http::client::EspHttpClient`
 
 Calling HTTP functions (e.g. `get(url)`) on this client returns an `embedded_svc::http::client::Request`, which must be submitted to reflect the client's option to send some data alongside its request.
 
-The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait. That is, any type where a call to `.as_ref()` will produce a `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
+The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.AsRef.html). This means that instead of being restricted to one specific type like just `String` or just `&str`, the function can accept anything that implements the `AsRef<str>` trait. That is any type where a call to `.as_ref()` will produce a `&str`. This works for `String` and `&str`, but also the `Cow<str>` enum type which contains either of the previous two.
 
 
 ```rust
@@ -73,7 +73,7 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ## Troubleshooting
 
-- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
+- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that the package name and config section name don't match.
 
 ```toml
 # Cargo.toml
@@ -89,4 +89,4 @@ wifi_psk = "..."
 ```
 
 - `Guru Meditation Error: Core 0 panic'ed (Load access fault). Exception was unhandled.`
-    This may be caused by an `.unwrap()` in your code. Try replacing those by question marks.
+    This may be caused by an `.unwrap()` in your code. Try replacing those with question marks.
