@@ -4,7 +4,7 @@
 
 ## Content of This Material
 
-This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is divided into two workshops: introductory and advanced. The introductory trail will introduce you to basics of embedded development and how to make the embedded board interact with the outside world - reacting to commands and sending sensor data.
+This is Ferrous Systems' *Embedded Rust on Espressif* training material. It is divided into two workshops: introductory and advanced. The introductory trail will introduce you to the basics of embedded development and how to make the embedded board interact with the outside world - reacting to commands and sending sensor data.
 
 The advanced course takes it from there to dive deeper into topics like interrupt handling, low-level peripheral access and writing your own drivers.
 
@@ -18,14 +18,14 @@ This book has been translated by generous volunteers. If you would like your tra
 
 ## The Board
 
-A [Rust ESP Board](https://github.com/esp-rs/esp-rust-board) is mandatory[^note] for working with this book - emulators like QEMU are'nt supported.
+A [Rust ESP Board](https://github.com/esp-rs/esp-rust-board) is mandatory[^note] for working with this book - emulators like QEMU aren't supported.
 
 
 The board design and images, pin layout and schematics can also be found in this repository.
 
 If you are subscribed to one of the trainings, a board will be provided to you directly by Espressif.
 
-Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3) platform, a [`RISC-V`](https://riscv.org/) based microcontroller with strong IoT capabilities, facilitated by integrated Wi-Fi and Bluetooth 5 (LE) functionality as well as large RAM + flash size for sophisticated applications. A substantial amount of this course is also applicable for `Xtensa`, the other architecture Espressif uses, in particular the [ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). For low-level access the general principles apply as well, but actual hardware access will differ in various ways - refer to the technical reference manuals ([C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3_technical_reference_manual_en.pdf), [S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf)) or [other available technical documents](https://www.espressif.com/en/support/documents/technical-documents)  as needed.
+Our focus lies primarily on the [ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3) platform, a [`RISC-V`](https://riscv.org/)-based microcontroller with strong IoT capabilities, facilitated by integrated Wi-Fi and Bluetooth 5 (LE) functionality as well as large RAM + flash size for sophisticated applications. A substantial amount of this course is also applicable for `Xtensa`, the other architecture Espressif uses, in particular the [ESP32-S3](https://www.espressif.com/en/products/socs/esp32-s3). For low-level access, the general principles apply as well, but actual hardware access will differ in various ways - refer to the technical reference manuals ([C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3_technical_reference_manual_en.pdf), [S3](https://www.espressif.com/sites/default/files/documentation/esp32-s3_technical_reference_manual_en.pdf)) or [other available technical documents](https://www.espressif.com/en/support/documents/technical-documents) as needed.
 
 ## Rust Knowledge
 

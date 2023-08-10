@@ -18,11 +18,11 @@ let connection = EspHttpConnection::new(&Configuration {
     }
 ```
 
-✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from a `https` resource, e.g. `https://espressif.com/`. the download will show as raw HTML in the terminal output.
+✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from an `https` resource, e.g. `https://espressif.com/`. the download will show as raw HTML in the terminal output.
 
 ## Troubleshooting (Repeated from Previous Section)
 
-- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that package name and config section name don't match.
+- `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that the package name and config section name don't match.
 
 ```toml
 # Cargo.toml
