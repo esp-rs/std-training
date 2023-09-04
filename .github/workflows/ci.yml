@@ -42,7 +42,7 @@ jobs:
             path: "intro/mqtt/host-client"
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update ownership
         run: |
