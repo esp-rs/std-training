@@ -25,7 +25,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Python dependencies
         run: |
