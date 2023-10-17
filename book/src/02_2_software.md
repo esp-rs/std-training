@@ -39,13 +39,13 @@ cargo install cargo-espflash espflash ldproxy
 ### Debian/Ubuntu
 
 ```console
-sudo apt install llvm-dev libclang-dev clang
+sudo apt install llvm-dev libclang-dev clang libuv-dev
 ```
 ### `macOS`
 
 When using the Homebrew package manager, which we recommend:
 ```console
-brew install llvm
+brew install llvm libuv
 ```
 
 ### Troubleshooting
