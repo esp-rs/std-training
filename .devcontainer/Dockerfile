@@ -1,7 +1,7 @@
 # There are a few Dockerfile restrictions when using Github Actions
 # See: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -13,7 +13,7 @@ ARG ESP_BOARD=esp32c3
 
 RUN apt-get update \
     && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
-    clang unzip python3 python3-pip pkg-config libssl-dev \
+    clang unzip python3 python3-pip python3-venv libpython3-all-dev python3-virtualenv pkg-config libssl-dev \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
