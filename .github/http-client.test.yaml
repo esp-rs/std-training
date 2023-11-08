@@ -1,0 +1,7 @@
+name: http-client test
+version: 1
+author: Sergio Gasquez Arcos
+
+steps:
+  - delay: 5000ms
+  - wait-serial: "Response code: 200"

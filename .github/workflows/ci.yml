@@ -67,3 +67,13 @@ jobs:
           image: espressif/rust-std-training:latest
           options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
           run: /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
+
+      - name: Wokwi CI check
+        if: matrix.project.name == 'button-interrupt' || matrix.project.name == 'http-client' || matrix.project.name == 'hardware-check'
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: ${{ matrix.project.path }}
+          timeout: 30000
+          scenario: ${{ github.workspace }}/.github/${{ matrix.project.name }}.test.yaml
+          fail_text: 'Error'

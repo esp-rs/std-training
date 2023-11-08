@@ -2,8 +2,6 @@
 
 set -ef
 
-WORK_DIR=/home/esp/workspace/$1
-
 echo "Compiling $1"
 
 cd /home/esp/workspace/$1
@@ -26,6 +24,8 @@ $HOME/.cargo/bin/cargo build
 if [[ "$1" == advanced/button-interrupt ]]; then
     $HOME/.cargo/bin/cargo build --example solution
     $HOME/.cargo/bin/cargo build --example solution_led
+    # Simulate with Wokwi
+    sed -i 's/^[[:space:]]*firmware[[:space:]]*=[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']\([[:space:]]*\)$/\nfirmware = "target\/riscv32imc-esp-espidf\/debug\/examples\/solution"/' wokwi.toml
 fi
 
 if [[ "$1" == advanced/i2c-sensor-reading ]]; then
@@ -36,6 +36,8 @@ fi
 if [[ "$1" == intro/http-client ]]; then
     $HOME/.cargo/bin/cargo build --example http_client
     $HOME/.cargo/bin/cargo build --example https_client
+    # Simulate with Wokwi
+    sed -i 's/^[[:space:]]*firmware[[:space:]]*=[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']\([[:space:]]*\)$/\nfirmware = "target\/riscv32imc-esp-espidf\/debug\/examples\/http_client"/' wokwi.toml
 fi
 
 if [[ "$1" == intro/http-server ]]; then
