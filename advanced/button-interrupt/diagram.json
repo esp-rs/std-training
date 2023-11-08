@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "author": "Sergio Gasquez Arcos",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-esp32-c3-rust-1",
+            "id": "esp",
+            "top": -99.32,
+            "left": 34.67,
+            "attrs": {
+                "builder": "rust-training-esp32c3"
+            }
+        },
+        {
+            "type": "wokwi-pushbutton",
+            "id": "btn1",
+            "top": 2.81,
+            "left": -49.66,
+            "rotate": 90,
+            "attrs": {
+                "color": "green",
+                "bounce": "0"
+            }
+        }
+    ],
+    "connections": [
+        [
+            "esp:21",
+            "$serialMonitor:RX",
+            "",
+            []
+        ],
+        [
+            "esp:20",
+            "$serialMonitor:TX",
+            "",
+            []
+        ],
+        [
+            "esp:9",
+            "btn1:1.r",
+            "green",
+            [
+                "h0"
+            ]
+        ],
+        [
+            "esp:GND",
+            "btn1:2.r",
+            "black",
+            [
+                "h-97.82",
+                "v114.6",
+                "h26"
+            ]
+        ]
+    ],
+    "serialMonitor": {
+        "display": "auto"
+    }
+}

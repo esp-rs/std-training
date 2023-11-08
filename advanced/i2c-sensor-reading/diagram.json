@@ -1,0 +1,132 @@
+{
+    "version": 1,
+    "author": "Sergio Gasquez Arcos",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-esp32-c3-rust-1",
+            "id": "esp",
+            "top": -185.86,
+            "left": -45.01,
+            "attrs": {
+                "builder": "rust-training-esp32c3"
+            }
+        },
+        {
+            "type": "chip-imc42670p",
+            "id": "chip1",
+            "top": -91.9,
+            "left": -231.89,
+            "attrs": {}
+        },
+        {
+            "type": "chip-shtc3",
+            "id": "chip2",
+            "top": -37.38,
+            "left": -233.39,
+            "attrs": {}
+        }
+    ],
+    "connections": [
+        [
+            "esp:21",
+            "$serialMonitor:RX",
+            "",
+            []
+        ],
+        [
+            "esp:20",
+            "$serialMonitor:TX",
+            "",
+            []
+        ],
+        [
+            "esp:GND",
+            "chip1:GND",
+            "black",
+            [
+                "h-9.6",
+                "v38.4"
+            ]
+        ],
+        [
+            "esp:3V3",
+            "chip1:VCC",
+            "red",
+            [
+                "h-19.2",
+                "v48"
+            ]
+        ],
+        [
+            "esp:GND",
+            "chip2:GND",
+            "black",
+            [
+                "h-9.6",
+                "v38.4"
+            ]
+        ],
+        [
+            "esp:3V3",
+            "chip2:VCC",
+            "red",
+            [
+                "h-19.2",
+                "v48"
+            ]
+        ],
+        [
+            "esp:8.2",
+            "chip2:SCL",
+            "yellow",
+            [
+                "v-2.61",
+                "h19.36",
+                "v83.06",
+                "h-137.87",
+                "v-194.94"
+            ]
+        ],
+        [
+            "esp:8.2",
+            "chip1:SCL",
+            "yellow",
+            [
+                "v-3.18",
+                "h18.79",
+                "v83.06",
+                "h-137.31",
+                "v-100.58"
+            ]
+        ],
+        [
+            "esp:10",
+            "chip1:SDA",
+            "green",
+            [
+                "v-1.47",
+                "h30.09",
+                "v81.93",
+                "h-161.6",
+                "v-116.4"
+            ]
+        ],
+        [
+            "esp:10",
+            "chip2:SDA",
+            "green",
+            [
+                "v0.22",
+                "h29.53",
+                "v79.67",
+                "h-159.91",
+                "v-213.02"
+            ]
+        ]
+    ],
+    "dependencies": {
+        "chip-imc42670p": "github:SergioGasquez/wokwi-icm42670p@0.0.4",
+        "chip-shtc3": "github:SergioGasquez/wokwi-shtc3@0.0.1"
+    }
+}
