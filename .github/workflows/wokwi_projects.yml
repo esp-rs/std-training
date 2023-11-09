@@ -2,6 +2,12 @@
 name: CI
 
 on:
+  push:
+    paths:
+      - '.github/workflows/wokwi_projects.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/wokwi_projects.yml'
   schedule:
     - cron: "50 7 * * *"
   workflow_dispatch:
