@@ -61,6 +61,13 @@ jobs:
           options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
           run: |
             cd /home/esp/workspace/${{ matrix.project.path }}
+            if [ -f cfg.toml.example ]; then
+                # Rename file to cfg.toml
+                cp cfg.toml.example cfg.toml
+                # Replace defaults
+                sed -i 's/wifi_ssid = "FBI Surveillance Van"/wifi_ssid = "Wokwi-GUEST"/g' cfg.toml
+                sed -i 's/wifi_psk = "hunter2"/wifi_psk = ""/g' cfg.toml
+            fi
             /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.path }}/${{ matrix.project.name }} -Z unstable-options
             rm -rf /home/esp/workspace/${{ matrix.project.path }}/target
 
