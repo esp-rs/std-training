@@ -1,32 +1,37 @@
-# There are a few Dockerfile restrictions when using Github Actions
-# See: https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions
-
+# Base image
 FROM debian:bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+
+# Arguments
 ARG CONTAINER_USER=esp
 ARG CONTAINER_GROUP=esp
 ARG NIGHTLY_VERSION=nightly-2023-02-28
 ARG ESP_IDF_VERSION=v4.4.4
 ARG ESP_BOARD=esp32c3
 
+# Install dependencies
 RUN apt-get update \
-    && apt-get install -y git curl ninja-build llvm-dev libclang-dev \
+    && apt-get install -y git curl ninja-build llvm-dev libclang-dev libusb-1.0-0\
     clang unzip python3 python3-pip python3-venv libpython3-all-dev python3-virtualenv pkg-config libssl-dev \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
+# Set users
 RUN adduser --disabled-password --gecos "" ${CONTAINER_USER}
 USER ${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
 
+# Install rustup
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
     --default-toolchain ${NIGHTLY_VERSION} -y --profile minimal \
-    --component rust-src,clippy
+    --component rust-src,clippy,rustfmt
 
+# Update envs
 ENV PATH=${PATH}:$HOME/.cargo/bin
 
+# Install extra crates
 RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //') && \
     curl -L "https://github.com/esp-rs/espflash/releases/latest/download/cargo-espflash-${ARCH}.zip" -o "${HOME}/.cargo/bin/cargo-espflash.zip" && \
     unzip "${HOME}/.cargo/bin/cargo-espflash.zip" -d "${HOME}/.cargo/bin/" && \
@@ -51,6 +56,7 @@ RUN ARCH=$($HOME/.cargo/bin/rustup show | grep "Default host" | sed -e 's/.* //'
     rm "${HOME}/.cargo/bin/cargo-generate.tar.gz" && \
     chmod u+x "${HOME}/.cargo/bin/cargo-generate"
 
+# Install esp-idf
 RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && git clone --branch ${ESP_IDF_VERSION} -q --depth 1 --shallow-submodules \
     --recursive https://github.com/espressif/esp-idf.git \
@@ -63,6 +69,7 @@ RUN mkdir -p ${HOME}/.espressif/frameworks/ \
     && rm -rf .espressif/frameworks/esp-idf/tools/esp_app_trace \
     && rm -rf .espressif/frameworks/esp-idf/tools/test_idf_size
 
+# Activate ESP environment
 ENV IDF_TOOLS_PATH=${HOME}/.espressif
 RUN echo "source ${HOME}/.espressif/frameworks/esp-idf/export.sh > /dev/null 2>&1" >> ~/.bashrc
 
