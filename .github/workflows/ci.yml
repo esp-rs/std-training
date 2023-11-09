@@ -7,12 +7,14 @@ on:
       - "book/"
       - "book/**"
       - "**/README.md"
+      - ".github/workflows/wokwi_projects.yml"
   pull_request:
     branches: [main]
     paths-ignore:
       - "book/"
       - "book/**"
       - "**/README.md"
+      - ".github/workflows/wokwi_projects.yml"
   schedule:
     - cron: "50 7 * * *"
 
