@@ -11,7 +11,7 @@ use esp_idf_sys as _;
 /// file `cfg.toml`.
 #[toml_cfg::toml_config]
 pub struct Config {
-    #[default("Wokwi-GUEST")]
+    #[default("")]
     wifi_ssid: &'static str,
     #[default("")]
     wifi_psk: &'static str,
