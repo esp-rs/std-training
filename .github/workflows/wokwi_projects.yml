@@ -48,7 +48,7 @@ jobs:
       - name: Test code example in Docker image
         uses: addnab/docker-run-action@v3
         with:
-          image: wokwi/builder-rust-${{ matrix.project.env }}-esp
+          image: espressif/rust-std-training
           options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
           run: |
             . /home/esp/export-esp.sh
