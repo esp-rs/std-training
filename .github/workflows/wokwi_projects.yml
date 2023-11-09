@@ -71,6 +71,8 @@ jobs:
             /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.path }}/${{ matrix.project.name }} -Z unstable-options
             rm -rf /home/esp/workspace/${{ matrix.project.path }}/target
 
+      - run: cat ${{ matrix.project.path }}/wokwi.toml
+
       - name: Wokwi CI check
         uses: wokwi/wokwi-ci-action@v1
         with:
