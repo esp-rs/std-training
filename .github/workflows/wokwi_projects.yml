@@ -34,6 +34,8 @@ jobs:
         run: |
           wget -q -O ${{ matrix.project.name }}.zip  https://wokwi.com/api/projects/${{ matrix.project.id }}/zip
           unzip ${{ matrix.project.name }}.zip -d ${{ matrix.project.name }}
+          mkdir -p ${{ matrix.project.name }}/src
+          cp ${{ matrix.project.name }}/*.rs ${{ matrix.project.name }}/src/
 
       - name: Create wokwi.toml
         run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}'" > ${{ matrix.project.name }}/wokwi.toml
@@ -48,13 +50,11 @@ jobs:
       - name: Test code example in Docker image
         uses: addnab/docker-run-action@v3
         with:
-          image: espressif/rust-std-training
+          image: espressif/rust-std-training:latest
           options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
           run: |
-            . /home/esp/export-esp.sh
-            cp /home/esp/workspace/${{ matrix.project.name }}/*.rs ${{ matrix.project.name }}/src/
-            cd ${{ matrix.project.name }}
-            cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.name }} -Z unstable-options
+            cd /home/esp/workspace/${{ matrix.project.name }}
+            /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.name }} -Z unstable-options
 
       - name: Wokwi CI check
         uses: wokwi/wokwi-ci-action@v1
