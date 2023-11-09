@@ -22,10 +22,14 @@ jobs:
         project:
           - name: "hardware-check"
             id: "360342886675214337"
+            path: "intro/hardware-check"
           - name: http-client
             id: "333372159510446675"
+            path: "intro/http-client"
           - name: button-interrupt
             id: "333374799393849940"
+            path: "advanced/button-interrupt"
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -35,14 +39,17 @@ jobs:
           wget -q -O ${{ matrix.project.name }}.zip  https://wokwi.com/api/projects/${{ matrix.project.id }}/zip
           unzip ${{ matrix.project.name }}.zip -d ${{ matrix.project.name }}
           mkdir -p ${{ matrix.project.name }}/src
-          cp ${{ matrix.project.name }}/*.rs ${{ matrix.project.name }}/src/
+          rm -rf ${{ matrix.project.path }}/src/*.rs
+          cp ${{ matrix.project.name }}/*.rs ${{ matrix.project.path }}/src/
+          rm -rf ${{ matrix.project.path }}/Cargo.toml
+          cp ${{ matrix.project.name }}/Cargo.toml ${{ matrix.project.path }}/Cargo.toml
 
       - name: Create wokwi.toml
-        run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}'" > ${{ matrix.project.name }}/wokwi.toml
+        run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}'" > ${{ matrix.project.path }}/wokwi.toml
 
       - name: Update ownership
         run: |
-          sudo chown 1000:1000 -R ${{ matrix.project.name }}
+          sudo chown 1000:1000 -R ${{ matrix.project.path }}
 
       - name: Pull Docker image
         run: docker image pull espressif/rust-std-training
@@ -53,14 +60,15 @@ jobs:
           image: espressif/rust-std-training:latest
           options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
           run: |
-            cd /home/esp/workspace/${{ matrix.project.name }}
-            /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.name }} -Z unstable-options
+            cd /home/esp/workspace/${{ matrix.project.path }}
+            /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.path }}/${{ matrix.project.name }} -Z unstable-options
+            rm -rf /home/esp/workspace/${{ matrix.project.path }}/target
 
       - name: Wokwi CI check
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
-          path: ${{ matrix.project.name }}
+          path: ${{ matrix.project.path }}
           timeout: 30000
           scenario: ${{ github.workspace }}/.github/${{ matrix.project.name }}.test.yaml
           fail_text: 'Error'
@@ -70,4 +78,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.project.name }}_${{ matrix.project.id }}
-          path: ${{ matrix.project.name }}
+          path: ${{ matrix.project.path }}
