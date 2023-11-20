@@ -31,7 +31,8 @@
         "vadimcn.vscode-lldb",
         "serayuzgur.crates",
         "mutantdino.resourcemonitor",
-        "yzhang.markdown-all-in-one"
+        "yzhang.markdown-all-in-one",
+        "Wokwi.wokwi-vscode"
       ]
     }
   },
