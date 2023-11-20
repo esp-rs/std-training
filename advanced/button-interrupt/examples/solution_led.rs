@@ -71,6 +71,7 @@ fn main() -> Result<()> {
 
             match res {
                 1 => {
+                    println!("Button pressed!");
                     // Generates random rgb values and sets them in the led.
                     random_light(&mut led);
                 }
