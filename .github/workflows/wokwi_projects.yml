@@ -45,7 +45,7 @@ jobs:
           cp ${{ matrix.project.name }}/Cargo.toml ${{ matrix.project.path }}/Cargo.toml
 
       - name: Create wokwi.toml
-        run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}'" > ${{ matrix.project.path }}/wokwi.toml
+        run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}/${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}/${{ matrix.project.name }}'" > ${{ matrix.project.path }}/wokwi.toml
 
       - name: Update ownership
         run: |

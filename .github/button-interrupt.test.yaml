@@ -3,7 +3,6 @@ version: 1
 author: Sergio Gasquez Arcos
 
 steps:
-  - delay: 100ms
   - wait-serial: "GPIO[9]| InputEn: 1| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:1"
   # Press once
   - set-control:
