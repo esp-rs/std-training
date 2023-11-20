@@ -1,6 +1,6 @@
 [wokwi]
 version = 1
-# # Exercise
+# Exercise
 firmware = 'target/riscv32imc-esp-espidf/debug/i2c-sensor-reading'
 elf = 'target/riscv32imc-esp-espidf/debug/i2c-sensor-reading'
 

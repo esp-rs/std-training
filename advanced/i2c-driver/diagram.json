@@ -11,13 +11,6 @@
             "attrs": {
                 "builder": "rust-training-esp32c3"
             }
-        },
-        {
-            "type": "chip-imc42670p",
-            "id": "chip1",
-            "top": -91.9,
-            "left": -231.89,
-            "attrs": {}
         }
     ],
     "connections": [
@@ -32,51 +25,6 @@
             "$serialMonitor:TX",
             "",
             []
-        ],
-        [
-            "esp:GND",
-            "chip1:GND",
-            "black",
-            [
-                "h-9.6",
-                "v38.4"
-            ]
-        ],
-        [
-            "esp:3V3",
-            "chip1:VCC",
-            "red",
-            [
-                "h-19.2",
-                "v48"
-            ]
-        ],
-        [
-            "esp:10",
-            "chip1:SDA",
-            "green",
-            [
-                "v-0.36",
-                "h34.24",
-                "v69.78",
-                "h-133.4",
-                "v-134.77"
-            ]
-        ],
-        [
-            "esp:8.2",
-            "chip1:SCL",
-            "yellow",
-            [
-                "v0.69",
-                "h43.47",
-                "v86.88",
-                "h-152.56",
-                "v-132.49"
-            ]
         ]
-    ],
-    "dependencies": {
-        "chip-imc42670p": "github:SergioGasquez/wokwi-icm42670p@0.0.4"
-    }
+    ]
 }
