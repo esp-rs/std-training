@@ -1,12 +1,12 @@
 use anyhow::Result;
 use core::str;
 use embedded_svc::{http::Method, io::Write};
-use esp_idf_hal::{
-    i2c::{I2cConfig, I2cDriver},
-    prelude::*,
-};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
+    hal::{
+        i2c::{I2cConfig, I2cDriver},
+        prelude::*,
+    },
     http::server::{Configuration, EspHttpServer},
 };
 use shtcx::{self, shtc3, PowerMode};
@@ -16,8 +16,6 @@ use std::{
     time::Duration,
 };
 use wifi::wifi;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
-use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -28,7 +26,7 @@ pub struct Config {
 }
 
 fn main() -> Result<()> {
-    esp_idf_sys::link_patches();
+    esp_idf_svc::sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
     let peripherals = Peripherals::take().unwrap();
