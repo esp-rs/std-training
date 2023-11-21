@@ -1,6 +1,6 @@
 // Reference: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 use anyhow::Result;
-use esp_idf_sys::{
+use esp_idf_svc::sys::{
     esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
     gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
     xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
@@ -27,6 +27,11 @@ fn main() -> Result<()> {
     //     ...
     // };
 
+    // Queue configurations
+    const QUEUE_TYPE_BASE: u8 = 0;
+    const ITEM_SIZE: u32 = 0;
+    const QUEUE_SIZE: u32 = 1;
+
     unsafe {
         // 2. Write the GPIO configuration into the register
         // esp!(...)?;
@@ -34,15 +39,10 @@ fn main() -> Result<()> {
         // 3. Install the global GPIO interrupt handler
         // esp!(...)?;
 
-        // Queue configurations
-        const QUEUE_TYPE_BASE: u8 = 0;
-        const ITEM_SIZE: u32 = 0;
-        const QUEUE_SIZE: u32 = 1;
-
-        // 5. Create an event queue
+        // 4. Create an event queue
         // EVENT_QUEUE = Some(...);
 
-        // 7. Add the button GPIO and the function to the interrupt handler
+        // 5. Add the button GPIO and the function to the interrupt handler
         // esp!(...)?;
     }
 
@@ -52,10 +52,10 @@ fn main() -> Result<()> {
             // Maximum delay
             const QUEUE_WAIT_TICKS: u32 = 1000;;
 
-            // 8. Receive the event from the queue.
+            // 6. Receive the event from the queue.
             // let res = ...;
 
-            // 9. Handle the value of res.
+            // 7. Handle the value of res.
             // ...
         }
     }

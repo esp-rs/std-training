@@ -1,7 +1,7 @@
 // Reference: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 
 use anyhow::Result;
-use esp_idf_sys::{
+use esp_idf_svc::sys::{
     esp, gpio_config, gpio_config_t, gpio_install_isr_service, gpio_int_type_t_GPIO_INTR_POSEDGE,
     gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT, xQueueGenericCreate, xQueueGiveFromISR,
     xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
@@ -62,10 +62,9 @@ fn main() -> Result<()> {
             let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
 
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed.
-            match res {
-                1 => println!("Button pressed!"),
-                _ => {}
-            };
+            if res == 1 {
+                println!("Button pressed!")
+            }
         }
     }
 }
