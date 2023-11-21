@@ -6,12 +6,10 @@ authors = ["Sergio Gasquez <sergio.gasquez@gmail.com>"]
 
 [dependencies]
 anyhow = "=1.0.75"
-esp-idf-svc = { version = "0.47.3", features = ["experimental", "alloc", "native", "binstart"] }
+esp-idf-svc = "=0.47.3"
 log = "=0.4.20"
 rgb = "0.8.29"
 
 [build-dependencies]
 embuild = "=0.31.4"
 
-[dev-dependencies]
-esp-idf-svc = { version = "0.47.3", features = ["experimental", "alloc", "native", "binstart"] }
