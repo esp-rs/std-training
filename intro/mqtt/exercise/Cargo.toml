@@ -15,8 +15,6 @@ opt-level = "s"
 debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
-
-
 [dependencies]
 anyhow = "=1.0.75"
 embedded-svc = "=0.26.4"
