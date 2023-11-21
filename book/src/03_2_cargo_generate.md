@@ -56,7 +56,6 @@ ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 
 ```toml
 [toolchain]
-
 channel = "nightly-2023-11-14" # change this line
 ```
 
