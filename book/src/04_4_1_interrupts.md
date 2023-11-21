@@ -83,3 +83,16 @@ If the interrupt fires, an event is added to the queue.
 9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed.
 
 10. Run the program and push the `BOOT` button, so see how it works!
+
+## Simulation
+
+This project is available for simulation through two methods:
+- Wokwi projects
+  - [Exercise](https://wokwi.com/projects/360623288920412161?build-cache=disable)
+  - [Solution](https://wokwi.com/projects/333374799393849940?build-cache=disable)
+    - The Solution project contains solution for [Random LED Color on pushinig a Button](./04_4_2_interrupts.md)
+- Wokwi files are also present in the project folder to simulate it with Wokwi VS Code extension:
+   1. Press F1, select `Wokwi: Select Config File` and choose `advanced/button-interrupt/wokwi.toml`
+      - Edit the `wokwi.toml` file to select between exercise and solution simulation
+   2. Build you project
+   3. Press F1 again and select `Wokwi: Start Simulator`

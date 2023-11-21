@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = 'target/riscv32imc-esp-espidf/debug/i2c-driver'
+elf = 'target/riscv32imc-esp-espidf/debug/i2c-driver'

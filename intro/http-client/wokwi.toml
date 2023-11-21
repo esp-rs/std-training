@@ -1,0 +1,9 @@
+[wokwi]
+version = 1
+# Exercise
+firmware = 'target/riscv32imc-esp-espidf/debug/http-client'
+elf = 'target/riscv32imc-esp-espidf/debug/http-client'
+
+# Solution - HTTP
+# firmware = 'target/riscv32imc-esp-espidf/debug/examples/http_client'
+# elf = 'target/riscv32imc-esp-espidf/debug/examples/http_client'

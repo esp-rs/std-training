@@ -1,0 +1,90 @@
+---
+name: Wokwi.com CI
+
+on:
+  push:
+    paths:
+      - '.github/workflows/wokwi_projects.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/wokwi_projects.yml'
+  schedule:
+    - cron: "50 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  wokwi-check:
+    name: ${{ matrix.project.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - name: "hardware-check"
+            id: "360342886675214337"
+            path: "intro/hardware-check"
+          - name: http-client
+            id: "333372159510446675"
+            path: "intro/http-client"
+          - name: button-interrupt
+            id: "333374799393849940"
+            path: "advanced/button-interrupt"
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Download project code
+        run: |
+          wget -q -O ${{ matrix.project.name }}.zip  https://wokwi.com/api/projects/${{ matrix.project.id }}/zip
+          unzip ${{ matrix.project.name }}.zip -d ${{ matrix.project.name }}
+          mkdir -p ${{ matrix.project.name }}/src
+          rm -rf ${{ matrix.project.path }}/src/*.rs
+          cp ${{ matrix.project.name }}/*.rs ${{ matrix.project.path }}/src/
+          rm -rf ${{ matrix.project.path }}/Cargo.toml
+          cp ${{ matrix.project.name }}/Cargo.toml ${{ matrix.project.path }}/Cargo.toml
+
+      - name: Create wokwi.toml
+        run: echo -e "[wokwi]\nversion = 1\nfirmware = '${{ matrix.project.name }}/${{ matrix.project.name }}'\nelf = '${{ matrix.project.name }}/${{ matrix.project.name }}'" > ${{ matrix.project.path }}/wokwi.toml
+
+      - name: Update ownership
+        run: |
+          sudo chown 1000:1000 -R ${{ matrix.project.path }}
+
+      - name: Pull Docker image
+        run: docker image pull espressif/rust-std-training
+
+      - name: Test code example in Docker image
+        uses: addnab/docker-run-action@v3
+        with:
+          image: espressif/rust-std-training:latest
+          options: -u esp -v ${{ github.workspace }}:/home/esp/workspace
+          run: |
+            cd /home/esp/workspace/${{ matrix.project.path }}
+            if [ -f cfg.toml.example ]; then
+                # Rename file to cfg.toml
+                cp cfg.toml.example cfg.toml
+                # Replace defaults
+                sed -i 's/wifi_ssid = "FBI Surveillance Van"/wifi_ssid = "Wokwi-GUEST"/g' cfg.toml
+                sed -i 's/wifi_psk = "hunter2"/wifi_psk = ""/g' cfg.toml
+            fi
+            /home/esp/.cargo/bin/cargo build --release --out-dir /home/esp/workspace/${{ matrix.project.path }}/${{ matrix.project.name }} -Z unstable-options
+            rm -rf /home/esp/workspace/${{ matrix.project.path }}/target
+
+      - run: cat ${{ matrix.project.path }}/wokwi.toml
+
+      - name: Wokwi CI check
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: ${{ matrix.project.path }}
+          timeout: 30000
+          scenario: ${{ github.workspace }}/.github/${{ matrix.project.name }}.test.yaml
+          fail_text: 'Error'
+
+      - name: Upload source code
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.project.name }}_${{ matrix.project.id }}
+          path: ${{ matrix.project.path }}

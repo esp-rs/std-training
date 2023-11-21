@@ -1,0 +1,13 @@
+[wokwi]
+version = 1
+# Exercise
+firmware = 'target/riscv32imc-esp-espidf/debug/i2c-sensor-reading'
+elf = 'target/riscv32imc-esp-espidf/debug/i2c-sensor-reading'
+
+# Solution - Part 1
+# firmware = 'target/riscv32imc-esp-espidf/debug/examples/part_1'
+# elf = 'target/riscv32imc-esp-espidf/debug/examples/part_1'
+
+# Solution - Part 2
+# firmware = 'target/riscv32imc-esp-espidf/debug/examples/part_2'
+# elf = 'target/riscv32imc-esp-espidf/debug/examples/part_2'

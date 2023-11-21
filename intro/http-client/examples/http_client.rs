@@ -95,7 +95,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
                             // print it and reset the offset to 0.
                             print!("{}", text);
                             offset = 0;
-                        },
+                        }
                         Err(error) => {
                             // The buffer contains incomplete UTF-8 data, we will
                             // print the valid part, copy the invalid sequence to

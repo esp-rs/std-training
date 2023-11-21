@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "author": "Sergio Gasquez Arcos",
+    "editor": "wokwi",
+    "parts": [
+        {
+            "type": "board-esp32-c3-rust-1",
+            "id": "esp",
+            "top": -185.86,
+            "left": -45.01,
+            "attrs": {
+                "builder": "rust-training-esp32c3"
+            }
+        }
+    ],
+    "connections": [
+        [
+            "esp:21",
+            "$serialMonitor:RX",
+            "",
+            []
+        ],
+        [
+            "esp:20",
+            "$serialMonitor:TX",
+            "",
+            []
+        ]
+    ]
+}
