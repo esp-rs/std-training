@@ -1,15 +1,17 @@
 use anyhow::{bail, Result};
-use embedded_svc::wifi::{
-    AccessPointConfiguration, AuthMethod, ClientConfiguration, Configuration,
+// use embedded_svc::wifi::{AuthMethod, ClientConfiguration, Configuration};
+// use esp_idf_svc::;
+use esp_idf_svc::{
+    eventloop::EspSystemEventLoop,
+    hal::peripheral,
+    wifi::{AuthMethod, BlockingWifi, ClientConfiguration, Configuration, EspWifi},
 };
-use esp_idf_hal::peripheral;
-use esp_idf_svc::{eventloop::EspSystemEventLoop, wifi::BlockingWifi, wifi::EspWifi};
 use log::info;
 
 pub fn wifi(
     ssid: &str,
     pass: &str,
-    modem: impl peripheral::Peripheral<P = esp_idf_hal::modem::Modem> + 'static,
+    modem: impl peripheral::Peripheral<P = esp_idf_svc::hal::modem::Modem> + 'static,
     sysloop: EspSystemEventLoop,
 ) -> Result<Box<EspWifi<'static>>> {
     let mut auth_method = AuthMethod::WPA2Personal;
@@ -50,20 +52,13 @@ pub fn wifi(
         None
     };
 
-    wifi.set_configuration(&Configuration::Mixed(
-        ClientConfiguration {
-            ssid: ssid.into(),
-            password: pass.into(),
-            channel,
-            auth_method,
-            ..Default::default()
-        },
-        AccessPointConfiguration {
-            ssid: "aptest".into(),
-            channel: channel.unwrap_or(1),
-            ..Default::default()
-        },
-    ))?;
+    wifi.set_configuration(&Configuration::Client(ClientConfiguration {
+        ssid: ssid.into(),
+        password: pass.into(),
+        channel,
+        auth_method,
+        ..Default::default()
+    }))?;
 
     info!("Connecting wifi...");
 
