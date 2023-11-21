@@ -15,10 +15,6 @@ opt-level = "s"
 debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
-[features]
-default = ["native"]
-native = ["esp-idf-svc/native"]
-
 [dependencies]
 anyhow = "=1.0.75"
 esp-idf-svc = { version = "=0.47.3", features = ["nightly"] }

@@ -1,17 +1,15 @@
 use anyhow::{bail, Result};
 use core::str;
 use embedded_svc::{
-    http::{client::Client, Status},
+    http::{client::Client, Method},
     io::Read,
 };
-use esp_idf_hal::prelude::Peripherals;
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
+    hal::prelude::Peripherals,
     http::client::{Configuration, EspHttpConnection},
 };
 use wifi::wifi;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
-use esp_idf_sys as _;
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -22,7 +20,7 @@ pub struct Config {
 }
 
 fn main() -> Result<()> {
-    esp_idf_sys::link_patches();
+    esp_idf_svc::sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
     let peripherals = Peripherals::take().unwrap();
@@ -48,13 +46,14 @@ fn get(url: impl AsRef<str>) -> Result<()> {
     // 1. Create a new EspHttpClient. (Check documentation)
     let connection = EspHttpConnection::new(&Configuration {
         use_global_ca_store: true,
-        crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
+        crt_bundle_attach: Some(esp_idf_svc::sys::esp_crt_bundle_attach),
         ..Default::default()
     })?;
     let mut client = Client::wrap(connection);
 
     // 2. Open a GET request to `url`
-    let request = client.get(url.as_ref())?;
+    let headers = [("accept", "text/plain")];
+    let request = client.request(Method::Get, url.as_ref(), &headers)?;
 
     // 3. Submit write request and check the status code of the response.
     // Successful http status codes are in the 200..=299 range.
@@ -86,7 +85,7 @@ fn get(url: impl AsRef<str>) -> Result<()> {
                         Ok(text) => {
                             print!("{}", text);
                             offset = 0;
-                        },
+                        }
                         Err(error) => {
                             let valid_up_to = error.valid_up_to();
                             unsafe {
