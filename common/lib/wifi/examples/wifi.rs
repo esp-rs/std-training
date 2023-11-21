@@ -1,10 +1,7 @@
 use anyhow::{bail, Result};
 use esp_idf_svc::eventloop::EspSystemEventLoop;
 use esp_idf_svc::hal::prelude::Peripherals;
-use log::info;
 use wifi::wifi;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
-use esp_idf_sys as _;
 
 /// This configuration is picked up at compile time by `build.rs` from the
 /// file `cfg.toml`.

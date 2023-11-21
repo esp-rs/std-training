@@ -21,7 +21,7 @@ native = ["esp-idf-svc/native"]
 
 [dependencies]
 anyhow = "=1.0.75"
-esp-idf-svc = { version = "=0.47.3", features = ["experimental", "alloc", "nightly", "binstart", "std", "native"] }
+esp-idf-svc = { version = "=0.47.3", features = ["nightly"] }
 log = "=0.4.20"
 rgb-led = { path = "../../common/lib/rgb-led" }
 toml-cfg = "=0.1.3"

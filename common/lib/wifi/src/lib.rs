@@ -1,6 +1,4 @@
 use anyhow::{bail, Result};
-// use embedded_svc::wifi::{AuthMethod, ClientConfiguration, Configuration};
-// use esp_idf_svc::;
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::peripheral,
