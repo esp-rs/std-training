@@ -15,16 +15,10 @@ opt-level = "s"
 debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
-[features]
-default = ["native"]
-native = ["esp-idf-sys/native"]
-
 [dependencies]
-anyhow = "=1.0.71"
+anyhow = "=1.0.75"
 embedded-hal = "=0.2.7"
-esp-idf-hal = "=0.41.1"
-esp-idf-sys = { version = "=0.33.0", features = ["binstart"] }
+esp-idf-svc = "=0.47.3"
 
 [build-dependencies]
-anyhow = "=1.0.71"
-embuild = "=0.31.2"
+embuild = "=0.31.4"
