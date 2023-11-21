@@ -9,10 +9,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "=1.0.71"
+anyhow = "=1.0.75"
 toml = "=0.5.11"
 
 [build-dependencies]
-anyhow = "=1.0.71"
+anyhow = "=1.0.75"
 toml = "=0.5.11"
-uuid = { version = "=1.3.3", features = ["v4"] }
+uuid = { version = "=1.6.1", features = ["v4"] }

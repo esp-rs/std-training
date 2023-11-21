@@ -1,24 +1,22 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
-use esp_idf_hal::{
-    delay,
-    i2c::{I2cConfig, I2cDriver},
-    prelude::*,
-};
+use embedded_svc::mqtt::client::QoS;
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
-    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+    hal::{
+        delay,
+        i2c::{I2cConfig, I2cDriver},
+        prelude::*,
+    },
+    mqtt::client::{EspMqttClient, MqttClientConfiguration},
 };
-use log::{error, info, warn};
-use mqtt_messages::{hello_topic, ColorData};
+use log::info;
+use mqtt_messages::hello_topic;
 use rgb_led::{RGB8, WS2812RMT};
 use shtcx::{self, shtc3, PowerMode};
-use std::{convert::TryFrom, thread::sleep, time::Duration};
+use std::{thread::sleep, time::Duration};
 use wifi::wifi;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
-use esp_idf_sys as _;
 
-const UUID: &'static str = get_uuid::uuid();
+const UUID: &str = get_uuid::uuid();
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -35,7 +33,7 @@ pub struct Config {
 }
 
 fn main() -> Result<()> {
-    esp_idf_sys::link_patches();
+    esp_idf_svc::sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
     let peripherals = Peripherals::take().unwrap();
@@ -68,7 +66,7 @@ fn main() -> Result<()> {
     led.set_pixel(RGB8::new(1, 1, 0))?;
 
     // Client configuration:
-    let broker_url = if app_config.mqtt_user != "" {
+    let broker_url = if !app_config.mqtt_user.is_empty() {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -82,7 +80,7 @@ fn main() -> Result<()> {
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    let mut client = EspMqttClient::new(broker_url, &mqtt_config, move |message_event| {
+    let mut client = EspMqttClient::new(&broker_url, &mqtt_config, move |_message_event| {
         // ... your handler code here - leave this empty for now
         // we'll add functionality later in this chapter
     })?;
