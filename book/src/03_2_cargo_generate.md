@@ -57,7 +57,7 @@ ESP_IDF_TOOLS_INSTALL_DIR = { value = "global" } # add this line
 ```toml
 [toolchain]
 
-channel = "nightly-2023-02-28" # change this line
+channel = "nightly-2023-11-14" # change this line
 ```
 
 ✅ Run your project by using the following command out of the `hello-world` directory.
