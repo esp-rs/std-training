@@ -2,6 +2,8 @@
 
 We're now going to use [`cargo-generate`](https://github.com/cargo-generate/cargo-generate) (a generic project wizard) to set up our first application.
 
+More information on generating projects can be found in the [Writing Your Own Application](https://esp-rs.github.io/book/writing-your-own-application/index.html) chapter of The Rust on ESP Book.
+
 > Most other exercises in this workshop already provide a project skeleton and don't require using `cargo-generate`.
 >
 ✅ Install `cargo-generate`:
