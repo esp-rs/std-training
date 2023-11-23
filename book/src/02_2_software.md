@@ -8,12 +8,12 @@ Follow the steps below for a default installation of the ESP32-C3 platform tooli
 
 ✅ If you haven't got Rust on your computer, obtain it via <https://rustup.rs/>
 
-Furthermore, for ESP32-C3, a [*nightly* version](https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust) of the Rust toolchain is currently required, for this training we will use `nightly-2023-02-28` version.
+Furthermore, for ESP32-C3, a [*nightly* version](https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust) of the Rust toolchain is currently required, for this training we will use `nightly-2023-11-14` version.
 
 ✅ Install *nightly* Rust and add support for the target architecture using the following command:
 
 ```console
-rustup toolchain install nightly-2023-02-28 --component rust-src
+rustup toolchain install nightly-2023-11-14 --component rust-src
 ```
 
 🔎 Rust is capable of cross-compiling to any supported target (see `rustup target list`). By default, only the native architecture of your system is installed.

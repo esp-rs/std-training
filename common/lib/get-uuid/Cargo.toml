@@ -6,13 +6,10 @@ authors = [
     "Sergio Gasquez <sergio.gasquez@gmail.com>",
 ]
 edition = "2021"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "=1.0.71"
-toml = "=0.5.11"
+anyhow = "=1.0.75"
 
 [build-dependencies]
-anyhow = "=1.0.71"
-toml = "=0.5.11"
-uuid = { version = "=1.3.3", features = ["v4"] }
+anyhow = "=1.0.75"
+uuid   = { version = "=1.6.1", features = ["v4"] }

@@ -25,16 +25,6 @@ On top of the usual contents of a Rust project created with `cargo new`, a few a
 
 🔎 The rest of this page is optional knowledge that can come in handy should you wish to change some aspects of a project.
 
-### `Cargo.toml`
-
-This workshop is written around the [`native` build system](https://github.com/esp-rs/esp-idf-sys#native). Alternatively, you may use [`PlatformIO`/`pio`](https://github.com/esp-rs/esp-idf-sys#pio), however this is currently being deprecated.
-
-```toml
-[features]
-default = ["native"]
-native = ["esp-idf-sys/native"]
-```
-
 Some [build dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#build-dependencies) must be set:
 
 ```toml

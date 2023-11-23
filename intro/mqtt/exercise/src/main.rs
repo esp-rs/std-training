@@ -1,29 +1,22 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::{
-    Client,
-    Details::{Complete, InitialChunk, SubsequentChunk},
-    Event::{self, Received},
-    Message, Publish, QoS,
-};
-use esp_idf_hal::{
-    delay,
-    i2c::{I2cConfig, I2cDriver},
-    prelude::*,
-};
+use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
+    hal::{
+        delay,
+        i2c::{I2cConfig, I2cDriver},
+        prelude::*,
+    },
     mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
 };
-use log::{error, info};
-use mqtt_messages::{cmd_topic_fragment, hello_topic, Command, RawCommandData};
+use log::{error, info, warn};
+use mqtt_messages::{hello_topic, ColorData};
 use rgb_led::{RGB8, WS2812RMT};
 use shtcx::{self, shtc3, PowerMode};
-use std::{borrow::Cow, convert::TryFrom, thread::sleep, time::Duration};
+use std::{convert::TryFrom, thread::sleep, time::Duration};
 use wifi::wifi;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
-use esp_idf_sys as _;
 
-const UUID: &'static str = get_uuid::uuid();
+const UUID: &str = get_uuid::uuid();
 
 #[toml_cfg::toml_config]
 pub struct Config {
@@ -40,7 +33,7 @@ pub struct Config {
 }
 
 fn main() -> Result<()> {
-    esp_idf_sys::link_patches();
+    esp_idf_svc::sys::link_patches();
     esp_idf_svc::log::EspLogger::initialize_default();
 
     let peripherals = Peripherals::take().unwrap();

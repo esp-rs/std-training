@@ -2,10 +2,10 @@
 name = "mqtt-messages"
 version = "0.1.0"
 authors = [
-    "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",
     "Sergio Gasquez <sergio.gasquez@gmail.com>",
+    "Tanks Transfeld <tanks.transfeld@ferrous-systems.com>",
 ]
 edition = "2021"
 
 [dependencies]
-rgb = "=0.8.36"
+rgb = "=0.8.37"

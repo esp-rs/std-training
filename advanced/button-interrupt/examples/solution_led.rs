@@ -1,11 +1,13 @@
 // Reference: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
 
 use anyhow::Result;
-use esp_idf_hal::prelude::Peripherals;
-use esp_idf_sys::{
-    esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
-    gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
-    xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
+use esp_idf_svc::{
+    hal::prelude::Peripherals,
+    sys::{
+        esp, esp_random, gpio_config, gpio_config_t, gpio_install_isr_service,
+        gpio_int_type_t_GPIO_INTR_POSEDGE, gpio_isr_handler_add, gpio_mode_t_GPIO_MODE_INPUT,
+        xQueueGenericCreate, xQueueGiveFromISR, xQueueReceive, QueueHandle_t, ESP_INTR_FLAG_IRAM,
+    },
 };
 use rgb_led::{RGB8, WS2812RMT};
 use std::ptr;
@@ -69,13 +71,10 @@ fn main() -> Result<()> {
             // If the event has the value 0, nothing happens. if it has a different value, the button was pressed.
             // If the button was pressed, a function that changes the state of the LED is called.
 
-            match res {
-                1 => {
-                    println!("Button pressed!");
-                    // Generates random rgb values and sets them in the led.
-                    random_light(&mut led);
-                }
-                _ => {}
+            if res == 1 {
+                println!("Button pressed!");
+                // Generates random rgb values and sets them in the led.
+                random_light(&mut led);
             };
         }
     }
