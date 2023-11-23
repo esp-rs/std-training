@@ -13,8 +13,10 @@ ARG ESP_BOARD=esp32c3
 
 # Install dependencies
 RUN apt-get update \
-    && apt-get install -y git curl ninja-build llvm-dev libclang-dev libusb-1.0-0\
-    clang unzip python3 python3-pip python3-venv libpython3-all-dev python3-virtualenv pkg-config libssl-dev \
+    && apt-get install -y git wget flex bison gperf python3 python3-pip python3-venv \
+    cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 \
+    llvm-dev libclang-dev clang pkg-config unzip libusb-1.0-0 \
+    libpython3-all-dev python3-virtualenv curl \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
