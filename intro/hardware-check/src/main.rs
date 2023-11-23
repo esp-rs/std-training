@@ -9,7 +9,7 @@ use wifi::wifi;
 /// file `cfg.toml`.
 #[toml_cfg::toml_config]
 pub struct Config {
-    #[default("")]
+    #[default("Wokwi-GUEST")]
     wifi_ssid: &'static str,
     #[default("")]
     wifi_psk: &'static str,
