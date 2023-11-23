@@ -11,7 +11,9 @@ use rgb_led::{RGB8, WS2812RMT};
 use std::num::NonZeroU32;
 
 fn main() -> Result<()> {
-    const GPIO_NUM: i32 = 9;
+    esp_idf_svc::sys::link_patches();
+
+    let peripherals = Peripherals::take()?;
 
     // 1. Configure the button using PinDriver
     // let mut button = PinDriver...

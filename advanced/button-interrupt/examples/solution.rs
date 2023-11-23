@@ -10,6 +10,7 @@ fn main() -> Result<()> {
     esp_idf_svc::sys::link_patches();
 
     let peripherals = Peripherals::take()?;
+
     // Configures the button
     let mut button = PinDriver::input(peripherals.pins.gpio9)?;
     button.set_pull(Pull::Up)?;
