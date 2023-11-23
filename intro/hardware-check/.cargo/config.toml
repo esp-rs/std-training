@@ -6,15 +6,15 @@ linker = "ldproxy"
 runner = "espflash flash --monitor"
 # Future - necessary for the experimental "native build" of esp-idf-sys with ESP32C3
 # See also https://github.com/ivmarkov/embuild/issues/16
-rustflags = ["-C", "default-linker-libraries"]
+rustflags = ["--cfg", "espidf_time64", "-C", "default-linker-libraries"]
 
 [unstable]
 build-std = ["std", "panic_abort"]
 build-std-features = ["panic_immediate_abort"]
 
 [env]
-# Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF (v4.4.6)
-ESP_IDF_VERSION = { value = "tag:v4.4.6" }
+# Enables the esp-idf-sys "native" build feature (`cargo build --features native`) to build against ESP-IDF (v5.1.2)
+ESP_IDF_VERSION = { value = "tag:v5.1.2" }
 
 # These configurations will pick up your custom "sdkconfig.release", "sdkconfig.debug" or "sdkconfig.defaults[.*]" files
 # that you might put in the root of the project
