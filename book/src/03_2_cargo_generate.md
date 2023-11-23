@@ -14,7 +14,7 @@ cargo install cargo-generate
 
 ```shell
 cd intro
-cargo generate https://github.com/esp-rs/esp-idf-template cargo
+cargo generate esp-rs/esp-idf-template cargo
 ```
 
 [You'll be prompted for details regarding your new project](https://github.com/esp-rs/esp-idf-template#generate-the-project). When given a choice between several options, navigate using cursor up/down and select with the Return key.
@@ -24,7 +24,6 @@ The first message you see will be:
 
 🔎 You can create a [favorite config file](https://cargo-generate.github.io/cargo-generate/favorites.html) that will be placed in `$CARGO_HOME/cargo-generate`, and override it with `-c, --config <config-file>`.
 
-
 > If you make a mistake, hit `Ctrl+C` and start anew.
 
 ✅ Configure your project:
@@ -33,15 +32,12 @@ The first message you see will be:
 
 * Project Name: `hello-world`
 * MCU: `esp32c3`
-* ESP-IDF native build version: `4.4`
-* STD support: `true`
-* Dev Containers support: `false`
+* Configure advanced template options?: `false`
 
 🔎 `.cargo/config.toml` contains local settings ([list of all settings](https://doc.rust-lang.org/cargo/reference/config.html)) for your package.
-`Cargo.toml` contains dependencies [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
+`Cargo.toml` contains dependencies and `Cargo.lock` will [import all your dependencies](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html).
 
-
-Optional, but recommended: To save disk space and download time, set the [toolchain directory to global](https://github.com/esp-rs/esp-idf-sys#esp_idf_tools_install_dir-esp_idf_tools_install_dir). Otherwise, each new project/workspace will have its own instance of the toolchain installed on your computer:
+Optional, but recommended: To save disk space and download time, set the [toolchain directory to global](https://github.com/esp-rs/esp-idf-sys/blob/master/BUILD-OPTIONS.md#esp_idf_tools_install_dir-esp_idf_tools_install_dir). Otherwise, each new project/workspace will have its own instance of the toolchain installed on your computer:
 
 
 ✅ Open `hello-world/.cargo/config.toml` and add the following line to the bottom of the `[env]` section. Leave everything else unchanged.
