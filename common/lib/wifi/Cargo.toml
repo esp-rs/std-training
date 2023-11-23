@@ -1,13 +1,13 @@
 [package]
-name = "wifi"
+name    = "wifi"
 version = "0.1.0"
 edition = "2021"
 authors = ["Sergio Gasquez <sergio.gasquez@gmail.com>"]
 
 [dependencies]
-anyhow = "=1.0.75"
-esp-idf-svc =  "=0.47.3"
-log = "=0.4.20"
+anyhow      = "=1.0.75"
+esp-idf-svc = "=0.47.3"
+log         = "=0.4.20"
 
 [build-dependencies]
 embuild = "=0.31.4"

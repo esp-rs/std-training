@@ -1,6 +1,5 @@
 use anyhow::{bail, Result};
-use esp_idf_svc::eventloop::EspSystemEventLoop;
-use esp_idf_svc::hal::prelude::Peripherals;
+use esp_idf_svc::{eventloop::EspSystemEventLoop, hal::prelude::Peripherals};
 use wifi::wifi;
 
 /// This configuration is picked up at compile time by `build.rs` from the
