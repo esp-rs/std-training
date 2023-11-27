@@ -3,7 +3,7 @@ version: 1
 author: Sergio Gasquez Arcos
 
 steps:
-  - wait-serial: "GPIO[9]| InputEn: 1| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:1"
+  - wait-serial: " GPIO[9]| InputEn: 0| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0 "
   # Press once
   - set-control:
       part-id: btn1
