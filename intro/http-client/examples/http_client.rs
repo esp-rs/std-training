@@ -50,7 +50,9 @@ fn get(url: impl AsRef<str>) -> Result<()> {
 
     // 3. Open a GET request to `url`
     let headers = [("accept", "text/plain")];
+    // ANCHOR: request
     let request = client.request(Method::Get, url.as_ref(), &headers)?;
+    // ANCHOR_END: request
 
     // 4. Submit the request and check the status code of the response.
     // Successful http status codes are in the 200..=299 range.

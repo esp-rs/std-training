@@ -14,7 +14,9 @@ fn main() -> Result<()> {
     esp_idf_svc::sys::link_patches();
 
     let peripherals = Peripherals::take()?;
+    // ANCHOR: led
     let mut led = WS2812RMT::new(peripherals.pins.gpio2, peripherals.rmt.channel0)?;
+    // ANCHOR_END: led
 
     // Configures the button
     let mut button = PinDriver::input(peripherals.pins.gpio9)?;
@@ -33,6 +35,7 @@ fn main() -> Result<()> {
         })?;
     }
 
+    // ANCHOR: loop
     loop {
         // Enable interrupt and wait for new notificaton
         button.enable_interrupt()?;
@@ -41,9 +44,11 @@ fn main() -> Result<()> {
         // Generates random rgb values and sets them in the led.
         random_light(&mut led);
     }
+    // ANCHOR_END: loop
 }
 
 #[allow(unused)]
+// ANCHOR: random_light
 fn random_light(led: &mut WS2812RMT) {
     let mut color = RGB8::new(0, 0, 0);
     unsafe {
@@ -56,3 +61,4 @@ fn random_light(led: &mut WS2812RMT) {
 
     led.set_pixel(color).unwrap();
 }
+// ANCHOR_END: random_light
