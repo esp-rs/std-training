@@ -1,7 +1,6 @@
 # Building the Interrupt Handler
 
 The goal of this exercise is to handle the interrupt that fires if the `BOOT` button is pushed.
-This exercise involves working with C bindings to the ESP-IDF and other unsafe operations, as well as non-typical Rust documentation. In a first step we will go line by line to build this interrupt handler.
 
 You can find a skeleton code for this exercise in `advanced/button-interrupt/src/main.rs`.
 
@@ -12,77 +11,25 @@ cargo run --example solution
 ```
 ## ✅ Tasks
 
-1. Configure the [BOOT button](https://github.com/esp-rs/esp-rust-board#ios) (GPIO9) with a C struct [`gpio_config_t`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/struct.gpio_config_t.html) and the following settings:
+1. Configure the [BOOT button](https://github.com/esp-rs/esp-rust-board#ios) (GPIO9), using the `PinDriver` struct with the following settings:
     - Input mode
     - Pull up
     - Interrupt on positive edge
+2. Instantiate a new notification and notifier
+    - See `hal::task::notification` documentation
+3. In an `unsafe` block, create a subscription and its callback function.
+    - See `PinDriver::subscribe` and `task::notify_and_yield`
+    - The reasons for being `unsafe` are:
+      - The callback function will run in the [ISR (Interrupt Service Routine)](https://en.wikipedia.org/wiki/Interrupt_handler), so we should avoid calling any blocking functions on it, this includes STD, `libc` or FreeRTOS APIs (except for a few allowed ones).
+      - Callback closure is capturing its environment and you can use static variables inserted onto it. Captured variables need to outlive the subscription. You can also, use non-static variables, but that requires extra caution, see `esp_idf_hal::gpio::PinDriver::subscribe_nonstatic` documentation for more details.
+4. In the loop, enable the interrupt, and wait for the notification
+    - The interruption should be enabled after each received notification, from a non-ISR context
+    - `esp_idf_svc::hal::delay::BLOCK` can be used for waiting
+5.  Run the program, push the `BOOT` button, and see how it works!
 
-The struct has the following fields:
-
- * `pin_bit_mask`: Represents the Pin number, the value 1  shifted by the number of the pin.
- * `mode`: Sets the mode of the pin, it can have the following settings:
-   * `gpio_mode_t_GPIO_MODE_INPUT`
-   * `gpio_mode_t_GPIO_MODE_OUTPUT`
-   * `gpio_mode_t_GPIO_MODE_DISABLE` // Disable GPIO
-   * `gpio_mode_t_GPIO_MODE_OUTPUT_OD` // Open drain output
-   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT` // Input and output
-   * `gpio_mode_t_GPIO_MODE_INPUT_OUTPUT_OD` // Open drain input and output
- * `pull_up_en`: `true.into()`, if the GPIO is pulled up,
- * `pull_down_en`: `true.into()`, if the GPIO is pulled down,
- * `intr_type`: Sets the interrupt type, it can have the following settings:
-   * `gpio_int_type_t_GPIO_INTR_ANYEDGE` // Interrupt at any edge
-   * `gpio_int_type_t_GPIO_INTR_DISABLE` // Interrupt disabled
-   * `gpio_int_type_t_GPIO_INTR_NEGEDGE` // Interrupt at negative edge
-   * `gpio_int_type_t_GPIO_INTR_POSEDGE` // Interrupt at positive edge
-
-They are constants with numbers representing the bit that must be set in the corresponding register.
-
-2. Write the configuration into the register with [`unsafe extern "C" fn gpio_config`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_config.html). This needs to happen in the unsafe block. To make these FFI calls, we can use the macro `esp!($Cfunktion)`.
-
-3. Install a generic GPIO interrupt handler with [`unsafe extern "C" fn gpio_install_isr_service`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.gpio_install_isr_service.html). This function takes `ESP_INTR_FLAG_IRAM` as argument.
-
-4. Create a `static mut` that holds the queue handle we are going to get from `xQueueGenericCreate`. This is a number that uniquely identifies one particular queue, as opposed to any of the other queues in our program. The queue storage itself if managed by the Operating System.
-
-    ```rust
-    static mut EVENT_QUEUE: Option<QueueHandle_t> = None;
-    ```
-
-5. Create the event queue using [`pub unsafe extern "C" fn xQueueGenericCreate`](https://esp-rs.github.io/esp-idf-sys/esp_idf_sys/fn.xQueueGenericCreate.html). This lets us safely pass events from an interrupt routine to our main thread.
-
-    ```rust
-    EVENT_QUEUE = Some(xQueueGenericCreate(QUEUE_SIZE, ITEM_SIZE, QUEUE_TYPE_BASE));
-    ```
-
-6. Add a function which that will be called whenever there is a GPIO interrupt on our button pin. We put this function in a special block of RAM (`iram0`), so it will still be available even if the external flash is busy doing something else (like filesystem work). The function needs to get the queue handle from `EVENT_QUEUE` and call the `xQueueGiveFromISR` function with a `std::ptr::null_mut()` - the objects in our queue are of size zero, so we don't actually need a 'thing' to put on the queue. Instead, the act of pushing a 'nothing' is enough to wake up the other end!
-
-    ```rust
-    #[link_section = ".iram0.text"]
-    unsafe extern "C" fn button_interrupt(_: *mut c_void) {
-        xQueueGiveFromISR(EVENT_QUEUE.unwrap(), std::ptr::null_mut());
-    }
-    ```
-
-If the interrupt fires, an event is added to the queue.
-
-7. Pass the function we just wrote to the generic GPIO interrupt handler we registered earlier, along with the number of the GPIO pin that should cause this function to be executed.
-
-    ```rust
-    esp!(gpio_isr_handler_add(
-        GPIO_NUM,
-        Some(button_interrupt),
-        std::ptr::null_mut()
-    ))?;
-    ```
-
-8. Inside a loop, wait until the queue has an item in it. That is, until the `button_interrupt` function puts something in the queue.
-
-    ```rust
-    let res = xQueueReceive(EVENT_QUEUE.unwrap(), ptr::null_mut(), QUEUE_WAIT_TICKS);
-    ```
-
-9. Handle the value of `res`, so that "Button pushed!" is logged, if the button is pushed.
-
-10. Run the program and push the `BOOT` button, so see how it works!
+🔎 In this exercise we are using notifications, which only give the latest value, so if the interrupt is triggered
+multiple times before the value of the notification is read, you will only be able to read the latest one. Queues,
+on the other hand, allow receiving multiple values. See `esp_idf_hal::task::queue::Queue` for more details.
 
 ## Simulation
 

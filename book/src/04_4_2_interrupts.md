@@ -16,5 +16,5 @@ cargo run --example solution_led
 * The LED's part number is WS2812RMT.
 * It's a programmable RGB LED. This means there aren't single pins to set for red, green and blue, but we need to instantiate it to be able to send `RGB8` type values to it with a method.
 * The board has a hardware random number generator. It can be called with `esp_random()`.
-* Calling functions from the `esp-idf-sys` is unsafe in Rust terms and requires an `unsafe()` block. You can assume that these functions are safe to use, so no other measures are required.
+* Calling functions from the `esp-idf-svc::sys` is unsafe in Rust terms and requires an `unsafe()` block. You can assume that these functions are safe to use, so no other measures are required.
 

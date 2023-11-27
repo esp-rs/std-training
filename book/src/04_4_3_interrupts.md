@@ -6,13 +6,9 @@
 
     led.set_pixel(RGB8::new(20, 0, 20)).unwrap(); // Remove this line after you tried it once
    ```
-2. Light up the LED only when the button is pressed. You can do this for now by exchanging the print statement.
+2. Light up the LED only when the button is pressed. You can do this for now by adding the following line after the button pressed message:
    ```rust
-   1 => {
-        led.set_pixel(arbitrary_color)?;
-
-        },
-    _ => {},
+   led.set_pixel(arbitrary_color)?;
    ```
 3. Create random RGB values by calling `esp_random()`.
    * This function is `unsafe`.
@@ -37,18 +33,13 @@
 
     ```rust
     // ...
-
-        unsafe {
-            // ...
-            match res {
-                    1 => {
-                        // Generates random rgb values
-                        random_light(&mut led);
-
-                    },
-                    _ => {},
-                };
-            }
+        loop {
+            // enable_interrupt should also be called after each received notification from non-ISR context
+            button.enable_interrupt()?;
+            notification.wait(esp_idf_svc::hal::delay::BLOCK);
+            println!("Button pressed!");
+            // Generates random rgb values and sets them in the led.
+            random_light(&mut led);
         }
     // ...
     fn random_light(led: &mut WS2812RMT) {
