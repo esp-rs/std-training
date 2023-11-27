@@ -4,18 +4,14 @@ You will now make changes to your HTTP client files so that it also works for en
 
 `intro/http-client/examples/http_client.rs` contains the solution. You can run it with the following command:
 
-```shell
+```console
 cargo run --example https_client
 ```
 
 Create a custom client configuration to use an `esp_idf_svc::http::client::EspHttpConnection` which enables the use of these certificates and uses default values for everything else:
 
 ```rust
-let connection = EspHttpConnection::new(&Configuration {
-        use_global_ca_store: true,
-        crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
-        ..Default::default()
-    }
+{{#include ../../intro/http-client/examples/https_client.rs:connection}}
 ```
 
 ✅ Initialize your HTTP client with this new configuration and verify HTTPS works by downloading from an `https` resource, e.g. `https://espressif.com/`. the download will show as raw HTML in the terminal output.

@@ -4,6 +4,7 @@ use embedded_hal::blocking::i2c;
 
 /// ICM42670P device driver.
 /// Datasheet: https://invensense.tdk.com/wp-content/uploads/2021/07/DS-000451-ICM-42670-P-v1.0.pdf
+// ANCHOR: struct
 #[derive(Debug)]
 pub struct ICM42670P<I2C> {
     // The concrete I²C device implementation.
@@ -12,17 +13,21 @@ pub struct ICM42670P<I2C> {
     // Device address
     address: DeviceAddr,
 }
+// ANCHOR_END: struct
 
 // See Table 3.3.2 in Documentation
 /// Contains the possible variants of the devices addesses as binary numbers.
 #[derive(Debug, Clone, Copy, PartialEq)]
+// ANCHOR: device_addr
 pub enum DeviceAddr {
     /// 0x68
     AD0 = 0b110_1000,
     /// 0x69
     AD1 = 0b110_1001,
 }
+// ANCHOR_END: device_addr
 
+// ANCHOR: impl
 impl<I2C, E> ICM42670P<I2C>
 where
     I2C: i2c::WriteRead<Error = E> + i2c::Write<Error = E>,
@@ -31,6 +36,7 @@ where
     pub fn new(i2c: I2C, address: DeviceAddr) -> Result<Self, E> {
         Ok(Self { i2c, address })
     }
+    // ANCHOR_END: impl
 
     /// Returns the device's ID `0x67
     //(if it doesn't, something is amiss)
@@ -39,6 +45,7 @@ where
         self.read_register(Register::WhoAmI)
     }
 
+    // ANCHOR: read_write
     /// Writes into a register
     // This method is not public as it is only needed inside this file.
     #[allow(unused)]
@@ -56,10 +63,12 @@ where
             .write_read(self.address as u8, &[register.address()], &mut data)?;
         Ok(u8::from_le_bytes(data))
     }
+    // ANCHOR_END: read_write
 }
 
 // See Table 14.1 in documentation
 /// This enum represents the device's registers
+// ANCHOR: register
 #[derive(Clone, Copy)]
 pub enum Register {
     WhoAmI = 0x75,
@@ -70,3 +79,4 @@ impl Register {
         *self as u8
     }
 }
+// ANCHOR_END: register

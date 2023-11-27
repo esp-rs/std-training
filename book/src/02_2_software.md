@@ -83,7 +83,7 @@ to compile the binaries for the Espressif target. Flashing binaries from contain
 
 ✅ Install [`Docker`](https://docs.docker.com/get-docker/) for your operating system.
 
-✅ Get the docker image: There are 2 ways of getting the Docker image:
+✅ Get the Docker image: There are 2 ways of getting the Docker image:
 - Build the Docker image from the `Dockerfile`:
     ```console
     docker image build --tag rust-std-training --file .devcontainer/Dockerfile .

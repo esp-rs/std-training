@@ -6,8 +6,12 @@ use esp_idf_svc::hal::{
     peripherals::Peripherals,
     prelude::*,
 };
+// ANCHOR: include
 use icm42670::{Address, Icm42670, PowerMode as imuPowerMode};
+// ANCHOR_END: include
+// ANCHOR: shared_bus
 use shared_bus::BusManagerSimple;
+// ANCHOR_END: shared_bus
 use shtcx::{self, PowerMode as shtPowerMode};
 
 // Goals of this exercise:

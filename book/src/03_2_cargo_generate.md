@@ -8,13 +8,13 @@ More information on generating projects can be found in the [Writing Your Own Ap
 >
 ✅ Install `cargo-generate`:
 
-```shell
+```console
 cargo install cargo-generate
 ```
 
 ✅ Change to the `intro` directory and run `cargo generate` with the [`esp-idf` template](https://github.com/esp-rs/esp-idf-template):
 
-```shell
+```console
 cd intro
 cargo generate esp-rs/esp-idf-template cargo
 ```
@@ -59,14 +59,14 @@ channel = "nightly-2023-11-14" # change this line
 
 ✅ Run your project by using the following command out of the `hello-world` directory.
 
-```shell
+```console
 cd hello-world
 cargo run
 ```
 
 ✅ The last lines of your output should look like this:
 
-```shell
+```console
 (...)
 I (268) cpu_start: Starting scheduler.
 Hello, world!

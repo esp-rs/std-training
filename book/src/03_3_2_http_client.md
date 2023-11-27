@@ -37,8 +37,7 @@ The `get` function uses [as_ref()](https://doc.rust-lang.org/std/convert/trait.A
 
 
 ```rust
-let request = client.get(url.as_ref())?;
-let response = request.submit()?;
+{{#include ../../intro/http-client/examples/http_client.rs:request}}
 ```
 
 A successful response has [a status code in the 2xx range](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Followed by the raw html of the website.
