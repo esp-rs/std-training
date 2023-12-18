@@ -15,6 +15,7 @@ on:
 jobs:
   wokwi-check:
     name: ${{ matrix.project.name }}
+    if: github.actor == 'esp-rs'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

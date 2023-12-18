@@ -70,7 +70,7 @@ jobs:
           run: /bin/bash /home/esp/workspace/.devcontainer/test.sh ${{ matrix.project.path }}
 
       - name: Wokwi CI check
-        if: matrix.project.name == 'button-interrupt' || matrix.project.name == 'http-client' || matrix.project.name == 'hardware-check'
+        if: (matrix.project.name == 'button-interrupt' || matrix.project.name == 'http-client' || matrix.project.name == 'hardware-check') && github.actor == 'esp-rs'
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
