@@ -45,7 +45,7 @@ jobs:
         run: linkchecker book
 
       - name: Upload GitHub Pages content
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: /tmp/book
 
