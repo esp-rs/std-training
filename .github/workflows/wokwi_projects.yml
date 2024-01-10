@@ -15,7 +15,7 @@ on:
 jobs:
   wokwi-check:
     name: ${{ matrix.project.name }}
-    if: github.actor == 'esp-rs'
+    if: github.repository == 'esp-rs/std-training' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
