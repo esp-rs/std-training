@@ -67,6 +67,9 @@ brew install llvm libuv
 
     4. On Ubuntu, you might need to change your kernel to `5.19`. Run `uname -r` to obtain your kernel version.
 
+- Error `unrecognized command-line option '--target=riscv32imc_zicsr_zifencei-esp-espidf `:
+
+  You can solve this by setting an env variable. Try to build with the `CRATE_CC_NO_DEFAULTS=1` env variable set. Either directly provide it with  `CRATE_CC_NO_DEFAULTS=1 cargo build` or set it in the projects `.cargo/config.toml` inside the [env] section.
 
 ## Docker
 
