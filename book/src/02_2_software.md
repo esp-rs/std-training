@@ -89,14 +89,20 @@ to compile the binaries for the Espressif target. Flashing binaries from contain
     docker image build --tag rust-std-training --file .devcontainer/Dockerfile .
     ```
     Building the image takes a while depending on the OS & hardware (20-30 minutes).
-- Donwload it from [Dockerhub](https://hub.docker.com/r/espressif/rust-std-training):
+- Download it from [Dockerhub](https://hub.docker.com/r/espressif/rust-std-training):
     ```console
     docker pull espressif/rust-std-training
     ```
 ✅ Start the new Docker container:
-```console
-docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it rust-std-training /bin/bash
-```
+
+- For local Docker image:
+  ```console
+  docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it rust-std-training /bin/bash
+  ```
+- From the Docker Hub:
+  ```console
+  docker run --mount type=bind,source="$(pwd)",target=/workspace,consistency=cached -it espressif/rust-std-training:latest /bin/bash
+  ```
 
 This starts an interactive shell in the Docker container. It also mounts the local repository to a folder
 named `/workspace` inside the container. Changes to the project on the host system are reflected inside the container & vice versa.
