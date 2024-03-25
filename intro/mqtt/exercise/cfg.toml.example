@@ -1,0 +1,14 @@
+[mqtt]
+mqtt_user = "horse"
+mqtt_pass = "CorrectHorseBatteryStaple"
+mqtt_host = "yourpc.local"
+wifi_ssid = "FBI Surveillance Van"
+wifi_psk = "hunter2"
+
+# If you're participating in a Ferrous Systems training, 
+# login credentials for a server operated by Espressif 
+# will be made available in the workshop.
+
+# If you are working on your own you could use one listed at https://test.mosquitto.org/,
+# e.g. the simplest way is to just place `mqtt_host = "test.mosquitto.org"` (and remove the other mqtt keys but leave the wifi ones).
+
