@@ -17,8 +17,8 @@ opt-level = "z"
 
 [dependencies]
 anyhow        = "=1.0.75"
-embedded-svc  = "=0.26.4"
-esp-idf-svc   = "=0.47.3"
+embedded-svc = "0.27.1"
+esp-idf-svc   = "=0.48.1"
 get-uuid      = { path = "../../../common/lib/get-uuid" }
 log           = "=0.4.20"
 mqtt-messages = { path = "../../../common/lib/mqtt-messages" }

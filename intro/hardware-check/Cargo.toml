@@ -17,7 +17,7 @@ opt-level = "z"
 
 [dependencies]
 anyhow      = "=1.0.75"
-esp-idf-svc = "=0.47.3"
+esp-idf-svc = "=0.48.1"
 log         = "=0.4.20"
 rgb-led     = { path = "../../common/lib/rgb-led" }
 toml-cfg    = "=0.1.3"

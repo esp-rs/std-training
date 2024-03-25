@@ -18,7 +18,7 @@ opt-level = "z"
 [dependencies]
 anyhow       = "=1.0.75"
 embedded-hal = "=0.2.7"
-esp-idf-svc  = "=0.47.3"
+esp-idf-svc  = "=0.48.1"
 
 [build-dependencies]
 embuild = "=0.31.4"

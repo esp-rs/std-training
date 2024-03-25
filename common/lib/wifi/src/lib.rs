@@ -51,8 +51,8 @@ pub fn wifi(
     };
 
     wifi.set_configuration(&Configuration::Client(ClientConfiguration {
-        ssid: ssid.into(),
-        password: pass.into(),
+        ssid: ssid.try_into().expect("SSID does not fit into String<32> buffer"),
+        password: pass.try_into().expect("Password does not fit into String<64> buffer"),
         channel,
         auth_method,
         ..Default::default()
