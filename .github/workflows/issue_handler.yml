@@ -10,7 +10,7 @@ jobs:
     name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0.6.1
+      - uses: actions/add-to-project@v1.0.0
         with:
           project-url: https://github.com/orgs/esp-rs/projects/2
           github-token: ${{ secrets.PAT }}
