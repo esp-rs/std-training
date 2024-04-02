@@ -2,8 +2,8 @@
 mqtt_user = "horsea"
 mqtt_pass = "CorrectaHorseBatteryStaple"
 mqtt_host = "yourpca.local"
-wifi_ssid = "FBI Surveillance Van2"
-wifi_psk = "2hunter2"
+wifi_ssid = "FBI Surveillance Van"
+wifi_psk = "hunter2"
 
 # If you're participating in a Ferrous Systems training, 
 # login credentials for a server operated by Espressif 
