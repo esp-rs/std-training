@@ -2,12 +2,10 @@ use anyhow::Result;
 use core::str;
 use embedded_svc::{http::Method, io::Write};
 use esp_idf_svc::{
-    eventloop::EspSystemEventLoop,
-    hal::{
+    eventloop::EspSystemEventLoop, hal::{
         i2c::{I2cConfig, I2cDriver},
         prelude::*,
-    },
-    http::server::{Configuration, EspHttpServer},
+    }, http::server::{Configuration, EspHttpServer}, io::EspIOError, sys::EspError
 };
 use shtcx::{self, shtc3, PowerMode};
 use std::{
@@ -59,7 +57,7 @@ fn main() -> Result<()> {
     // Set the HTTP server
     let mut server = EspHttpServer::new(&Configuration::default())?;
     // http://<sta ip>/ handler
-    server.fn_handler("/", Method::Get, |request| {
+    server.fn_handler("/", Method::Get, |request| -> core::result::Result<(), EspIOError> {
         let html = index_html();
         let mut response = request.into_ok_response()?;
         response.write_all(html.as_bytes())?;
@@ -67,7 +65,7 @@ fn main() -> Result<()> {
     })?;
 
     // http://<sta ip>/temperature handler
-    server.fn_handler("/temperature", Method::Get, move |request| {
+    server.fn_handler("/temperature", Method::Get, move |request| -> core::result::Result<(), EspIOError> {
         let temp_val = temp_sensor
             .lock()
             .unwrap()
