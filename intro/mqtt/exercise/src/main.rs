@@ -1,19 +1,17 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
+
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::{
         delay,
         i2c::{I2cConfig, I2cDriver},
         prelude::*,
-    },
-    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+    }, mqtt::client::MqttClientConfiguration
 };
-use log::{error, info, warn};
-use mqtt_messages::{hello_topic, ColorData};
+use log::info;
 use rgb_led::{RGB8, WS2812RMT};
 use shtcx::{self, shtc3, PowerMode};
-use std::{convert::TryFrom, thread::sleep, time::Duration};
+use std::{thread::sleep, time::Duration};
 use wifi::wifi;
 
 const UUID: &str = get_uuid::uuid();
@@ -66,7 +64,7 @@ fn main() -> Result<()> {
     led.set_pixel(RGB8::new(1, 1, 0))?;
 
     // Client configuration:
-    let broker_url = if app_config.mqtt_user != "" {
+    let _broker_url = if app_config.mqtt_user != "" {
         format!(
             "mqtt://{}:{}@{}",
             app_config.mqtt_user, app_config.mqtt_pass, app_config.mqtt_host
@@ -75,7 +73,7 @@ fn main() -> Result<()> {
         format!("mqtt://{}", app_config.mqtt_host)
     };
 
-    let mqtt_config = MqttClientConfiguration::default();
+    let _mqtt_config = MqttClientConfiguration::default();
 
     // Your Code:
 
@@ -86,7 +84,7 @@ fn main() -> Result<()> {
 
     loop {
         sleep(Duration::from_secs(1));
-        let temp = temp_sensor
+        let _temp = temp_sensor
             .measure_temperature(PowerMode::NormalMode, &mut delay)
             .unwrap()
             .as_degrees_celsius();

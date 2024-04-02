@@ -80,7 +80,7 @@ fn main() -> Result<()> {
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    let mut client = EspMqttClient::new(&broker_url, &mqtt_config, move |_message_event| {
+    let mut client = EspMqttClient::new_cb(&broker_url, &mqtt_config, move |_message_event| {
         // ... your handler code here - leave this empty for now
         // we'll add functionality later in this chapter
     })?;
