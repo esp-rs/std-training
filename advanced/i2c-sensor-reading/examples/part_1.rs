@@ -34,15 +34,15 @@ fn main() -> Result<()> {
 
     loop {
         // 5. This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
-        sht.start_measurement(PowerMode::NormalMode).unwrap();
-        FreeRtos.delay_ms(100u32);
-        let measurement = sht.get_measurement_result().unwrap();
-
-        println!(
-            "TEMP: {:.2} °C | HUM: {:.2} %",
-            measurement.temperature.as_degrees_celsius(),
-            measurement.humidity.as_percent(),
-        );
+        if let Ok(measurement) =  sht.get_measurement_result() {
+            println!(
+                "TEMP: {:.2} °C | HUM: {:.2} %",
+                measurement.temperature.as_degrees_celsius(),
+                measurement.humidity.as_percent(),
+            );
+            
+            sht.start_measurement(PowerMode::NormalMode).unwrap();
+        }
 
         FreeRtos.delay_ms(500u32);
     }
