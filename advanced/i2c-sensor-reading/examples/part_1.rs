@@ -32,8 +32,11 @@ fn main() -> Result<()> {
     let device_id = sht.device_identifier().unwrap();
     println!("Device ID SHTC3: {:#02x}", device_id);
 
+    // 5. Start measurements
+    sht.start_measurement(PowerMode::NormalMode).unwrap();
+
     loop {
-        // 5. This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
+        // 6. This loop initiates measurements, reads values and prints humidity in % and Temperature in °C.
         if let Ok(measurement) =  sht.get_measurement_result() {
             println!(
                 "TEMP: {:.2} °C | HUM: {:.2} %",
