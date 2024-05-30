@@ -78,7 +78,7 @@ fn main() -> Result<()> {
 
     // 1. Create a client with default configuration and empty handler
     let mut client =
-        EspMqttClient::new(
+        EspMqttClient::new_cb(
             &broker_url,
             &mqtt_config,
             move |message_event| match message_event {
