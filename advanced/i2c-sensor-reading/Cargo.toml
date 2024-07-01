@@ -8,6 +8,10 @@ authors = [
 edition = "2021"
 resolver = "2"
 
+[[bin]]
+name = "i2c-sensor-reading"
+harness = false # We can't use the default rust libtest harness for a crosscompile target
+
 [profile.release]
 opt-level = "s"
 
