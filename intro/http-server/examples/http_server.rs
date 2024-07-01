@@ -61,9 +61,10 @@ fn main() -> Result<()> {
     // http://<sta ip>/ handler
     server.fn_handler("/", Method::Get, |request| {
         let html = index_html();
-        let mut response = request.into_ok_response()?;
-        response.write_all(html.as_bytes())?;
-        Ok(())
+        request
+            .into_ok_response()?
+            .write_all(html.as_bytes())
+            .map(|_| ())
     })?;
 
     // http://<sta ip>/temperature handler
@@ -76,9 +77,10 @@ fn main() -> Result<()> {
             .temperature
             .as_degrees_celsius();
         let html = temperature(temp_val);
-        let mut response = request.into_ok_response()?;
-        response.write_all(html.as_bytes())?;
-        Ok(())
+        request
+            .into_ok_response()?
+            .write_all(html.as_bytes())
+            .map(|_| ())
     })?;
 
     println!("Server awaiting connection");

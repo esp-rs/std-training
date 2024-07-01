@@ -1,5 +1,7 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
+use embedded_svc::mqtt::client::{
+    Details::Complete, EventPayload::Error, EventPayload::Received, QoS,
+};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::{
@@ -7,7 +9,7 @@ use esp_idf_svc::{
         i2c::{I2cConfig, I2cDriver},
         prelude::*,
     },
-    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+    mqtt::client::{Details, EspMqttClient, MqttClientConfiguration},
 };
 use log::{error, info, warn};
 use mqtt_messages::{hello_topic, ColorData};
@@ -77,15 +79,18 @@ fn main() -> Result<()> {
     };
 
     // 1. Create a client with default configuration and empty handler
+    // ANCHOR: mqtt_client
     let mut client =
-        EspMqttClient::new(
+        EspMqttClient::new_cb(
             &broker_url,
             &mqtt_config,
-            move |message_event| match message_event {
-                Ok(Received(msg)) => process_message(msg, &mut led),
-                _ => warn!("Received from MQTT: {:?}", message_event),
+            move |message_event| match message_event.payload() {
+                Received { data, details, .. } => process_message(data, details, &mut led),
+                Error(e) => warn!("Received error from MQTT: {:?}", e),
+                _ => info!("Received from MQTT: {:?}", message_event.payload()),
             },
         )?;
+    // ANCHOR_END: mqtt_client
 
     // 2. publish an empty hello message
     let payload: &[u8] = &[];
@@ -109,11 +114,12 @@ fn main() -> Result<()> {
     }
 }
 
-fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
-    match message.details() {
+// ANCHOR: process_message
+fn process_message(data: &[u8], details: Details, led: &mut WS2812RMT) {
+    match details {
         Complete => {
-            info!("{:?}", message);
-            let message_data: &[u8] = message.data();
+            info!("{:?}", data);
+            let message_data: &[u8] = data;
             if let Ok(ColorData::BoardLed(color)) = ColorData::try_from(message_data) {
                 info!("{}", color);
                 if let Err(e) = led.set_pixel(color) {
@@ -121,6 +127,7 @@ fn process_message(message: &EspMqttMessage, led: &mut WS2812RMT) {
                 };
             }
         }
-        _ => error!("Could not set board LED"),
+        _ => {}
     }
 }
+// ANCHOR_END: process_message

@@ -51,8 +51,8 @@ pub fn wifi(
     };
 
     wifi.set_configuration(&Configuration::Client(ClientConfiguration {
-        ssid: ssid.into(),
-        password: pass.into(),
+        ssid: ssid.try_into().unwrap(),
+        password: pass.try_into().unwrap(),
         channel,
         auth_method,
         ..Default::default()

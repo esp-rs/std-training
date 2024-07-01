@@ -1,5 +1,7 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::QoS;
+use embedded_svc::mqtt::client::{
+    Details::Complete, EventPayload::Error, EventPayload::Received, QoS,
+};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::{
@@ -7,7 +9,7 @@ use esp_idf_svc::{
         i2c::{I2cConfig, I2cDriver},
         prelude::*,
     },
-    mqtt::client::{EspMqttClient, MqttClientConfiguration},
+    mqtt::client::{Details, EspMqttClient, MqttClientConfiguration},
 };
 use log::info;
 use mqtt_messages::hello_topic;
@@ -80,14 +82,14 @@ fn main() -> Result<()> {
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    let mut client = EspMqttClient::new(&broker_url, &mqtt_config, move |_message_event| {
+    let mut client = EspMqttClient::new_cb(&broker_url, &mqtt_config, move |_message_event| {
         // ... your handler code here - leave this empty for now
         // we'll add functionality later in this chapter
     })?;
 
     // 2. publish an empty hello message
     let payload: &[u8] = &[];
-    client.publish(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
+    client.enqueue(&hello_topic(UUID), QoS::AtLeastOnce, true, payload)?;
 
     loop {
         sleep(Duration::from_secs(1));
@@ -96,7 +98,7 @@ fn main() -> Result<()> {
             .unwrap()
             .as_degrees_celsius();
         // 3. publish CPU temperature
-        client.publish(
+        client.enqueue(
             &mqtt_messages::temperature_data_topic(UUID),
             QoS::AtLeastOnce,
             false,
