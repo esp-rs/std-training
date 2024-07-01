@@ -5,6 +5,7 @@ use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::{
         i2c::{I2cConfig, I2cDriver},
+        io::EspIOError,
         prelude::*,
     },
     http::server::{Configuration, EspHttpServer},
@@ -59,29 +60,35 @@ fn main() -> Result<()> {
     // Set the HTTP server
     let mut server = EspHttpServer::new(&Configuration::default())?;
     // http://<sta ip>/ handler
-    server.fn_handler("/", Method::Get, |request| {
-        let html = index_html();
-        request
-            .into_ok_response()?
-            .write_all(html.as_bytes())
-            .map(|_| ())
-    })?;
+    server.fn_handler(
+        "/",
+        Method::Get,
+        |request| -> core::result::Result<(), EspIOError> {
+            let html = index_html();
+            let mut response = request.into_ok_response()?;
+            response.write_all(html.as_bytes())?;
+            Ok(())
+        },
+    )?;
 
     // http://<sta ip>/temperature handler
-    server.fn_handler("/temperature", Method::Get, move |request| {
-        let temp_val = temp_sensor
-            .lock()
-            .unwrap()
-            .get_measurement_result()
-            .unwrap()
-            .temperature
-            .as_degrees_celsius();
-        let html = temperature(temp_val);
-        request
-            .into_ok_response()?
-            .write_all(html.as_bytes())
-            .map(|_| ())
-    })?;
+    server.fn_handler(
+        "/temperature",
+        Method::Get,
+        move |request| -> core::result::Result<(), EspIOError> {
+            let temp_val = temp_sensor
+                .lock()
+                .unwrap()
+                .get_measurement_result()
+                .unwrap()
+                .temperature
+                .as_degrees_celsius();
+            let html = temperature(temp_val);
+            let mut response = request.into_ok_response()?;
+            response.write_all(html.as_bytes())?;
+            Ok(())
+        },
+    )?;
 
     println!("Server awaiting connection");
 
