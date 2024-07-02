@@ -1,5 +1,7 @@
 use anyhow::Result;
-use embedded_svc::mqtt::client::{Details::Complete, Event::Received, QoS};
+use embedded_svc::mqtt::client::{
+    Details::Complete, EventPayload::Error, EventPayload::Received, QoS,
+};
 use esp_idf_svc::{
     eventloop::EspSystemEventLoop,
     hal::{
@@ -7,7 +9,7 @@ use esp_idf_svc::{
         i2c::{I2cConfig, I2cDriver},
         prelude::*,
     },
-    mqtt::client::{EspMqttClient, EspMqttMessage, MqttClientConfiguration},
+    mqtt::client::{Details, EspMqttClient, MqttClientConfiguration},
 };
 use log::{error, info, warn};
 use mqtt_messages::{hello_topic, ColorData};
@@ -80,7 +82,7 @@ fn main() -> Result<()> {
     // Your Code:
 
     // 1. Create a client with default configuration and empty handler
-    // let mut client = EspMqttClient::new( ... )?;
+    // let mut client = EspMqttClient::new_cb( ... )?;
 
     // 2. publish an empty hello message
 

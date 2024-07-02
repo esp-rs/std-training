@@ -51,8 +51,12 @@ pub fn wifi(
     };
 
     wifi.set_configuration(&Configuration::Client(ClientConfiguration {
-        ssid: ssid.into(),
-        password: pass.into(),
+        ssid: ssid
+            .try_into()
+            .expect("Could not parse the given SSID into WiFi config"),
+        password: pass
+            .try_into()
+            .expect("Could not parse the given password into WiFi config"),
         channel,
         auth_method,
         ..Default::default()

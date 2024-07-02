@@ -8,6 +8,10 @@ authors = [
 edition = "2021"
 resolver = "2"
 
+[[bin]]
+name = "i2c-driver"
+harness = false # We can't use the default rust libtest harness for a crosscompile target
+
 [profile.release]
 opt-level = "s"
 
@@ -16,9 +20,9 @@ debug     = true # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [dependencies]
-anyhow       = "=1.0.75"
+anyhow       = "=1.0.86"
 embedded-hal = "=0.2.7"
-esp-idf-svc  = "=0.47.3"
+esp-idf-svc  = "=0.49.0"
 
 [build-dependencies]
-embuild = "=0.31.4"
+embuild = "=0.32.0"

@@ -5,10 +5,10 @@ edition = "2021"
 authors = ["Sergio Gasquez <sergio.gasquez@gmail.com>"]
 
 [dependencies]
-anyhow      = "=1.0.75"
-esp-idf-svc = "=0.47.3"
-log         = "=0.4.20"
+anyhow      = "=1.0.86"
+esp-idf-svc = "=0.49.0"
+log         = "=0.4.22"
 rgb         = "0.8.29"
 
 [build-dependencies]
-embuild = "=0.31.4"
+embuild = "=0.32.0"
