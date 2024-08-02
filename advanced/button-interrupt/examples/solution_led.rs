@@ -35,6 +35,9 @@ fn main() -> Result<()> {
         })?;
     }
 
+    println!("Hello world!");
+
+
     // ANCHOR: loop
     loop {
         // Enable interrupt and wait for new notificaton
