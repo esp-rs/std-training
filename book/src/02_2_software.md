@@ -39,7 +39,7 @@ cargo install cargo-espflash espflash ldproxy
 ### Debian/Ubuntu
 
 ```console
-sudo apt install llvm-dev libclang-dev clang libuv-dev libuv1-dev pkgconf python3-venv python-is-python3
+sudo apt install llvm-dev libclang-dev clang libudev-dev libuv1-dev pkgconf python3-venv python-is-python3
 ```
 ### `macOS`
 
