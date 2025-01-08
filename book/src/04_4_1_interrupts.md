@@ -30,16 +30,3 @@ cargo run --example solution
 🔎 In this exercise we are using notifications, which only give the latest value, so if the interrupt is triggered
 multiple times before the value of the notification is read, you will only be able to read the latest one. Queues,
 on the other hand, allow receiving multiple values. See `esp_idf_hal::task::queue::Queue` for more details.
-
-## Simulation
-
-This project is available for simulation through two methods:
-- Wokwi projects
-  - [Exercise](https://wokwi.com/projects/360623288920412161?build-cache=disable)
-  - [Solution](https://wokwi.com/projects/333374799393849940?build-cache=disable)
-    - The Solution project contains solution for [Random LED Color on pushinig a Button](./04_4_2_interrupts.md)
-- Wokwi files are also present in the project folder to simulate it with Wokwi VS Code extension:
-   1. Press F1, select `Wokwi: Select Config File` and choose `advanced/button-interrupt/wokwi.toml`
-      - Edit the `wokwi.toml` file to select between exercise and solution simulation
-   2. Build you project
-   3. Press F1 again and select `Wokwi: Start Simulator`
