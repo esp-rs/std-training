@@ -33,15 +33,23 @@ Anchor comments can be ignored, they are only used to introduce those parts of c
 
 ## Simulating Projects
 
-Certain projects can be simulated with [Wokwi][wokwi]. Look for indications in the book to identify projects available for simulation. Simulation can be accomplished through two methods:
-- Using wokwi.com: Conduct the build process and code editing directly through the browser.
-- Using [Wokwi VS Code extension][wokwi-vscode]: Leverage VS Code to edit projects and perform builds. Utilize the Wokwi VS Code extension to simulate the resulting binaries.
-    - This approach requires some [installation][wokwi-installation]
-    - This approach assumes that the project is built in debug mode
-    - This approach allows [debugging the project][wokwi-debug]
+Certain projects can be simulated, or at least partially simulated, with [Wokwi][wokwi]. Here is the list of projects that support Wokwi simulation:
+- `intro/hello-world`
+- `intro/http-client`
+- `advanced/i2c-sensor-reading`
+- `advanced/i2c-driver`
+- `advanced/button-interrupt`
+
+Before jumping into any simulation project, you need to [setup the extension][wokwi-installation]. To simulate one project:
+
+1. Press F1, select `Wokwi: Select Config File`, and choose the `wokwi.toml` of the project you want to simulate.
+   1. Edit the corresponding `wokwi.toml` file to simulate the exercise or the solution project.
+2. Build your project in `debug` mode.
+3. Press F1 again and select `Wokwi: Start Simulator`.
+
+You can also [debug the project][wokwi-debug].
 
 [wokwi]: https://wokwi.com/
-[wokwi-vscode]: https://docs.wokwi.com/vscode/getting-started
 [wokwi-installation]: https://docs.wokwi.com/vscode/getting-started#installation
 [wokwi-debug]: https://docs.wokwi.com/vscode/debugging
 

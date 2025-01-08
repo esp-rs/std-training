@@ -69,19 +69,6 @@ The status error can be returned with the [Anyhow](https://docs.rs/anyhow/latest
 
 ✅ Write a custom `Error` enum to represent these errors. Implement the `std::error::Error` trait for your error.
 
-
-## Simulation
-
-This project is available for simulation through two methods:
-- Wokwi projects:
-  - [Exercise](https://wokwi.com/projects/360722140931768321?build-cache=disable)
-  - [Solution](https://wokwi.com/projects/333372159510446675?build-cache=disable)
-- Wokwi files are also present in the project folder to simulate it with Wokwi VS Code extension:
-   1. Press F1, select `Wokwi: Select Config File` and choose `intro/http-client/wokwi.toml`
-      - Edit the `wokwi.toml` file to select between exercise and solution simulation
-   2. Build you project
-   3. Press F1 again and select `Wokwi: Start Simulator`
-
 ## Troubleshooting
 
 - `missing WiFi name/password`: ensure that you've configured `cfg.toml` according to `cfg.toml.example` - a common problem is that the package name and config section name don't match.
