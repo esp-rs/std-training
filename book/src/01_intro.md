@@ -15,7 +15,7 @@ You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on M
 > Espressif officially supports the `no_std` approach with [`esp-hal`][esp-hal]. For equivalent training using the officially supported approach, see the [`no_std` training][no-std-training].
 
 [esp-hal]: https://github.com/esp-rs/esp-hal
-[no-std-training]: https://docs.espressif.com/projects/esp-rs/en/latest/no_std-training/
+[no-std-training]: https://docs.espressif.com/projects/rust/no_std-training/
 
 ## Translations
 
