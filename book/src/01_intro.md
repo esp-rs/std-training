@@ -10,6 +10,13 @@ The advanced course takes it from there to dive deeper into topics like interrup
 
 You can join the [esp-rs community](https://matrix.to/#/#esp-rs:matrix.org) on Matrix for all technical questions and issues! The community is open to everyone.
 
+> ⚠️ This book uses the `std` ecosystem (`esp-idf-hal`, `esp-idf-sys`, `esp-idf-svc`), which is maintained by the community, these crates are not officially supported by Espressif.
+>
+> Espressif officially supports the `no_std` approach with [`esp-hal`][esp-hal]. For equivalent training using the officially supported approach, see the [`no_std` training][no-std-training].
+
+[esp-hal]: https://github.com/esp-rs/esp-hal
+[no-std-training]: https://docs.espressif.com/projects/rust/no_std-training/
+
 ## Translations
 
 This book has been translated by generous volunteers. If you would like your translation listed here, please open a PR to add it.
