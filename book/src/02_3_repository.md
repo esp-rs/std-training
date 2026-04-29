@@ -11,7 +11,7 @@ cd std-training
 
 ❗ Windows users may have problems with [long path names][windows-long-path].
 
-[windows-long-path]: https://docs.esp-rs.org/book/troubleshooting/index.html#long-path-names
+[windows-long-path]: https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
 
 ## Repository Contents
 
